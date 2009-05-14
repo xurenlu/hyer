@@ -1,35 +1,39 @@
 #coding:utf-8
 import json
 class Writer:
-    def __init__(self,setting):
-        self.setting=setting
+    """filters implements function like writing to db"""
+    def __init__(self,config):
+        self.config=config
     def run(self,data):
-        if(self.setting["from"]==""):
+        if(self.config["from"]==""):
             towrite=data
         else:
-            towrite=data[self.setting["from"]]
+            towrite=data[self.config["from"]]
         #do some thing here...
         return data
 class MySQLWriter(Writer):
-    def run(self,setting,data):
+    def run(self,config,data):
         pass
 class ResetFileWriter(Writer):
+    '''
+        delete  file data["write_to"]
+    '''
     def run(self,data):
-        if  self.setting.has_key('write_to'):
-            os.unlink(self.setting["write_to"])
+        if  self.config.has_key('write_to'):
+            os.unlink(self.config["write_to"])
         else:
             raise KeyError("write_to can't be null")
         return data
 class TextFileWriter(Writer):
     def run(self,data):
-        if(self.setting["from"]==""):
+        if(self.config["from"]==""):
             towrite=data
         else:
-            towrite=data[self.setting["from"]]
+            towrite=data[self.config["from"]]
 
-        if  self.setting.has_key('write_to'):
+        if  self.config.has_key('write_to'):
             str=json.dumps(towrite)
-            fl=open(self.setting["write_to"],"w")
+            fl=open(self.config["write_to"],"w")
             print >>fl,str
             fl.close()
         else:
@@ -41,20 +45,20 @@ class LineAppendWriter(Writer):
     row by row
     '''
     def run(self,data):
-        if(self.setting["from"]==""):
+        if(self.config["from"]==""):
             towrite=data
         else:
-            towrite=data[self.setting["from"]]
-
-        if  self.setting.has_key('write_to'):
+            towrite=data[self.config["from"]]
+        
+        if  self.config.has_key('write_to'):
             if towrite.__class__ == type([]):
                 mstr="\n".join(towrite)
             else:
                 mstr=towrite
-            if data.has_key("ID"):
-                fl=open(self.setting["write_to"]+str(data["ID"]),"w")
+            if data.has_key("__ID__"):
+                fl=open(self.config["write_to"]+str(data["__ID__"]),"w")
             else:
-                fl=open(self.setting["write_to"],"w")
+                fl=open(self.config["write_to"],"w")
             print >>fl,str(mstr)
             fl.close()
         else:
@@ -67,14 +71,14 @@ class JsonLineAppendWriter(Writer):
     row by row
     '''
     def run(self,data):
-        if(self.setting["from"]==""):
+        if(self.config["from"]==""):
             towrite=data
         else:
-            towrite=data[self.setting["from"]]
+            towrite=data[self.config["from"]]
 
-        if  self.setting.has_key('write_to'):
+        if  self.config.has_key('write_to'):
             mstr=json.dumps(towrite)
-            fl=open(self.setting["write_to"],"a+")
+            fl=open(self.config["write_to"],"a+")
             print >>fl,str(mstr)
             fl.close()
         else:

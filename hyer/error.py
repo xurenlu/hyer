@@ -12,3 +12,9 @@ class HTTPServerInternalError(HTTPError):
 		'''
 class HTTPForbiddenError(HTTPError):
 	'''403,404...Forbidden'''
+
+class ExitLoopError(Exception):
+    '''
+    just give a signal to exit the loop of builders
+    '''
+    pass

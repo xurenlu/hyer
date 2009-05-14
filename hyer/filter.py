@@ -5,6 +5,8 @@ import os
 import json
 from BeautifulSoup import BeautifulSoup
 import re
+import hyer.browser
+_MAX_PAGENUM=10000
 class Filter:
     def __init__(self,config):
         self.config=config
@@ -107,8 +109,24 @@ class InfoExtractFilter(Filter):
 		pass
 class RegexpFilter(Filter):
     pass
-class UrlFilter(Filter):
-    pass
+class UrlFetchFilter(Filter):
+    '''
+    fetch URL from the 'from' field and save to 'to' field
+    '''
+    def run(self,data):
+        if data[self.config["from"]].__class__ == type([]):
+            raise ValueError("from field can't be list")
+            return data
+        url=data[self.config["from"]]
+        browser=hyer.browser.SimpleBrowser(self.config["agent"])
+        browser.setCache(self.config["db_path"]+"/cache/")
+        resp=browser.getHTML(url)
+        if resp==None:
+            return data
+        else:
+            data[self.config["to"]]=resp
+        return data
+
 class XpathFilter(Filter):
     pass
 class JsonDisplayFilter(Filter):
@@ -247,8 +265,7 @@ class RegexpExtractFilter(Filter):
                     temp[iter["to"]].append(matches[iter["index"]])
         else:
             #单个源字符串的处理..
-            matches=r.findall(data[self.config["from"])
-            data[self.config["to"]]=matches[
+            matches=r.findall(data[self.config["from"]])
             for iter in self.config["matches"]:
                 data[iter["to"]]=matches[iter["index"]]
             return data 
@@ -278,3 +295,88 @@ class AddStringFilter(Filter):
                 data[self.config["to"]]= data[self.config["from"]] +self.config["string"]
 
         return data 
+
+class MaxPageGetterByStringFilter(Filter):
+    '''
+    some list page do't specific the MAX page number.
+    just with prev-page,next-page, So We find it  page and  page
+    and get the right number last;
+    config items:
+    {
+        "startat":1,
+        "step":1,
+        "musthave":"next page",
+        "template:"http://www.162cm.com/archives/%s.html",
+        "to":"maxpage" #存到这个字段里.save maxpage to this filed;
+    }
+    '''
+    def run(self,data):
+        config={}
+        self.retries=0
+        browser=hyer.browser.SimpleBrowser(self.config["agent"])
+        browser.setCache(self.config["db_path"]+"/cache/")
+        if not self.config.has_key("startat"):
+            self.config["startat"]=1
+        if not self.config.has_key("step"):
+            self.config["step"]=1
+        i=self.config["startat"]
+        while True:
+            url = data[self.config["template"]].replace("_page_",str(i))
+            url = url.replace("_step_",str(self.config["step"]))
+            try:
+                html=browser.getHTML(url)
+            except hyer.error.HTTPError,er:
+                if self.retries < 3 :
+                    time.sleep(5)
+                    self.retries = self.retries + 1
+                    continue
+                else:
+                    print "retry too many  times"
+                    data[self.config["to"]]=max(i-1,1)
+                    return data
+            if html == None:
+                data[self.config["to"]]=max(i-1,1)
+                print "html is none"
+                return data
+
+            try:
+                pos=html.index(self.config["musthave"])
+
+            except ValueError,er:
+                data[self.config["to"]]=i
+                return data
+            i=i+self.config["step"]
+            if i>_MAX_PAGENUM:
+                return data
+
+
+class ExitLoopFilter(Filter):
+    '''just exit the loop'''
+    def run(self,data):
+        raise hyer.error.ExitLoopError("exit the loop")
+class UrlListGeneratorFilter(Filter):
+    def run(self,data):
+        '''
+        generate url list 
+        '''
+        urllist=[]
+        template=data[self.config["template"]]
+        if not self.config.has_key("startat"):
+            self.config["startat"]=1
+        if not self.config.has_key("step"):
+            self.config["step"]=1
+        i=self.config["startat"]
+        maxpage=1
+        if not self.config.has_key("maxpage"):
+            maxpage=_MAX_PAGENUM
+        else:
+            maxpage=data[self.config["maxpage"]]
+        
+        while i <= maxpage:
+            url = data[self.config["template"]].replace("_page_",str(i))
+            url = url.replace("_step_",str(self.config["step"]))
+            urllist.append(url)
+            i=i+self.config["step"]
+        data[self.config["to"]]=urllist
+        return data
+
