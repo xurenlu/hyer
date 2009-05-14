@@ -147,27 +147,50 @@ builder_get_category_list={
     "class":hyer.builders.FileRowsTaskBuilder,
     "taskfile":"/var/data/amazon/cateurls.json",
     "db_path":"/var/data/amazon/",
-    "filters":[
+    "source":
         {
-            "class":hyer.filter.AddStringFilter,
-            "string":"/page/_page_",
-            "side":"right",
-            "from":"URI",
-            "to":"template"
-        },
-        {
-            "class":hyer.source.MaxPageGetterByString,
+            "class":hyer.source.Source,
             #"agent":"Mozilla 4.0(windows NT 5.0) alextoolbar installed",
             "agent":"Mozilla/5.0 (X11; N; Linux 2.2.16-22smp i686; en-US; m18) Gecko/20001220",
             "startat":1,
             "step":1,
             "db_path":"/var/data/amazon/",
-            #"musthave":'<font>下一页</font>'.decode("UTF-8").encode("gb2312"),
-            #"template":'http://www.162cm.com/archives/category/\%E6\%9D\%82\%E8\%B0\%88/page/%d',
-            #"template":'http://tieba.baidu.com/f?ct=&tn=&rn=_step_&pn=_page_&lm=11&cm=0&kw=ansys&rs2=0&sc=&un=&rs1=&rs5=&sn=&rs6=&myselectvalue=0&word=ansys&submit=%B0%D9%B6%C8%D2%BB%CF%C2&tb=on',
             "template":"template",
             "musthave":"&laquo; Previous Entries",
-            "to":"maxpage"
+            "to":"maxpage",
+            "from":"__ROW__"
+        },
+        "filters":[
+        {
+            "class":hyer.filter.AddStringFilter,
+            "string":"/page/_page_",
+            "side":"right",
+            "from":"__ROW__",
+            "to":"template"
+        },
+        {
+            "class":hyer.filter.MaxPageGetterByStringFilter,
+            "agent":"Mozilla/5.0 (X11; N; Linux 2.2.16-22smp i686; en-US; m18) Gecko/20001220",
+            "startat":1,
+            "step":1,
+            "db_path":"/var/data/amazon/",
+            "template":"template",
+            "musthave":"&laquo; Previous Entries",
+            "to":"maxpage",
+            "from":"template"
+        },
+        {
+            "class":hyer.filter.DisplayFilter
+        },
+        {
+            "class":hyer.filter.ExitFilter
+        },
+        {
+            "class":hyer.filter.UrlFetchFilter,
+            "agent":"Mozilla/5.0 (X11; N; Linux 2.2.16-22smp i686; en-US; m18) Gecko/20001220",
+            "db_path":"/var/data/amazon/",
+            "to":"html",
+            "from":"__ROW__"
         },
         {
             "class":hyer.filter.DeleteItemFilter,
@@ -190,12 +213,6 @@ builder_get_category_list={
 
         ]
     }
-builder2={
-    "data":{},
-    "class":hyer.builders.JsonFileTaskBuilder,
-    "taskfile":"/var/data/amazon/allcates.json",
-    "db_path":"/var/data/amazon/",
-    "filters":[
 
 vs=hyer.vsr.VSR({
     "builders":[
