@@ -1,0 +1,14 @@
+0.5.9
+	Pcolor added,so we can display colorful text when debuging
+	Vertical search support developing...
+0.5.7 rc1
+	pyevent added,so we can develop plugs for it
+0.5.6
+	various bugs fixed
+	url functions moved to hyer.urlfunc module
+0.5.5
+	Logging service added
+	Site holder (hold on for a domain,avoid to visite one site too
+	frequecently)
+0.5.4
+	first edition

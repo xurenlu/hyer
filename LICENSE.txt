@@ -1,0 +1,7 @@
+1.this software was provied with LGPL <see http://www.opensource.org/licenses/lgpl-2.1.php >
+1.这个软件随LGPL协议提供<http://www.opensource.org/licenses/lgpl-2.1.php>
+
+2.这个库的hyer/vendor/目录下是第三方的库,其中BSD license,MIT license,LGPL
+license都有。 所以这个以LGPL发布.某些只是一些网友的练习作品,没有声明license.
+    
+
