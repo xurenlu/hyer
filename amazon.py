@@ -180,7 +180,24 @@ builder_get_category_list={
             "from":"template"
         },
         {
+            "class":hyer.filter.UrlListGeneratorFilter,
+            "startat":1,
+            "maxpage":"maxpage",
+            "step":1,
+            "template":"template",
+            "to":"urllist",
+        },
+        {
             "class":hyer.filter.DisplayFilter
+        },
+        {
+            "class":hyer.dbwriter.LineAppendWriter,
+            "from":"urllist",
+            "write_to":"/var/data/amazon/urls_1.json",
+            "appendix":"__ID__",
+        },
+        {
+            "class":hyer.filter.ExitLoopFilter
         },
         {
             "class":hyer.filter.ExitFilter
@@ -199,11 +216,6 @@ builder_get_category_list={
         },
         {
             "class":hyer.filter.JsonDisplayFilter
-        },
-        {
-            "class":hyer.dbwriter.LineAppendWriter,
-            "from":"maxpage",
-            "write_to":"/var/data/amazon/catestpl.json"
         },
         {
             "class":hyer.dbwriter.JsonLineAppendWriter,
