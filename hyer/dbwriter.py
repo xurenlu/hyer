@@ -55,10 +55,10 @@ class LineAppendWriter(Writer):
                 mstr="\n".join(towrite)
             else:
                 mstr=towrite
-            if data.has_key("__ID__"):
-                fl=open(self.config["write_to"]+str(data["__ID__"]),"w")
-            else:
-                fl=open(self.config["write_to"],"w")
+            #if data.has_key("__ID__"):
+                #fl=open(self.config["write_to"]+str(data["__ID__"]),"w")
+            #else:
+            fl=open(self.config["write_to"],"a")
             print >>fl,str(mstr)
             fl.close()
         else:

@@ -14,10 +14,13 @@ class Source:
     def get(self,url):
         pass
     def pop(self):
+        print "pop called" #hack by renlu
+        print self.feeds
         return self.feeds.pop()
     def run(self,data={}):
         pass
     def init(self,data):
+        print "init function called" #hack by renlu
         if data[self.config["from"]].__class__ == type([]):
             self.feeds=data[self.config["from"]]
         else:

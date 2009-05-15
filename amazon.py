@@ -225,11 +225,66 @@ builder_get_category_list={
 
         ]
     }
-
+amazon_builder_get_categories={
+    "data":{
+        "feed":"http://www.amazon.cn/mn/browseListApp?ref=GS&nodeid=51080&uid=480-7769557-1682349"
+    },
+    "class":hyer.builders.GenericBuilder,
+    "db_path":"/var/data/amazon/",
+    "source":
+        {
+            "class":hyer.source.Source,
+            "agent":"Mozilla/5.0 (X11; N; Linux 2.2.16-22smp i686; en-US; m18) Gecko/20001220",
+            "db_path":"/var/data/amazon/",
+            "from":"feed"
+        },
+        "filters":[
+        {
+            "class":hyer.filter.UrlFetchFilter,
+            "from":"feed",
+            "to":"html",
+            "agent":"Mozilla/firefox",
+            "db_path":"/var/data/amazon/"
+        },
+        {
+            "class":hyer.filter.ExtractFilter,
+            "from":"html",
+            "to":"body",
+            "starttag":"<body>",
+            "endtag":"</body>"
+        },
+        {
+            "class":hyer.filter.BeautifulSoupSingleNodeFilter,
+            "from":"body",
+            "tagname":'div',
+            "to":"categorystr",
+            "attrs":{"id":"category"}
+        },
+        {
+            "class":hyer.filter.BeautifulSoupMultiNodeFilter,
+            "from":"categorystr",
+            "to":"bigcategories",
+            "tagname":"div",
+            "attrs":{}
+        },
+        {
+            "class":hyer.filter.ExtractFilter,
+            "from":"bigcategories",
+            "starttag":"browseApp",
+            "endtag":"</a>",
+            "to":"categorylinks"
+        },
+        {
+            "class":hyer.filter.DeleteItemFilter,
+            "delete_items":["html","body", "categorystr","bigcategories"]
+        },
+        {
+            "class":hyer.filter.DisplayFilter
+        }
+        ]
+}
 vs=hyer.vsr.VSR({
     "builders":[
-        #builder_gen_categories,
-        builder_get_category_list]
+        amazon_builder_get_categories]
     });
 vs.run()
-#spider.start(10)

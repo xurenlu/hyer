@@ -18,9 +18,16 @@ class ExtractFilter(Filter):
     '''
     Extract Data by specifying starttag and endtag
     the string between starttag and endtag is the target data
+    {
+        "class":hyer.filter.ExtractFilter,
+        "from":"html",
+        "to":"body",
+        "starttag":"<body>",
+        "endtag":"</body>"
+    }
     '''
     def run(self,data):
-        if data[self.config["from"]].__class__==type([]):
+        if isinstance(data[self.config["from"]],list):
             temp=[]
             for frm in data[self.config["from"]]:
                 startpos=frm.index(self.config["starttag"])+ len(self.config["starttag"])
@@ -35,13 +42,13 @@ class ExtractFilter(Filter):
             return data
 class ExtractMultiFieldsFilter(Filter):
     def run(self,data):
-        if data[self.config["from"]].__class__== type([]):
+        if isinstance(data[self.config["from"]],list):
             temp=[]
             startpos,endpos=(0,0)
-            for frm in data[self.config["from"]]:#遍历各个from字段..
+            for frm in data[self.config["from"]]:
                 temp_to={}
                 startpos,endpos=(0,0)
-                for tag in self.config["tags"]:#遍历各个tags
+                for tag in self.config["tags"]:#
                     try:
                         startpos=frm.index(tag["starttag"],startpos)+len(tag["starttag"])
                         endpos=frm.index(tag["endtag"],startpos)
@@ -64,13 +71,18 @@ class ExtractMultiFieldsFilter(Filter):
 class DeleteItemFilter(Filter):
     '''
     delete items from hash data
+    {
+        "class":hyer.filter.DeleteItemFilter,
+        "from":"",
+        "delete_items":["html","body"],
+    }
     '''
     def run(self,data):
-        if self.config["from"] == "":
+        if (not self.config.has_key("from")) or  self.config["from"] == "":
             for v in self.config["delete_items"]:
                 del data[v]
         else:
-            if data[self.config["from"]].__class__ == type([]):
+            if isinstance(data[self.config["from"]],list):
                 for dataitem in data[self.config["from"]]:
                     for v in self.config["delete_items"]:
                         del dataitem[v]
@@ -112,9 +124,16 @@ class RegexpFilter(Filter):
 class UrlFetchFilter(Filter):
     '''
     fetch URL from the 'from' field and save to 'to' field
+    {
+        "class":hyer.filter.UrlFetchFilter,
+        "agent":"Mozilla/Firefox 3.1",
+        "from":"url",
+        "to":"html",
+        "db_path":"../db/dbpath/",
+    }
     '''
     def run(self,data):
-        if data[self.config["from"]].__class__ == type([]):
+        if isinstance(data[self.config["from"]],list):
             raise ValueError("from field can't be list")
             return data
         url=data[self.config["from"]]
@@ -135,12 +154,28 @@ class JsonDisplayFilter(Filter):
     def  run(self,data):
         print json.dumps(data)
         return data
+class DebugVarFilter(Filter):
+    '''
+    print specific symbols such as \n\n...
+    {
+        "class":hyer.filter.DebugVarFilter,
+        "toprint":"\n\n"
+    }
+    '''
+    def run(self,data):
+        if self.config.has_key("toprint"):
+            print self.config["toprint"]
+        else:
+            print "\n\n"
 class DisplayFilter(Filter):
     '''
     dump the data just for debub
+    {
+       "class":hyer.filter.DisplayFilter
+    }
     '''
     def dump(self,vr,depth):
-        '''var_dump 变量'''
+        '''var_dump '''
         if vr.__class__ == type([]):
             i=0
             print " " * depth,"["
@@ -165,10 +200,25 @@ class DisplayFilter(Filter):
 class ReMixArrayFilter(Filter):
     '''
     fetch one column from rows of an array and re-generate a new array
+    {
+        "class":hyer.filter.ReMixArrayFilter,
+        "from":"htmls",
+        "to":"html_a",
+        "column":"a"
+    }
+    before filter data:
+        {
+            "htmls":{"a":"dos"}
+        }
+    after fitler data:
+        {
+            "htmls":{"a":"dos":},
+            "html_a":"dos"
+        }
     '''
     def run(self,data):
         if not self.config.has_key("column"):
-            raise KeyError("setting['from'] can't be null [ ReMixArrayFilter ]")
+            raise KeyError("setting['column'] can't be null [ ReMixArrayFilter ]")
         if not self.config.has_key("to"):
             raise KeyError("setting['to'] can't be null [ ReMixArrayFilter ]")
 
@@ -176,8 +226,7 @@ class ReMixArrayFilter(Filter):
             towrite=data
         else:
             towrite=data[self.config["from"]]
-
-        if towrite.__class__ == type([])    :
+        if isinstance(towrite,list):
             temp=[]
             for v in towrite:
                 temp.append(v[self.config["column"]])
@@ -187,7 +236,12 @@ class ReMixArrayFilter(Filter):
         return data
 class ExitFilter(Filter):
     '''nothing but exit the filters chain.
-    just for debuging .'''
+    just for debuging .
+    example:
+    {
+        "class":hyer.filter.ExitFilter
+    }
+    '''
     def run(self,data):
         sys.exit(0)
 
@@ -204,12 +258,18 @@ class BeautifulSoupMultiNodeFilter(Filter):
     }
     """
     def run(self,data):
-        if data[self.config["from"]].__class__ == type([]):
+        
+        if isinstance(data[self.config["from"]],list):
             raise ValueError("the from parameter of hyer.filter.BeautifulSoupMultiNodeFilter can't be Array")
             return data
         
         soup=BeautifulSoup(data[self.config["from"]])
-        data[self.config["to"]]=soup.findAll(self.config["tagname"],self.config["attrs"])
+        
+        results=soup.findAll(self.config["tagname"],self.config["attrs"])
+        temp=[]
+        for iter in results:
+            temp.append(str(iter)) 
+        data[self.config["to"]]=temp
         return data
 class BeautifulSoupSingleNodeFilter(Filter):
     """
@@ -224,12 +284,13 @@ class BeautifulSoupSingleNodeFilter(Filter):
     }
     """
     def run(self,data):
-        if data[self.config["from"]].__class__ == type([]):
+        if isinstance(data[self.config["from"]],list):
             raise ValueError("the from parameter of hyer.filter.BeautifulSoupSingleNodeFilter can't be Array")
             return data
         
         soup=BeautifulSoup(data[self.config["from"]])
-        data[self.config["to"]]=soup.find(self.config["tagname"],self.config["attrs"])
+        data[self.config["to"]]=str(soup.find(self.config["tagname"],self.config["attrs"]))
+        del soup
         return data
 class RegexpExtractFilter(Filter):
     """
@@ -254,7 +315,7 @@ class RegexpExtractFilter(Filter):
     """
     def run(self,data):
         r=self.config["regexp"]
-        if data[self.config["from"]].__class__ == type([]):
+        if isinstance(data[self.config["from"]],list):
             temp={}
             for iter in self.config["matches"]:
                 temp[iter["to"]]=[] 
@@ -264,7 +325,6 @@ class RegexpExtractFilter(Filter):
                 for iter in self.config["matches"]:
                     temp[iter["to"]].append(matches[iter["index"]])
         else:
-            #单个源字符串的处理..
             matches=r.findall(data[self.config["from"]])
             for iter in self.config["matches"]:
                 data[iter["to"]]=matches[iter["index"]]
@@ -279,7 +339,7 @@ class AddStringFilter(Filter):
     }
     """
     def run(self,data):
-        if data[self.config["from"]].__class__ == type([]):
+        if isinstance(data[self.config["from"]],list):
             temp=[]
             for frm in data[self.config["from"]] :
                 if self.config["side"]=="left":
@@ -307,7 +367,7 @@ class MaxPageGetterByStringFilter(Filter):
         "step":1,
         "musthave":"next page",
         "template:"http://www.162cm.com/archives/%s.html",
-        "to":"maxpage" #存到这个字段里.save maxpage to this filed;
+        "to":"maxpage" # 
     }
     '''
     def run(self,data):

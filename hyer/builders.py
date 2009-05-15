@@ -33,17 +33,22 @@ class GenericBuilder(Builder):
         self.filters.append(filter)
         pass
     def run(self,data):
-        #while(temp=self.source.pop()):
         self.source.init(data)
         while(True):
-            temp=self.source.pop()
+            try:
+                temp=self.source.pop()
+            except Exception,e:
+                print e 
+                return data
             if temp == None:
                 return data
             data["__ITER__"]=temp
             for filter in self.filters:
                 try:
-                    data=filter["class"](filter).run(data)
+                    #data=filter["class"](filter).run(data) # because python pass values by referer,so we just pass it to the filterClass.run() method ,dot need the return value.
+                    filter["class"](filter).run(data)
                 except hyer.error.ExitLoopError,e:
+                    print "error caught:",e
                     return False
         return True 
 class FileRowsTaskBuilder(Builder):
