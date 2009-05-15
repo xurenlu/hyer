@@ -18,3 +18,7 @@ class ExitLoopError(Exception):
     just give a signal to exit the loop of builders
     '''
     pass
+
+class ConfigError(Exception):
+    ''' error occured when configurating '''
+    pass

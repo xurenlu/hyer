@@ -282,7 +282,7 @@ amazon_builder_get_categories={
         {
             "class":hyer.filter.RegexpExtractFilter,
             "from":"categorylinks",
-            "regexp":re.compile("nodeid=(\d+)\&[^>]+(.*)"),
+            "regexp":re.compile("nodeid=(\d+)\&[^>]+>(.*)"),
             "matches":[
                 {
                     "to":"nodeid",
@@ -293,6 +293,16 @@ amazon_builder_get_categories={
                     "index":1
                 }
             ]
+        },
+        {
+            "class":hyer.dbwriter.LineAppendWriter,
+            "from":"nodeid",
+            "write_to":"/var/data/amazon/noides.db"
+        },
+        {
+            "class":hyer.dbwriter.LineAppendWriter,
+            "from":"catename",
+            "write_to":"/var/data/amazon/catenames.db"
         },
         {
             "class":hyer.filter.DisplayFilter

@@ -43,6 +43,12 @@ class LineAppendWriter(Writer):
     '''
     write array items to file 
     row by row
+
+    {
+        "class":hyer.dbwriter.LineAppendWriter,
+        "from":"somefield",
+        "write_to":"/var/data/dbfile",
+    }
     '''
     def run(self,data):
         if(self.config["from"]==""):
@@ -69,6 +75,12 @@ class JsonLineAppendWriter(Writer):
     '''
     write array items to file 
     row by row
+
+    {
+        "class":hyer.dbwriter.JsonLineAppendWriter,
+        "from":"somefield",
+        "write_to":"/var/data/dbfile",
+    }
     '''
     def run(self,data):
         if(self.config["from"]==""):
