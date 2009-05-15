@@ -318,16 +318,17 @@ class RegexpExtractFilter(Filter):
         if isinstance(data[self.config["from"]],list):
             temp={}
             for iter in self.config["matches"]:
-                temp[iter["to"]]=[] 
+                data[iter["to"]]=[] 
             for frm in data[self.config["from"]]:
                 matches=[]
                 matches=r.findall(frm)
                 for iter in self.config["matches"]:
-                    temp[iter["to"]].append(matches[iter["index"]])
+                    data[iter["to"]].append(matches[0][iter["index"]])
+            
         else:
             matches=r.findall(data[self.config["from"]])
             for iter in self.config["matches"]:
-                data[iter["to"]]=matches[iter["index"]]
+                data[iter["to"]]=matches[0][iter["index"]]
             return data 
 class AddStringFilter(Filter):
     """add an string at the left side

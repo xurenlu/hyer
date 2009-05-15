@@ -37,6 +37,7 @@ import hyer.dbwriter
 import codecs
 import sys
 import json
+import re
 sys.getdefaultencoding()
 reload(sys)
 sys.setdefaultencoding("utf-8")
@@ -277,6 +278,21 @@ amazon_builder_get_categories={
         {
             "class":hyer.filter.DeleteItemFilter,
             "delete_items":["html","body", "categorystr","bigcategories"]
+        },
+        {
+            "class":hyer.filter.RegexpExtractFilter,
+            "from":"categorylinks",
+            "regexp":re.compile("nodeid=(\d+)\&[^>]+(.*)"),
+            "matches":[
+                {
+                    "to":"nodeid",
+                    "index":0
+                },
+                {
+                    "to":"catename",
+                    "index":1
+                }
+            ]
         },
         {
             "class":hyer.filter.DisplayFilter
