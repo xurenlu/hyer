@@ -1,0 +1,302 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
+
+<head profile="http://gmpg.org/xfn/11">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>realazy  &raquo; Blog Archive   &raquo; AIR 的尝试</title>
+
+<link rel="stylesheet" href="http://realazy.org/blog/wp-content/themes/realazy2dot0/style.css" type="text/css" media="screen" />
+<link rel="alternate" type="application/rss+xml" title="realazy RSS Feed" href="http://realazy.org/blog/feed/" />
+<link rel="pingback" href="http://realazy.org/blog/xmlrpc.php" />
+
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://realazy.org/blog/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://realazy.org/blog/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 2.7.1" />
+
+</head>
+<body>
+<div id="doc4" class="yui-t7">
+<a id="skip" href="#bd">跳到内容</a>
+<div id="hd">
+		<h1 id="logo"><a href="http://realazy.org/blog/">realazy</a></h1>
+	<div id="nav">
+		<ul>
+	 			<li class="cat-item cat-item-1"><a href="http://realazy.org/blog/category/web-standards/" title="分离、维护、不乱入">Web 标准</a>
+</li>
+	<li class="cat-item cat-item-3"><a href="http://realazy.org/blog/category/miscellaneous/" title="杂乱无章，无法分类">杂</a>
+</li>
+	<li class="cat-item cat-item-8"><a href="http://realazy.org/blog/category/javascript-dom/" title="现在的 JavaScript 离不开 Dom">JS / Dom</a>
+</li>
+	<li class="cat-item cat-item-2"><a href="http://realazy.org/blog/category/free-as-in-freedom/" title="自由、开源，一生所追">自由与开源</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://realazy.org/blog/category/interaction-design/" title="和谐人和机器">交互设计</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://realazy.org/blog/category/ui-design/" title="舒适的界面能提高生产力">界面设计</a>
+</li>
+	<li class="cat-item cat-item-14"><a href="http://realazy.org/blog/category/book-review/" title="读读写写">书评</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://realazy.org/blog/category/mac-development/" title="关于 Mac 的开发，Objective-C, Cocoa 等。">Mac 开发</a>
+</li>
+	<li class="cat-item cat-item-16"><a href="http://realazy.org/blog/category/python/" title="python 是一门值得学习的语言">Python</a>
+</li>
+			<li class="rss"><a href="http://realazy.org/blog/feed/">RSS</a></li>
+		</ul>
+		<form method="get" id="searchform" action="http://realazy.org/blog/">
+<div><input type="text" value="" name="s" id="s" />
+<input type="submit" id="searchsubmit" value="搜索" />
+</div>
+</form>
+	</div>
+</div>
+<hr />
+<div id="bd">
+
+	<div class="yui-g">
+
+			<div class="navigation">
+			<div class="alignleft">&laquo; <a href="http://realazy.org/blog/2008/11/30/benifit-of-fecthing-page-via-iframe/">使用 iframe 获取网页片段的一个好处</a></div>
+			<div class="alignright"><a href="http://realazy.org/blog/2009/02/02/objective-c-part-1-introduction/">Objective-C 学习笔记（一）——简介</a> &raquo;</div>
+		</div>
+
+		<div class="post" id="post-188">
+			<h1>AIR 的尝试</h1>
+			<div class="entry">
+				<p>最近利用 <a href="http://www.adobe.com/products/air/">Adobe AIR</a> 做了一个饭否客户端：<a href="http://ifan.realazy.org/">爱饭</a>，并将之<a href="http://code.google.com/p/ifan/">开源</a>。使用 HTML, CSS 和 JavaScript 对着 API 文档照虎画猫，大概三个星期完工，有一些感想和总结。</p>
+<ol>
+<li>AIR 的开发对 Web 开发者非常友好，基本上不需要额外的程序知识了，甚至可以使用已有的 JS 库，爱饭就使用了 YUI。但是生成的程序有一通病，那就是占用内存高（爱饭在 Windows 下占用 40m 左右），而且不存在优化之说。做严肃的应用 AIR 还是上不了台面。很多时候觉得，打开一个 AIR 程序，其实就是打开了一个浏览器。</li>
+<li>absolute 的 CSS 布局方式非常灵活，对窗口缩放这种情况具有非常好的适应性。使用 webkit 引擎的 AIR 对 absolute 完全支持。如果是 IE 这种支持残缺的引擎，那得费非常多的 JS 代码。在 AIR 下写 CSS 有一种莫名的快感。正好 24ways 上发布了一篇关于 absolute 方式布局的文章，免却了我的罗嗦，见：<a href="http://24ways.org/2008/absolute-columns">Absolute Columns</a>。</li>
+<li>AIR 对 Linux 的支持还是存在缺失，比如无法给窗口加阴影，看来是 Linux 下的 Flash 支持跟不上。</li>
+</ol>
+<p>完毕。</p>
+
+								
+				<p class="postmetadata alt">
+					<small>
+						This entry was posted
+												on Sunday, January 11th, 2009 at 18:46						and is filed under <a href="http://realazy.org/blog/category/javascript-dom/" title="View all posts in JS / Dom" rel="category tag">JS / Dom</a>.
+						You can follow any responses to this entry through the <a href='http://realazy.org/blog/2009/01/11/ifan-on-air/feed/'>RSS 2.0</a> feed.
+
+													You can <a href="#respond">leave a response</a>, or <a href="http://realazy.org/blog/2009/01/11/ifan-on-air/trackback/" rel="trackback">trackback</a> from your own site.
+
+						
+					</small>
+				</p>
+
+			</div>
+		</div>
+
+	
+<!-- You can start editing here. -->
+
+	<h3 id="comments">11 Responses to &#8220;AIR 的尝试&#8221;</h3>
+
+	<ol class="commentlist">
+
+	
+		<li class="alt" id="comment-120538">
+			<cite><a href='http://www.xiaorsz.com' rel='external nofollow' class='url'>xiaorsz</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-120538" title="">January 11th, 2009 at 19:49</a> </small>
+
+			<div><p>很强大的东东，支持下！</p>
+</div>
+
+		</li>
+
+	
+	
+		<li id="comment-120555">
+			<cite><a href='http://ka-yue.com' rel='external nofollow' class='url'>家儒</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-120555" title="">January 11th, 2009 at 20:15</a> </small>
+
+			<div><p>我也寫了個app<br />
+能夠用css3實在太幸福</p>
+<p><a href="http://ka-yue.com/blog/air-time-tracker" rel="nofollow">http://ka-yue.com/blog/air-time-tracker</a></p>
+</div>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-120637">
+			<cite><a href='http://www.misuisui.com' rel='external nofollow' class='url'>s5s5</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-120637" title="">January 11th, 2009 at 22:57</a> </small>
+
+			<div><p>absolute 是我的最爱的CSS属性，HOHO~</p>
+</div>
+
+		</li>
+
+	
+	
+		<li id="comment-120932">
+			<cite><a href='http://hellobmw.com/' rel='external nofollow' class='url'>北极冰仔</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-120932" title="">January 12th, 2009 at 10:00</a> </small>
+
+			<div><p>下来试试，感谢开源。</p>
+</div>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-121235">
+			<cite><a href='http://zibin.tehais.com' rel='external nofollow' class='url'>zibin</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-121235" title="">January 12th, 2009 at 22:51</a> </small>
+
+			<div><p>太喜欢你了。这个app超棒！</p>
+</div>
+
+		</li>
+
+	
+	
+		<li id="comment-121357">
+			<cite>savin</cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-121357" title="">January 13th, 2009 at 11:00</a> </small>
+
+			<div><p>vista下显示有问题？</p>
+</div>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-121783">
+			<cite><a href='http://www.awflasher.com/blog/' rel='external nofollow' class='url'>Aw</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-121783" title="">January 15th, 2009 at 15:42</a> </small>
+
+			<div><p>有些XHTML+CSS做不好的，可以尝试一下SWF混合进去：）</p>
+<p>ActionScript3是很爽滴</p>
+</div>
+
+		</li>
+
+	
+	
+		<li id="comment-123317">
+			<cite><a href='http://zhaonc.yo2.cn/articles/%e7%88%b1%e9%a5%ad-ifan.html' rel='external nofollow' class='url'>Nelson Is Here</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-123317" title="">January 23rd, 2009 at 00:56</a> </small>
+
+			<div><p><strong>爱饭 - ifan&#8230;</strong></p>
+<p>Realazy同学写了一个饭否的本地客户端：『爱饭』（ifan）。<br />
+爱饭用Adobe AIR开发，界面简洁也很实用。考虑到饭否本来就不是个复杂的Web应用，这样的客户端也是适当的。AIR的执行效率还不错，&#8230;</p>
+</div>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-143558">
+			<cite>cherish</cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-143558" title="">March 27th, 2009 at 09:28</a> </small>
+
+			<div><p>我打第一眼看到AIR的东西 要追塑到APOLLO  其根本目的只有一个 让大部分的WEB开发者变成披着狼皮的羊 虚浮。。。</p>
+</div>
+
+		</li>
+
+	
+	
+		<li id="comment-148237">
+			<cite>humbass</cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-148237" title="">April 29th, 2009 at 03:57</a> </small>
+
+			<div><p>感觉一个小应用，非要运行一个15m的支持库，不是特别舒服，当然界面还是可以的。</p>
+<p>Aw居然也跑这里来混了。嘎嘎 。 世界真小啊</p>
+</div>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-148439">
+			<cite>humbass</cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-148439" title="">April 30th, 2009 at 16:46</a> </small>
+
+			<div><p>下载了爱饭，发现一个问题： 显示不分页？ 假如有1000多条记录不是很吃内存吗</p>
+</div>
+
+		</li>
+
+	
+	
+	</ol>
+
+ 
+
+
+<h3 id="respond">Leave a Reply</h3>
+
+
+<form action="http://realazy.org/blog/wp-comments-post.php" method="post" id="commentform">
+
+
+<p><input type="text" name="author" id="author" value="" size="22" tabindex="1" />
+<label for="author"><small>Name (required)</small></label></p>
+
+<p><input type="text" name="email" id="email" value="" size="22" tabindex="2" />
+<label for="email"><small>Mail (will not be published) (required)</small></label></p>
+
+<p><input type="text" name="url" id="url" value="" size="22" tabindex="3" />
+<label for="url"><small>Website</small></label></p>
+
+
+<!--<p><small><strong>XHTML:</strong> You can use these tags: <code>&lt;a href=&quot;&quot; title=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;acronym title=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote cite=&quot;&quot;&gt; &lt;cite&gt; &lt;code&gt; &lt;del datetime=&quot;&quot;&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=&quot;&quot;&gt; &lt;strike&gt; &lt;strong&gt; </code></small></p>-->
+
+<p><textarea name="comment" id="comment" cols="100%" rows="10" tabindex="4"></textarea></p>
+
+<p><input name="submit" type="submit" id="submit" tabindex="5" value="Submit Comment" />
+<input type="hidden" name="comment_post_ID" value="188" />
+</p>
+
+</form>
+
+
+
+	
+	</div>
+
+</div><hr />
+<div id="ft">
+	<p>
+		realazy （<strong class="lazy">懒到死</strong>） is proudly powered by
+		<a href="http://wordpress.org/">WordPress</a> | 
+		<a href="http://realazy.org/blog/feed/">Entries (RSS)</a>
+		and <a href="http://realazy.org/blog/comments/feed/">Comments (RSS)</a>
+	</p>
+	<p class="splinks"><strong>赞助商链接</strong> <a title="We are specialize in manufacturing phone lanyard, printed lanyards, billy collins lanyard, safety lanyard, badge lanyard, cell phone lanyard,moblie phone lanyard, custom lanyard, neck lanyard, beaded lanyards, holder lanyard, lanyards in China." href="http://www.lanyardmanufacture.com" target="_blank">phone lanyard</a> <a href="http://www.glassmachinechina.com/" target="_blank" title="We are specialize in manufacturing glass machine，glass edging machine，glass grinding machine，glass washing machine，glass  machinery，glass double edger，glass cutting machine in China.">Glass edging machine</a> <a href="http://www.tradevv.com/chinasuppliers/thermometer/products-detail/china-Digital-Thermometer-271e3.html" target="_blank" title="We are specialize in manufacturing Digital Thermometer,Digital Blood Pressure Monitor,Ear Thermometer in China.">Digital Thermometer </a></p>
+</div>
+</div>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-494634-1");
+pageTracker._trackPageview();
+</script>
+</body>
+</html>
