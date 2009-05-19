@@ -5,12 +5,13 @@ import unittest
 import hyer.browser
 import hyer.event
 import hyer.filter
+import hyer.vendor.TextExtract
 global debug
 debug=1
 
-class PyEventTest(unittest.TestCase):
+class PyFilterTest(unittest.TestCase):
     ''' ...'''
-    def test_event(self):
+    def test_regexpfiltertext(self):
         data={}
         filter= \
         {
@@ -29,6 +30,38 @@ class PyEventTest(unittest.TestCase):
         }
         data=hyer.filter.RegexpExtractFilter(filter).run(data)
         self.assertEqual(data["body"],"<div>godo</div>")
+    def test_extmaintext(self):
+        data={}
+        filter= \
+        {
+            "class":hyer.filter.ExtMainTextFilter,
+            "from":"html",
+            "to":"text",
+            "threshold":0.03
+        }
+        data={ }
+        j=open("data/index.html","r")
+        html=j.read()
+        j.close()
+        data["html"]=html 
+        hyer.filter.ExtMainTextFilter(filter).run(data)
+#        print data["text"]
+        #self.assertEqual(data["body"],"<div>godo</div>")
+    def test_html2text_regexp(self):
+        pass
+    def test_html2text_soup(self):
+        filter=\
+        {
+            "from":"html",
+            "to":"text"
+        }
+        data={}
+        j=open("data/index.html","r")
+        html=j.read()
+        j.close()
+        data["html"]=html 
+        hyer.filter.Html2TextBySoupFilter(filter).run(data)
+        print data["text"] 
 if __name__ == "__main__":
     unittest.main()  
 		

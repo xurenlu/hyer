@@ -119,8 +119,6 @@ class MultiExtractFilter(Filter):
         return data
 class InfoExtractFilter(Filter):
 		pass
-class RegexpFilter(Filter):
-    pass
 class UrlFetchFilter(Filter):
     '''
     fetch URL from the 'from' field and save to 'to' field
@@ -323,12 +321,12 @@ class RegexpExtractFilter(Filter):
                 matches=[]
                 matches=r.findall(frm)
                 for iter in self.config["matches"]:
-                    data[iter["to"]].append(matches[0][iter["index"]])
+                    data[iter["to"]].append(matches[iter["index"]])
             
         else:
             matches=r.findall(data[self.config["from"]])
             for iter in self.config["matches"]:
-                data[iter["to"]]=matches[0][iter["index"]]
+                data[iter["to"]]=matches[iter["index"]]
             return data 
 class AddStringFilter(Filter):
     """add an string at the left side
@@ -442,16 +440,16 @@ class UrlListGeneratorFilter(Filter):
         return data
 
 class ExtMainTextFilter(Filter):
-''' 
-    Extract Main text from HTML content
-    see hyer/vendors/TextExtract.py
-    {
-        "class":hyer.filter.ExtMainTextFilter,
-        "from":"html",
-        "to":"main_text",
-        "threshold":0.03
-    }
-'''
+    ''' 
+        Extract Main text from HTML content
+        see hyer/vendor/TextExtract.py
+        {
+            "class":hyer.filter.ExtMainTextFilter,
+            "from":"html",
+            "to":"main_text",
+            "threshold":0.03
+        }
+    '''
     def run(self,data):
         if not self.config.has_key("from"):
             raise hyer.error.ConfigError("You must  specific [from] field")
@@ -462,7 +460,33 @@ class ExtMainTextFilter(Filter):
         if isinstance(data[self.config["from"]],list): 
             data[self.config["to"]]=[]
             for frm in data[self.config["from"]]:
-               data[self.config["to"]].append( hyer.vendors.TextExtract.extMainText(frm,self.config["threshold"])) 
+               data[self.config["to"]].append( hyer.vendor.TextExtract.extMainText(frm,self.config["threshold"])) 
         else:
-            data[self.config["to"]]=hyer.vendors.TextExtract.extMainText(data[self.config["from"]),self.config["threshold"])
-
+            data[self.config["to"]]=hyer.vendor.TextExtract.extMainText(data[self.config["from"]],self.config["threshold"])
+        return data
+class Html2TextBySoupFilter(Filter):
+    '''
+        Extract Text data from HTML
+        {
+            'class':hyer.filter.Html2TextBySoupFilter,
+            'from',"body",
+            "to","text"
+        }
+    '''
+    def _handle(self,html):
+        '''
+        return text data for 'html' variable
+        '''
+        #r_cmt=re.compile('<!--.+?-->')
+        #r_tag=re.compile('<.*?>')
+        soup = BeautifulSoup(html) 
+        text = "".join(soup.findAll(text=True))
+        return text
+    def run(self,data):
+        if isinstance(data[self.config["from"]],list):
+            data[self.config["to"]]=[]
+            for frm in data[self.config["from"]]:
+               data[self.config["to"]].append(self._handle(frm)) 
+        else:
+            data[self.config["to"]]=self._handle(data[self.config["from"]])
+        return data
