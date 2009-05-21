@@ -321,12 +321,12 @@ class RegexpExtractFilter(Filter):
                 matches=[]
                 matches=r.findall(frm)
                 for iter in self.config["matches"]:
-                    data[iter["to"]].append(matches[iter["index"]])
+                    data[iter["to"]].append(iter["index"].run(matches))
             
         else:
             matches=r.findall(data[self.config["from"]])
             for iter in self.config["matches"]:
-                data[iter["to"]]=matches[iter["index"]]
+                data[iter["to"]]=iter["index"].run(matches)
             return data 
 class AddStringFilter(Filter):
     """add an string at the left side
@@ -490,3 +490,24 @@ class Html2TextBySoupFilter(Filter):
         else:
             data[self.config["to"]]=self._handle(data[self.config["from"]])
         return data
+class FuncFilter(Filter):
+    '''
+        Extract data by specific function
+        {
+            "class":hyer.filter.FuncFilter,
+            "from":"string",
+            "to":"len",
+            "func":len
+        }
+    '''
+    def run(self,data):
+        if not self.config.has_key("func"):
+            raise hyer.error.ConfigError("config['func'] can't be null")
+        if isinstance(data[self.config["from"]],list):
+            data[self.config["to"]]=[]
+            for frm in data[self.config["from"]]:
+               data[self.config["to"]].append(self.config["func"](frm)) 
+        else:
+            data[self.config["to"]]=self.config["func"](data[self.config["from"]])
+        return data
+    

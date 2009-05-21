@@ -286,11 +286,11 @@ amazon_builder_get_categories={
             "matches":[
                 {
                     "to":"nodeid",
-                    "index":0
+                    "index":hyer.helper.peeker([0,0])
                 },
                 {
                     "to":"catename",
-                    "index":1
+                    "index":hyer.helper.peeker([0,1])
                 }
             ]
         },
