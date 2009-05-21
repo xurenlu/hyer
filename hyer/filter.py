@@ -510,4 +510,3 @@ class FuncFilter(Filter):
         else:
             data[self.config["to"]]=self.config["func"](data[self.config["from"]])
         return data
-    

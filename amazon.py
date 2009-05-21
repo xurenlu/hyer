@@ -309,8 +309,78 @@ amazon_builder_get_categories={
         }
         ]
 }
+
+amazon_builder_crawler_categories={
+    "data":{
+    },
+    "class":hyer.builders.FileRowsTaskBuilder,
+    "taskfile":"/var/data/amazon/noides.db",
+    "db_path":"/var/data/amazon/",
+    "source":
+        {
+            "class":hyer.source.Source,
+            "agent":"Mozilla/5.0 (X11; N; Linux 2.2.16-22smp i686; en-US; m18) Gecko/20001220",
+            "db_path":"/var/data/amazon/",
+            "from":"__ROW__"
+        },
+        "filters":[
+        {
+            "class":hyer.filter.AddStringFilter,
+            "string":"http://www.amazon.cn/mn/browseApp?showType=1&nodeid=",
+            "side":"left",
+            "from":"__ROW__",
+            "to":"__ROW__"
+        },
+        {
+            "class":hyer.filter.AddStringFilter,
+            "string":"&sortType=market&pageNow=_page_",
+            "side":"right",
+            "from":"__ROW__",
+            "to":"__ROW__"
+        },
+        {
+            "class":hyer.filter.DisplayFilter
+        },
+        {
+        "class":hyer.dbwriter.LineAppendWriter,
+        "from":"__ROW__",
+        "write_to":"/var/data/amazon/amazon_templates.json"
+        }
+        ]
+    }
+amazon_builder_geurls_categories={
+    "data":{
+        "maxpage":50
+    },
+    "class":hyer.builders.FileRowsTaskBuilder,
+    "taskfile":"/var/data/amazon/amazon_templates.json",
+    "db_path":"/var/data/amazon/",
+    "source":
+        {
+            "class":hyer.source.Source,
+            "agent":"Mozilla/5.0 (X11; N; Linux 2.2.16-22smp i686; en-US; m18) Gecko/20001220",
+            "db_path":"/var/data/amazon/",
+            "from":"__ROW__"
+        },
+        "filters":[
+        {
+            "class":hyer.filter.UrlListGeneratorFilter,
+            "startat":1,
+            "maxpage":"maxpage",
+            "step":1,
+            "template":"__ROW__",
+            "to":"urllist",
+        },
+        {
+        "class":hyer.dbwriter.LineAppendWriter,
+        "from":"urllist",
+        "write_to":"/var/data/amazon/bookpageurls.db"
+        }
+        ]
+    }
 vs=hyer.vsr.VSR({
     "builders":[
-        amazon_builder_get_categories]
+        amazon_builder_geurls_categories
+    ]
     });
 vs.run()
