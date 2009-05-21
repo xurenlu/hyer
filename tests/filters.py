@@ -61,7 +61,18 @@ class PyFilterTest(unittest.TestCase):
         j.close()
         data["html"]=html 
         hyer.filter.Html2TextBySoupFilter(filter).run(data)
-        print data["text"] 
+    def test_funcfilter(self):
+        filter=\
+        {
+            "from":"html",
+            "to":"len",
+            "func":len
+        }
+        data={}
+        data["html"]="testdone"
+        hyer.filter.FuncFilter(filter).run(data)
+        self.assertEqual(data["len"],8)
+        
 if __name__ == "__main__":
     unittest.main()  
 		
