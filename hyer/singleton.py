@@ -1,7 +1,24 @@
 #coding:utf-8
 import thread
-class SingletonClass(object):
-    '''Implement Pattern: SINGLETON'''
+class Singleton(object):
+    '''Implement Pattern: SINGLETON
+        Example code:
+        class S2(MySingletonClass):
+            d=""
+            def hello(self):
+                print id(self);
+            def __init__(self,helo):
+                self.d=helo
+                print "S2.__init__ called,arg helo:",helo
+
+        v1=S2("godo1")
+        print v1.d
+        v2=S2("godo2")
+        print v2.d
+        print id(v1)
+        print id(v2)
+        print v1.d
+    '''
 
     __lockObj = thread.allocate_lock()  # lock object
     __instance = None  # the unique instance
@@ -32,22 +49,3 @@ class SingletonClass(object):
         return cls.__instance
     getInstance = classmethod(getInstance)
 
-class S2(MySingletonClass):
-    d=""
-    def hello(self):
-        print id(self);
-    def __init__(self,helo):
-        self.d=helo
-        print "S2.__init__ called,arg helo:",helo
-#v1=MySingletonClass()
-#v2=MySingletonClass()
-#print id(v1)
-#print id(v2)
-
-v1=S2("godo1")
-print v1.d
-v2=S2("godo2")
-print v2.d
-print id(v1)
-print id(v2)
-print v1.d

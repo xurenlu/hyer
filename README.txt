@@ -9,6 +9,10 @@ provides a number of methods to mine data from kinds of sites.
   + extract MainText from HTML by specific a * link-threshold *
   + visit sites with cookie;
 
+==About Worker==
+    The Hyer Vertical Search run in mutltiThread mode and simulate a production line.First we define the <b>rules</b>,and we define <b>workers</b>. Each Worker run in a new thread.When workers finish  their task,Then ask the console-desk to fetch a new task.
+    A worker have a "skill";We bind each worker with a filter or a source or dbwriter and something else. Workers request console-desk to task;
+    Console-desk has a taskBus,hold on all tasks,watch over the production precess.
 == about VSR class ==
 VSR是vertical search crawler的简称。它运行各个 builder,builder则运行属于它的filters.
 
