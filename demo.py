@@ -47,8 +47,40 @@ sys.setdefaultencoding("utf-8")
 
 consoleDesk=hyer.console_desk.ConsoleDesk()
 worker1=hyer.worker.Worker()
-#worker1.set("name","url generator")
-print worker1
+workers=[
+        {
+            "productions":[
+                {
+                    "template":"",
+                    "maxpage":50,
+                    "template":"http://www.162cm.com/page/_page_"
+                }
+                ],
+            "filters":[
+                {
+                    "class":hyer.filter.UrlListGeneratorFilter,
+                    "startat":1,
+                    "maxpage":"maxpage",
+                    "step":1,
+                    "template":"template",
+                    "to":"urllist"
+                },
+                {
+                    "class":hyer.filter.DisplayFilter
+                },
+                {
+                    "class":hyer.filter.TaskSplitFilter,
+                    "from":"urllist",
+                    "to":"newurl"
+                }
+            ]
+        }
+        ]
+productionLine=hyer.production_line.ProductionLine()
+productionLine.addWorkers(workers)
+productionLine.addConsoleDesk(consoleDesk)
+productionLine.start()
+
 log=hyer.log.Log("/var/data/amazon/hyer.log")
 log.info("hi,baby")
 log.error("hi,baby")

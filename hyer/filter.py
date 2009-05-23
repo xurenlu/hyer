@@ -6,6 +6,7 @@ import json
 from BeautifulSoup import BeautifulSoup
 import re
 import hyer.browser
+import copy
 _MAX_PAGENUM=10000
 class Filter:
     def __init__(self,config):
@@ -510,3 +511,27 @@ class FuncFilter(Filter):
         else:
             data[self.config["to"]]=self.config["func"](data[self.config["from"]])
         return data
+
+class TaskSplitFilter(Filter):
+    '''
+        split task/production to lots of productions
+        其实这个filter里有一个很大的不同:其他的filter虽然也是传值方式，但是是可以改变输入参数值的。这里却没有改变,输入参数啥也没改变,只是返回一堆新数组.
+        {
+            "class":hyer.filter.TaskSplitFilter,
+            "from":"urlist",
+            "to":"urlist"
+        }
+
+    '''
+    def run(self,data):
+        if not isinstance(data[self.config["from"]],list):
+            raise hyer.error.ConfigError("config['from'] must be list ")
+        
+        tempdata=[]
+        frm=data[self.config["from"]]
+        for item in frm:
+            iter=copy.copy(data)
+            del iter[self.config["from"]]
+            iter[self.config["to"]]=item
+            tempdata.append(iter)
+        return tempdata

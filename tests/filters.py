@@ -6,6 +6,8 @@ import hyer.browser
 import hyer.event
 import hyer.filter
 import hyer.vendor.TextExtract
+import copy
+import hyer.helper
 global debug
 debug=1
 
@@ -21,7 +23,7 @@ class PyFilterTest(unittest.TestCase):
             "matches":[
                 {
                 "to":"body",
-                "index":0
+                "index":hyer.helper.peeker([0])
                 }
             ]
         }
@@ -72,7 +74,18 @@ class PyFilterTest(unittest.TestCase):
         data["html"]="testdone"
         hyer.filter.FuncFilter(filter).run(data)
         self.assertEqual(data["len"],8)
-        
+    def test_tasksplitfilter(self):
+        filter=\
+        {
+            "from":"list",
+            "to":"url",
+        }
+        data=\
+        {
+            "list":["a1","a2","a3"]
+        }
+        newtasks=hyer.filter.TaskSplitFilter(filter).run(data)
+        self.assertEqual(newtasks, [{"url":"a1"},{"url":"a2"},{"url":"a3"}])
 if __name__ == "__main__":
     unittest.main()  
 		
