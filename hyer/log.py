@@ -4,9 +4,23 @@ import logging
 from hyer import pcolor
 import time
 class Log(hyer.singleton.Singleton):
-    def __init__(self,file):
+    '''
+    colorful log text.
+    writer log messages to std.err  default 
+    specific a file to write it to a file
+    example code:
+    log=hyer.log.Log()#"/var/data/amazon/hyer.log")
+    log.info("hi,baby")
+    log.error("hi,baby")
+    log.debug("hi,baby")
+    '''
+    def __init__(self,file=None):
         logger = logging.getLogger()
-        hdlr = logging.FileHandler(file)
+        if file==None:
+            hdlr=logging.StreamHandler()
+        else:
+            hdlr = logging.FileHandler(file)
+
         #formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
         formatter = logging.Formatter('%(message)s')
         hdlr.setFormatter(formatter)

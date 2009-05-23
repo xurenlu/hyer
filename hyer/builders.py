@@ -45,7 +45,6 @@ class GenericBuilder(Builder):
             data["__ITER__"]=temp
             for filter in self.filters:
                 try:
-                    #data=filter["class"](filter).run(data) # because python pass values by referer,so we just pass it to the filterClass.run() method ,dot need the return value.
                     filter["class"](filter).run(data)
                 except hyer.error.ExitLoopError,e:
                     print "error caught:",e

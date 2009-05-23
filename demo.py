@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 """
 """
@@ -12,12 +12,17 @@ def sig_exit():
     print "got mesg:[2]"
     sys.exit(0)
 def handler(signum, frame):
+    if signum == 3:
+        sig_exit()
     if signum == 2:
+        sig_exit()
+    if signum == 9:
         sig_exit()
         return None
 import signal, os,time,re
-signal.signal(2,handler)
-
+signal.signal(signal.SIGINT,handler)
+signal.signal(signal.SIGTERM,handler)
+signal.signal(3,handler)
 
 #================================================
 import sys, os
@@ -40,6 +45,7 @@ import codecs
 import sys
 import json
 import re
+import threading
 sys.getdefaultencoding()
 reload(sys)
 sys.setdefaultencoding("utf-8")
@@ -49,7 +55,9 @@ consoleDesk=hyer.console_desk.ConsoleDesk()
 worker1=hyer.worker.Worker()
 workers=[
         {
-            "productions":[
+            "name":"UrlGenerator",
+            "nextWorker":"UrlProcess",
+            "products":[
                 {
                     "template":"",
                     "maxpage":50,
@@ -74,14 +82,34 @@ workers=[
                     "to":"newurl"
                 }
             ]
+        },
+        {
+            "name":"UrlProcess",
+            "nextWorker":None,
+            "products":[],
+            "filters":[
+                {
+                    "class":hyer.filter.UrlFetchFilter,
+                    "from":"newurl",
+                    "to":"html"
+                },
+                {
+                    "class":hyer.filter.BeautifulSoupMultiNodeFilter,
+                    "from":"html",
+                    "to":"h3",
+                    "attrs":{},
+                    "tagname":"h3"
+                },
+                {
+                    "class":hyer.filter.DeleteItemFilter,
+                    "from":"",
+                    "delete_items":["html"]
+                }
+            ]
         }
         ]
 productionLine=hyer.production_line.ProductionLine()
-productionLine.addWorkers(workers)
 productionLine.addConsoleDesk(consoleDesk)
+productionLine.hireWorkers(workers)
 productionLine.start()
-
-log=hyer.log.Log("/var/data/amazon/hyer.log")
-log.info("hi,baby")
-log.error("hi,baby")
-log.debug("hi,baby")
+print "total:%d" % threading.activeCount()

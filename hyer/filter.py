@@ -166,6 +166,7 @@ class DebugVarFilter(Filter):
             print self.config["toprint"]
         else:
             print "\n\n"
+        return data
 class DisplayFilter(Filter):
     '''
     dump the data just for debub
@@ -323,7 +324,7 @@ class RegexpExtractFilter(Filter):
                 matches=r.findall(frm)
                 for iter in self.config["matches"]:
                     data[iter["to"]].append(iter["index"].run(matches))
-            
+            return data 
         else:
             matches=r.findall(data[self.config["from"]])
             for iter in self.config["matches"]:
