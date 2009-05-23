@@ -7,8 +7,9 @@ STA_ERR=1
 REST_TIME=2
 
 import time
-
-class Worker:
+import threading
+import Queue
+class Worker(threading.Thread):
     '''
     Worker class 
     工人们从控制台取回下一步需要做的任务[原料],完成处理,再把原料交给控制台。
@@ -16,11 +17,11 @@ class Worker:
     每一个工人都需要知道:当前要完成的任务号,
 
     '''
-    def __init__(self,consoleDesk,filter,config={}):
+    def init(self,consoleDesk,filter,config={}):
         self.consoleDesk=consoleDesk
         self.filter=filter
         self.config=config
-        self.products=[]
+        self.products=Queue.Queue()
         pass
     def requestNewTask(self):
         '''当前工人主动去请求任务'''
@@ -31,6 +32,10 @@ class Worker:
         '''
         self.products.append(product)
         pass
+    def addFilters(self,filters):
+        self.filters.extend(filters)
+    def addFilter(self,filter):
+        self.filters.append(filter)
     def process(self):
         pass
     def report(self,status=STA_DONE):
@@ -46,14 +51,14 @@ class Worker:
         从待完成任务中取中一件来
         '''
 
-    def start(self):
+    def run(self):
         while True:
             try:
                 product=self.pop()
                 if product == None:
                     time.sleep(REST_TIME)
                 else:
-                    self.run()
+                    self.process(product)
             except:
                 time.sleep(REST_TIME)
         pass
