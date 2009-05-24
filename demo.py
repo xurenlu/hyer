@@ -105,9 +105,6 @@ workers=[
                     "agent":"Mozilla/Firefox"
                 },
                 {
-                    "class":hyer.filter.DisplayFilter
-                },
-                {
                     "class":hyer.filter.BeautifulSoupMultiNodeFilter,
                     "from":"html",
                     "to":"h3",
