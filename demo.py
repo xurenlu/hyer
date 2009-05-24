@@ -64,7 +64,7 @@ print g_mutex
 Leader=hyer.leader.Leader()
 workers=[
         {
-            "name":"UrlGenerator",
+            "post":"UrlGenerator",
             "nextWorker":"UrlProcess",
             "products":[
                 {
@@ -93,14 +93,19 @@ workers=[
             ]
         },
         {
-            "name":"UrlProcess",
+            "post":"UrlProcess",
             "nextWorker":None,
             "products":[],
             "filters":[
                 {
                     "class":hyer.filter.UrlFetchFilter,
                     "from":"newurl",
-                    "to":"html"
+                    "to":"html",
+                    "db_path":"/var/data/amazon/",
+                    "agent":"Mozilla/Firefox"
+                },
+                {
+                    "class":hyer.filter.DisplayFilter
                 },
                 {
                     "class":hyer.filter.BeautifulSoupMultiNodeFilter,
@@ -113,7 +118,10 @@ workers=[
                     "class":hyer.filter.DeleteItemFilter,
                     "from":"",
                     "delete_items":["html"]
-                }
+                },
+                {
+                    "class":hyer.filter.DisplayFilter
+                },
             ]
         }
         ]

@@ -13,7 +13,7 @@ class Leader(threading.Thread):
         '''登记一个工人/worker
         '''
         hyer.lock.lock("register worker")
-        self.productsToHandle[worker.name]=worker.products
+        self.productsToHandle[worker.post]=worker.products
         self.workers.append(worker)
         hyer.lock.unLock()
     def pushProduct(self,nextWorker,product):
@@ -33,9 +33,16 @@ class Leader(threading.Thread):
         #hyer.log.info("try to fetch product")
         hyer.lock.lock("fetchProduct")
         try:
-            tmp=self.productsToHandle[nextWorker].pop(0)
+            tmp=self.productsToHandle[nextWorker].pop()
+            hyer.lock.unLock()
+            hyer.log.info("get products success")
+            hyer.lock.lock("nothing")
         except Exception,e:
             #print self.productsToHandle[nextWorker]
+            hyer.lock.unLock()
+
+            hyer.log.error("error: %s" % str(e))
+            hyer.lock.lock("nothing")
             tmp=None
         finally:
             pass

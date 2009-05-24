@@ -15,7 +15,7 @@ class ProductionLine:
         for workerProperty in workers:
             worker=hyer.worker.Worker()
             worker.init(
-                    workerProperty["name"],
+                    workerProperty["post"],
                     self.Leader,
                     workerProperty["filters"],
                     workerProperty["products"],

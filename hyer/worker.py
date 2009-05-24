@@ -20,15 +20,15 @@ class Worker(threading.Thread):
     每一个工人都需要知道:当前要完成的任务号,
 
     '''
-    def init(self,name,Leader,filters,products,config={}):
-        self.name=name
+    def init(self,post,Leader,filters,products,config={}):
+        self.post=post
         self.Leader=Leader
         self.filters=filters
         self.products=products
         self.config=config
         self.nextWorker=config["nextWorker"]
         #for product in products:
-        #    self.Leader.pushProduct(self.name,product)
+        #    self.Leader.pushProduct(self.post,product)
         #pass
     def requestNewTask(self):
         '''当前工人主动去请求任务'''
@@ -75,12 +75,15 @@ class Worker(threading.Thread):
             hyer.log.info("worker got new loop operation")
             try:
                 product=None
-                product=self.Leader.fetchProduct(self.name)
+                product=self.Leader.fetchProduct(self.post)
                 if product == None:
                     hyer.log.debug("worker got null product" )
                 else:
                     hyer.log.info("worker got new product")
                     output=self.process(product)
+                    #如果这个流程至这儿结束了,就不用报告到控制台了..
+                    if self.nextWorker==None:
+                        continue
                     if isinstance(output,list):
                         for outproduct in output:
                             try:
@@ -95,4 +98,4 @@ class Worker(threading.Thread):
 
             except Exception,e:
                 hyer.log.error("fetchProduct() failed:%s" % e )
-            print str(self.Leader)
+            print str(self.Leader.productsToHandle[self.post])
