@@ -4,7 +4,7 @@
 STA_DONE=128
 STA_ERR=1
 #'''没有新任务时就休息2秒'''
-REST_TIME=4
+REST_TIME=1
 
 import time
 import threading
@@ -16,19 +16,19 @@ class Worker(threading.Thread):
     '''
     Worker class 
     工人们从控制台取回下一步需要做的任务[原料],完成处理,再把原料交给控制台。
-    工人们从控制台取任务时，有可能控制台返回说接下来没有任务需要完成。这时不能马上又去轮询，而是过n秒钟后再去询问,避免过度的空询问将consoleDesk堵塞.
+    工人们从控制台取任务时，有可能控制台返回说接下来没有任务需要完成。这时不能马上又去轮询，而是过n秒钟后再去询问,避免过度的空询问将Leader堵塞.
     每一个工人都需要知道:当前要完成的任务号,
 
     '''
-    def init(self,name,consoleDesk,filters,products,config={}):
+    def init(self,name,Leader,filters,products,config={}):
         self.name=name
-        self.consoleDesk=consoleDesk
+        self.Leader=Leader
         self.filters=filters
         self.products=products
         self.config=config
         self.nextWorker=config["nextWorker"]
         #for product in products:
-        #    self.consoleDesk.pushProduct(self.name,product)
+        #    self.Leader.pushProduct(self.name,product)
         #pass
     def requestNewTask(self):
         '''当前工人主动去请求任务'''
@@ -74,9 +74,8 @@ class Worker(threading.Thread):
             time.sleep(REST_TIME)
             hyer.log.info("worker got new loop operation")
             try:
-                hyer.lock.lock()
-                product=self.consoleDesk.fetchProduct(self.name)
-                hyer.lock.unLock()
+                product=None
+                product=self.Leader.fetchProduct(self.name)
                 if product == None:
                     hyer.log.debug("worker got null product" )
                 else:
@@ -85,18 +84,15 @@ class Worker(threading.Thread):
                     if isinstance(output,list):
                         for outproduct in output:
                             try:
-                                hyer.lock.lock()
-                                self.consoleDesk.pushProduct(self.nextWorker,outproduct)
-                                hyer.lock.unLock()
+                                self.Leader.pushProduct(self.nextWorker,outproduct)
                             except Exception,ep:
                                 hyer.log.error("pushProduct error:%s" % ep)
                     else:
                         try:
-                            hyer.lock.lock()
-                            self.consoleDesk.pushProduct(self.nextWorker,output)
-                            hyer.lock.unLock()
+                            self.Leader.pushProduct(self.nextWorker,output)
                         except Exception,ep:
                             hyer.log.error("pushProduct error:%s" % ep)
 
             except Exception,e:
                 hyer.log.error("fetchProduct() failed:%s" % e )
+            print str(self.Leader)

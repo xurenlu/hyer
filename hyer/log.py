@@ -22,15 +22,16 @@ def debug(msg,file=None):
     _gen_msg("DEBG",pcolor.PYELLOW,msg,file)
 
 def _gen_msg(symbol,color,msg,file=None):
-    hyer.lock.lock()
+    hyer.lock.lock("record log")
     thread=""
     tmp=""
-    thread=",thread:%s,total threads:%d" % (
+    thread=pcolor.pcolorstr(" %s @%d" % (
                 str(threading.currentThread().getName()),
                 threading.activeCount()
-            )
-    tmp="[%s] %s %s %s" % (symbol,time.ctime(),msg,thread)
+            ),pcolor.PHIGHLIGHT,pcolor.PBLUE,pcolor.PBLACK)
+    tmp="[%s] %s %s " % (symbol,time.ctime(),msg)
     tmp="%s" % pcolor.pcolorstr(tmp,pcolor.PHIGHLIGHT,color,pcolor.PBLACK)
+    tmp="%s %s" %  (tmp,thread)
     print tmp
     hyer.lock.unLock()
     

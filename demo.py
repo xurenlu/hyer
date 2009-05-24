@@ -14,7 +14,7 @@ import hyer.helper
 import hyer.dbwriter
 import hyer.production_line
 import hyer.worker
-import hyer.console_desk
+import hyer.leader
 import hyer.singleton
 import hyer.log
 import codecs
@@ -61,7 +61,7 @@ global g_mutex
 g_mutex=None
 g_mutex = threading.Lock()
 print g_mutex
-consoleDesk=hyer.console_desk.ConsoleDesk()
+Leader=hyer.leader.Leader()
 workers=[
         {
             "name":"UrlGenerator",
@@ -118,7 +118,7 @@ workers=[
         }
         ]
 productionLine=hyer.production_line.ProductionLine()
-productionLine.addConsoleDesk(consoleDesk)
+productionLine.addLeader(Leader)
 productionLine.hireWorkers(workers)
 productionLine.start()
 print "total:%d" % threading.activeCount()
