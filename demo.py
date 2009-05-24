@@ -1,29 +1,5 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-"""
-"""
-
-__author__ = "xurenlu"
-__version__ = "0.1"
-__copyright__ = "Copyright (c) 2008 xurenlu"
-__license__ = "LGPL BSD"
-
-def sig_exit():
-    print "got mesg:[2]"
-    sys.exit(0)
-def handler(signum, frame):
-    if signum == 3:
-        sig_exit()
-    if signum == 2:
-        sig_exit()
-    if signum == 9:
-        sig_exit()
-        return None
-import signal, os,time,re
-signal.signal(signal.SIGINT,handler)
-signal.signal(signal.SIGTERM,handler)
-signal.signal(3,handler)
-
 #================================================
 import sys, os
 import hyer.document
@@ -46,13 +22,46 @@ import sys
 import json
 import re
 import threading
+import hyer.break_handler
+import hyer.pcolor
+"""
+"""
+
+__author__ = "xurenlu"
+__version__ = "0.1"
+__copyright__ = "Copyright (c) 2008 xurenlu"
+__license__ = "LGPL BSD"
+
+def sig_exit():
+    print hyer.pcolor.pcolorstr("CAUGHT SIG_EXIT signal,exiting...",hyer.pcolor.PHIGHLIGHT,hyer.pcolor.PRED,hyer.pcolor.PBLACK)
+    sys.exit(0)
+def handler(signum, frame):
+    sig_exit()
+    if signum == 3:
+        sig_exit()
+    if signum == 2:
+        sig_exit()
+    if signum == 9:
+        sig_exit()
+        return None
+import signal, os,time,re
+signal.signal(signal.SIGINT,handler)
+signal.signal(signal.SIGTERM,handler)
+signal.signal(3,handler)
+
+#如果子进程退出时主进程不需要处理资源回收等问题
+#这样可以避免僵尸进程
+signal.signal(signal.SIGCHLD,signal.SIG_IGN)
+
 sys.getdefaultencoding()
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
-
+global g_mutex
+g_mutex=None
+g_mutex = threading.Lock()
+print g_mutex
 consoleDesk=hyer.console_desk.ConsoleDesk()
-worker1=hyer.worker.Worker()
 workers=[
         {
             "name":"UrlGenerator",
@@ -60,7 +69,7 @@ workers=[
             "products":[
                 {
                     "template":"",
-                    "maxpage":50,
+                    "maxpage":5,
                     "template":"http://www.162cm.com/page/_page_"
                 }
                 ],

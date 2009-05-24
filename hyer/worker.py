@@ -4,12 +4,14 @@
 STA_DONE=128
 STA_ERR=1
 #'''没有新任务时就休息2秒'''
-REST_TIME=2000
+REST_TIME=4
 
 import time
 import threading
 import Queue
 import hyer.log
+import hyer.lock
+
 class Worker(threading.Thread):
     '''
     Worker class 
@@ -22,9 +24,12 @@ class Worker(threading.Thread):
         self.name=name
         self.consoleDesk=consoleDesk
         self.filters=filters
-        self.config=config
         self.products=products
-        pass
+        self.config=config
+        self.nextWorker=config["nextWorker"]
+        #for product in products:
+        #    self.consoleDesk.pushProduct(self.name,product)
+        #pass
     def requestNewTask(self):
         '''当前工人主动去请求任务'''
         pass
@@ -56,7 +61,6 @@ class Worker(threading.Thread):
                 print "error caught:",e
                 return False
         return product
-        pass
     def report(self,status=STA_DONE):
         pass
     def finishOneProduct(self):
@@ -65,25 +69,34 @@ class Worker(threading.Thread):
         通知流水线的下一个工人可以继续干活了
         '''
         pass
-    def pop(self):
-        '''
-        从待完成任务中取中一件来
-        '''
-        return self.products.pop()
     def run(self):
         while True:
-            hyer.log.Log().info("worker[%d] got new loop operation,threadid:[%d]" % (id(self),id(threading.currentThread()) ) )
+            time.sleep(REST_TIME)
+            hyer.log.info("worker got new loop operation")
             try:
-                product=self.pop()
+                hyer.lock.lock()
+                product=self.consoleDesk.fetchProduct(self.name)
+                hyer.lock.unLock()
                 if product == None:
-                    hyer.log.Log().info("worker[%d] got null product" % id(self))
-                    time.sleep(REST_TIME)
+                    hyer.log.debug("worker got null product" )
                 else:
-                    hyer.log.Log().info("worker[%d] got new product" % id(self))
+                    hyer.log.info("worker got new product")
                     output=self.process(product)
-                    print "output"
-                    print output
+                    if isinstance(output,list):
+                        for outproduct in output:
+                            try:
+                                hyer.lock.lock()
+                                self.consoleDesk.pushProduct(self.nextWorker,outproduct)
+                                hyer.lock.unLock()
+                            except Exception,ep:
+                                hyer.log.error("pushProduct error:%s" % ep)
+                    else:
+                        try:
+                            hyer.lock.lock()
+                            self.consoleDesk.pushProduct(self.nextWorker,output)
+                            hyer.lock.unLock()
+                        except Exception,ep:
+                            hyer.log.error("pushProduct error:%s" % ep)
+
             except Exception,e:
-                hyer.log.Log().info("worker[%d] pop() failed:%s" % (id(self),e) )
-                time.sleep(REST_TIME)
-        pass
+                hyer.log.error("fetchProduct() failed:%s" % e )
