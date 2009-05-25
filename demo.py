@@ -96,6 +96,7 @@ workers=[
             "post":"UrlProcess",
             "nextWorker":None,
             "products":[],
+            "threads":3,
             "filters":[
                 {
                     "class":hyer.filter.UrlFetchFilter,

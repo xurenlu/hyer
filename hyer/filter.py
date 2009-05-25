@@ -7,6 +7,7 @@ from BeautifulSoup import BeautifulSoup
 import re
 import hyer.browser
 import copy
+import random
 _MAX_PAGENUM=10000
 class Filter:
     def __init__(self,config):
@@ -136,7 +137,40 @@ class UrlFetchFilter(Filter):
             raise ValueError("from field can't be list")
             return data
         url=data[self.config["from"]]
-        browser=hyer.browser.SimpleBrowser(self.config["agent"])
+        browser=hyer.browser.Browser(self.config["agent"])
+        browser.setCache(self.config["db_path"]+"/cache/")
+        resp=browser.getHTML(url)
+        if resp==None:
+            return data
+        else:
+            data[self.config["to"]]=resp
+        return data
+class RandomProxyUrlFetchFilter(Filter):
+    '''
+    fetch URL from the 'from' field and save to 'to' field
+    {
+        "class":hyer.filter.RandomProxyUrlFetchFilter,
+        "agent":"Mozilla/Firefox 3.1",
+        "from":"url",
+        "to":"html",
+        "db_path":"../db/dbpath/",
+        "proxies":[
+            {"http":"http://localhost:2000"},
+            {"http":"http://10.2.2.4:3128"}
+        ]
+    }
+    '''
+    def run(self,data):
+        if isinstance(data[self.config["from"]],list):
+            raise ValueError("from field can't be list")
+            return data
+        if not self.config.has_key("proxies"):
+            raise hyer.error.ConfigError("RandomProxyUrlFetchFilter must get ['proxies'] value")
+        url=data[self.config["from"]]
+        i=len(self.config["proxies"])
+        i=random.randint(1,i)-1
+        proxy=self.config["proxies"][i]
+        browser=hyer.browser.Browser(self.config["agent"],proxy)
         browser.setCache(self.config["db_path"]+"/cache/")
         resp=browser.getHTML(url)
         if resp==None:

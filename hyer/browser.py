@@ -5,16 +5,16 @@ import socket
 import hyer.diskhash
 #from urlparse import urlparse
 socket.setdefaulttimeout(10)
-class browser:
+class Browser:
     """ This is a browser class fetch urls for you """
-    def __init__(self,user_agent="Mozilla/Firefox 3.1(http://www.firefox.com/)",cookie_file="/tmp/_hyer.browser.cookie.txt",range=204800):
+    def __init__(self,user_agent="Mozilla/Firefox 3.1(http://www.firefox.com/)",proxy=None,cookie_file="/tmp/_hyer.browser.cookie.txt",range=204800):
             ''' create browser object'''
             self.user_agent=user_agent
             self.cookie_file=cookie_file
             self.range=range
             self.use_cache=False
             self.cache_dir=""
-
+            self.proxy=proxy
     def setCache(self,cache_dir="/tmp/cachedir/"):
             self.use_cache=True
             self.cache_dir=cache_dir
@@ -29,7 +29,18 @@ class browser:
             cj.load(self.cookie_file)
         except:
             pass
-        opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+        if not self.proxy==None:
+            print "set proxy...",self.proxy
+            proxy_support = urllib2.ProxyHandler(self.proxy)
+            #{"http":"http://ahad-haam:3128"})
+            opener = urllib2.build_opener(
+                        urllib2.HTTPCookieProcessor(cj),
+                        proxy_support
+                    )
+        else:
+            print "need not set proxy"
+            opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+
         opener.addheaders= [('User-Agent',self.user_agent),('Range',"bytes=0-%d" % self.range)]
         try:
             stream=opener.open(url)
@@ -63,7 +74,7 @@ class browser:
 #        except StandardError,e:
 #            print "error:",e
 #            return None
-class SimpleBrowser(browser):
+class SimpleBrowser(Browser):
     def get(self,url):
         #print "url",url
         #print url.__class__

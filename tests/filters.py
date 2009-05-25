@@ -77,15 +77,23 @@ class PyFilterTest(unittest.TestCase):
     def test_tasksplitfilter(self):
         filter=\
         {
-            "from":"list",
-            "to":"url",
+            "class":hyer.filter.RandomProxyUrlFetchFilter,
+            "agent":"Mozilla/Firefox 3.1",
+            "from":"url",
+            "to":"html",
+            "db_path":"../db/dbpath/",
+            "proxies":[
+                {"http":"http://localhost:2000"},
+                {"http":"http://localhost:80"}
+            ]
         }
         data=\
         {
-            "list":["a1","a2","a3"]
+            "url":"http://www.sina.com/"
         }
-        newtasks=hyer.filter.TaskSplitFilter(filter).run(data)
-        self.assertEqual(newtasks, [{"url":"a1"},{"url":"a2"},{"url":"a3"}])
+        newtasks=hyer.filter.RandomProxyUrlFetchFilter(filter).run(data)
+        print len(newtasks["html"])
+
 if __name__ == "__main__":
     unittest.main()  
 		

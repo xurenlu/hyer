@@ -13,16 +13,19 @@ class ProductionLine:
     def hireWorkers(self,workers):
         '''note:hireWorkers must be called after addLeader...'''
         for workerProperty in workers:
-            worker=hyer.worker.Worker()
-            worker.init(
-                    workerProperty["post"],
-                    self.Leader,
-                    workerProperty["filters"],
-                    workerProperty["products"],
-                    workerProperty
-                    )
-            self.workers.append(worker)
-            self.Leader.registerWorker(worker)
+            if not workerProperty.has_key("threads"):
+                workerProperty["threads"]=1
+            for i in range(workerProperty["threads"]):
+                worker=hyer.worker.Worker()
+                worker.init(
+                        workerProperty["post"],
+                        self.Leader,
+                        workerProperty["filters"],
+                        workerProperty["products"],
+                        workerProperty
+                        )
+                self.workers.append(worker)
+                self.Leader.registerWorker(worker)
         pass
     def addLeader(self,Leader):
         '''note:hireWorkers must be called after addLeader...'''
