@@ -11,12 +11,10 @@ __license__ = "New-style BSD"
 
 import BeautifulSoup
 def sig_exit():
-  global spider
-  #spider.print_urls()
-  sys.exit(0)
+    sys.exit(0)
 def handler(signum, frame):
-  if signum == 2:
-    sig_exit()
+    if signum == 2:
+        sig_exit()
     return None
 
 
@@ -31,43 +29,38 @@ import hyer.event
 import signal, os,time,re
 import codecs
 import sys
+import extmain.extmain
 sys.getdefaultencoding()
 reload(sys)
 sys.setdefaultencoding("utf-8")
 #print sys.getdefaultencoding()
 
-#rrr= re.compile(".*[0-9\-]{5,}",re.I)
-rrr=re.compile('http://bang.xianguo.com/feed\/[0-9]+/category.*',re.I)
-rblog=re.compile('http://blog\..*',re.I)
-rfeedsky=re.compile('http://feed\..*',re.I)
-rxml=re.compile('.*xml',re.I)
-rrss=re.compile('.*rss',re.I)
+uri_re=re.compile('.*n[\d]+\.shtml',re.I)
 
 doc_id=0
 def extract_doc(doc):
-  global rrr,doc_id
-  if rrr.match(doc["URI"]):
-	  for c in doc["links"]:
-	  	if rblog.match(c):
-	  		print "new:",c
-	  	if rfeedsky.match(c):
-	  		print "new:",c
-	  	if rxml.match(c):
-	  		print "new:",c
-	  	if rrss.match(c):
-	  		print "new:",c
+    global uri_re,doc_id
+    if uri_re.match(doc["URI"]):
+        print "got new url matchs.%s" % doc["URI"]
+        html=doc["html"]
+        main=extmain.extmain.extMainText(doc["html"],0.03)
+        f=open("/var/data/sohu/txt/%d.html" % doc_id,"w+")
+        f.write(main)
+        f.close()
+    doc_id=doc_id+1 
 
 signal.signal(2,handler)
 spider=hyer.spider.spider({
-"task":"myblog",
-"feed":"http://www.162cm.com/",
+"task":"sohucj",
+"feed":"http://business.sohu.com/",
 "leave_domain":False,
-"same_domain_regexp":r'http:\/\/www\.162cm\.com\/',
+"same_domain_regexp":r'http:\/\/.*\.sohu\.com\/',
 "agent":"Hyer/0.5.4 (http://www.162cm.com/",
-"db_path":"/var/data/162cm/",
+"db_path":"/var/data/sohu/",
 "buckets":32,
 "max_in_minute":10, #avoid to visite site too frequencently
-"document":hyer.document.Document
+"document":hyer.document.SimpleHTMLDocument,
+"validate_domains":["money.sohu.com","business.sohu.com","stock.sohu.com"]
 })
 hyer.event.add_event("new_document",extract_doc)
 spider.run_loop(); 

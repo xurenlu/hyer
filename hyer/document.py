@@ -19,7 +19,7 @@ class Document(dict):
 	def links(self):
 		self['links']	
 
-class HTMLDocument(Document):
+class SimpleHTMLDocument(Document):
 	""" """
 	href_regexs=[\
 		r'href\s*=\s*[\'\"]?([+:%\/\?~=&;\\\(\),._a-zA-Z0-9-]*)(#[.a-zA-Z0-9-]*)?[\'\" ]?(\s*rel\s*=\s*[\'\"]?(nofollow)[\'\"]?)?',\
@@ -50,14 +50,6 @@ class HTMLDocument(Document):
 		self["body"]=""
 		
 		self.scan_links(content)
-		self.get_head_data(content)
-		self.get_title_data(self["head_data"])
-		self.get_keywords_meta(self["head_data"])
-		self.get_charset_meta(self["head_data"])
-		self.get_base_meta(self["head_data"])
-		self.get_description_meta(self["head_data"])
-		self.get_body_data(content)
-		self.textualize(self["body"])
 		self.parse_document_type(self["body"])
 	def scan_links(self,content):
 		"""return all links in the html content
@@ -204,7 +196,33 @@ class HTMLDocument(Document):
 		self['links']	
 
 
-
+class HTMLDocument(SimpleHTMLDocument):
+    def __init__(self,content,uri=''):
+		""" 
+		@param content:the HTML content
+		@param uri:the URI of the html like file:///temp/os.html or http://www.162cm.com/index.html """
+		Document.__init__(self,content)
+		self["URI"]=uri
+		self["html"]=content
+		self["links"]=[]
+		self["base"]=""
+		self["keywords"]=""
+		self["description"]=""
+		self["charset"]=""
+		self["head_data"]=""
+		self["title"]=""
+		self["body"]=""
+		
+		self.scan_links(content)
+		self.get_head_data(content)
+		self.get_title_data(self["head_data"])
+		self.get_keywords_meta(self["head_data"])
+		self.get_charset_meta(self["head_data"])
+		self.get_base_meta(self["head_data"])
+		self.get_description_meta(self["head_data"])
+		self.get_body_data(content)
+		self.textualize(self["body"])
+		self.parse_document_type(self["body"])
 class RSSDocument(Document):
 	def __init__(self,content):
 		Document.__init__(self)

@@ -40,6 +40,7 @@ class spider:
         self.timer=1
         self.rm=hyer.rules_monster.rules_monster(conf["agent"])
         self.same_domain_regexp=conf["same_domain_regexp"]
+        self.validate_domains=conf["validate_domains"]
         try:
             if conf["task"]:
                 self.task=conf["task"]
@@ -66,7 +67,8 @@ class spider:
         else:
             self.rest_time=2
 
-        self.browser=hyer.browser.browser(conf["agent"])
+        self.browser=hyer.browser.Browser(conf["agent"])
+        self.browser.setCache()
     def add_url(self,url):
         '''save an url to the meta server'''
         self.logger.info("try to add url:%s" % url)
@@ -191,6 +193,7 @@ class spider:
         try:
             content=resp.read() 
         except:
+            self.logger.error("error occured when resp.read() :%s" % url)
             return True
         doc=self.document(content,url)
         base_dir=hyer.urlfunc.get_base_dir(doc,url)
@@ -207,7 +210,7 @@ class spider:
                 self.add_url(u)
         self.url_db.mark_visited(url,self.task)
         hyer.event.fire_event("before_save_document",doc)
-        self.save_document(doc,url,self.conf["db_path"]+"docs/")
+        #self.save_document(doc,url,self.conf["db_path"]+"docs/")
         hyer.event.fire_event("new_document",doc)
         if self.timer > 1024:
             #self.url_db.save_to(self.conf["db_path"]+"_urls.db")
@@ -240,6 +243,12 @@ class spider:
             generelly removing pictures,css and javascript files
             and if the param conf (specified when you initing the object) set leave_domain false,fire this validation
         '''
+        parseResult=urlparse(u)
+        try :
+            self.validate_domains.index(parseResult[1])
+            return True
+        except:
+            pass
         if not self.conf["leave_domain"]:
             if not re.match(self.conf["same_domain_regexp"],u):
                 return False
