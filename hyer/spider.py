@@ -39,8 +39,7 @@ class spider:
         self.conf=conf
         self.timer=1
         self.rm=hyer.rules_monster.rules_monster(conf["agent"])
-        self.same_domain_regexp=conf["same_domain_regexp"]
-        self.validate_domains=conf["validate_domains"]
+        self.same_domain_regexps=conf["same_domain_regexps"]
         try:
             if conf["task"]:
                 self.task=conf["task"]
@@ -96,57 +95,6 @@ class spider:
             self.logger.info("process %d started!" % pid)
             self.procid=pid
         self.run_loop()
-    def fetch(self,url):
-        try:
-            uri=urlparse(url)
-        except:
-            self.logger.info("got invalid url:%s" % url)
-            return None 
-        if  not self.site_holder_monster.can_visite(uri):
-            self.logger.info("visited site too frequently:%s " % url)
-            time.sleep(5)
-            return None 
-        resp=None
-        try:
-            resp=self.browser.get(url)
-        except hyer.error.HTTPError,e:
-            self.logger.error("error occured when fetching an url %s" % e)
-            hyer.event.fire_event("url_fetch_error",url)
-            self.url_db.mark_error(url,self.task)
-            return True 
-        self.site_holder_monster.visited(uri)
-        if resp==None:
-            self.logger.error("error occured when fetching an url %s:response is None" % url)
-            return True 
-		#fix the timeout problem
-        try:
-            content=resp.read() 
-        except:
-            return None 
-        doc=self.document(content,url)
-        base_dir=hyer.urlfunc.get_base_dir(doc,url)
-        links=[]
-        all_original_links=doc["links"]
-        hyer.event.fire_event("new_original_url",all_original_links)
-        all_original_links=hyer.urlfunc.remove_bad_links(all_original_links)
-        for l in all_original_links: 
-            u=hyer.urlfunc.get_full_url(l,base_dir)
-            u=hyer.urlfunc.fix_url(u)
-            hyer.event.fire_event("new_fixed_url",l)
-            if self.validate_url(u):
-                hyer.event.fire_event("add_url",u)
-                self.add_url(u)
-        self.url_db.mark_visited(url,self.task)
-        hyer.event.fire_event("before_save_document",doc)
-        self.save_document(doc,url,self.conf["db_path"]+"docs/")
-        hyer.event.fire_event("new_document",doc)
-        if self.timer > 1024:
-            #self.url_db.save_to(self.conf["db_path"]+"_urls.db")
-            self.timer=1
-            time.sleep(self.rest_time)
-        else:
-            self.timer =self.timer+1
-        return True
 
     def run_loop(self):
         '''fetch tasks and finish it
@@ -177,24 +125,19 @@ class spider:
             self.logger.info("visited site too frequently:%s " % url)
             time.sleep(5)
             return True
-        resp=None
+        content=None
         try:
-            resp=self.browser.get(url)
+            content=self.browser.getHTML(url)
         except hyer.error.HTTPError,e:
             self.logger.error("error occured when fetching an url %s" % e)
             hyer.event.fire_event("url_fetch_error",url)
             self.url_db.mark_error(url,self.task)
             return True 
         self.site_holder_monster.visited(uri)
-        if resp==None:
+        if content==None:
             self.logger.error("error occured when fetching an url %s:response is None" % url)
             return True 
 		#fix the timeout problem
-        try:
-            content=resp.read() 
-        except:
-            self.logger.error("error occured when resp.read() :%s" % url)
-            return True
         doc=self.document(content,url)
         base_dir=hyer.urlfunc.get_base_dir(doc,url)
         links=[]
@@ -243,14 +186,12 @@ class spider:
             generelly removing pictures,css and javascript files
             and if the param conf (specified when you initing the object) set leave_domain false,fire this validation
         '''
-        parseResult=urlparse(u)
-        try :
-            self.validate_domains.index(parseResult[1])
-            return True
-        except:
-            pass
         if not self.conf["leave_domain"]:
-            if not re.match(self.conf["same_domain_regexp"],u):
+            same_domain=False
+            for sdomain_reg in self.conf["same_domain_regexps"]:
+                if sdomain_reg.match(u):
+                    same_domain=True
+            if same_domain==False:
                 return False
         if re.match(r'\.jpg$',u,re.I):
             return False 

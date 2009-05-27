@@ -38,7 +38,6 @@ class Browser:
                         proxy_support
                     )
         else:
-            print "need not set proxy"
             opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
 
         opener.addheaders= [('User-Agent',self.user_agent),('Range',"bytes=0-%d" % self.range)]
