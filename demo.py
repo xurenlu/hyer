@@ -22,7 +22,7 @@ import sys
 import json
 import re
 import threading
-import hyer.break_handler
+#import hyer.break_handler
 import hyer.pcolor
 """
 """
@@ -70,7 +70,8 @@ workers=[
                 {
                     "template":"",
                     "maxpage":5,
-                    "template":"http://www.162cm.com/page/_page_"
+                    "template":"http://www.162cm.com/page/_page_",
+                    "__TASK_ID__":"indexpage"
                 }
                 ],
             "filters":[
