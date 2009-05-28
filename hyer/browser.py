@@ -68,7 +68,10 @@ class Browser:
                 hyer.diskhash.hash_write(url,str,self.cache_dir)
                 return str
         except hyer.error.HTTPError,er:
-            raise
+            raise er
+            return None
+        except Exception,er2:
+            raise er2
             return None
 #        except StandardError,e:
 #            print "error:",e

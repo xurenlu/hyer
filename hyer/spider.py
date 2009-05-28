@@ -133,6 +133,8 @@ class spider:
             hyer.event.fire_event("url_fetch_error",url)
             self.url_db.mark_error(url,self.task)
             return True 
+        except Exception,er:
+            return True
         self.site_holder_monster.visited(uri)
         if content==None:
             self.logger.error("error occured when fetching an url %s:response is None" % url)

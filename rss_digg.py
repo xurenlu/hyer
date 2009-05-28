@@ -56,6 +56,7 @@ def tidy(jhtml):
             stdout=subprocess.PIPE
             ).communicate()[0]
     begin="<body>"
+    os.unlink(j)
     return rhtml
     return html[html.find(begin)+len(begin):html.rfind("</body>")].strip()
 
