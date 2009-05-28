@@ -6,6 +6,8 @@ import json
 from BeautifulSoup import BeautifulSoup
 import re
 import hyer.browser
+import hyer.urlfunc
+import hyer.document
 import copy
 import random
 _MAX_PAGENUM=10000
@@ -284,7 +286,7 @@ class BeautifulSoupMultiNodeFilter(Filter):
     Extra html tag nodes by BeautifulSoup 
     example:
     {
-        "class":hyer.filter.BeautifulSoupMultiNodeFilter(Filter):
+        "class":hyer.filter.BeautifulSoupMultiNodeFilter,
         "from":"html",
         "to":"links_nodes",
         "tagname":"a",
@@ -570,3 +572,53 @@ class TaskSplitFilter(Filter):
             iter[self.config["to"]]=item
             tempdata.append(iter)
         return tempdata
+class ScanLinksFilter(Filter):
+    '''
+    从[from]扫描出所有链接,再利用[uri_field]拼接出完整的地址.
+    {
+        "class":hyer.filter.ScanLinksFilter,
+        "from":"html",
+        "uri_field":"URI",
+        "to":"links",
+        "same_domain_regexps":[ re.compile('http:\/\/business\.sohu\.com\/'), re.compile('http:\/\/money\.sohu\.com\/'), re.compile('http:\/\/stock\.sohu\.com\/') ],
+    }
+    '''
+    def run(self,data):
+        frm=data[self.config["from"]]
+        url=data[self.config["uri_field"]]
+        doc=hyer.document.HTMLDocument(frm,url)
+        base_dir=hyer.urlfunc.get_base_dir(doc,url)
+        links=[]
+        all_original_links=doc["links"]
+        hyer.event.fire_event("new_original_url",all_original_links)
+        all_original_links=hyer.urlfunc.remove_bad_links(all_original_links)
+        urls=[]
+        for l in all_original_links: 
+            u=hyer.urlfunc.get_full_url(l,base_dir)
+            u=hyer.urlfunc.fix_url(u)
+            hyer.event.fire_event("new_fixed_url",l)
+            if self.validate_url(u):
+                urls.append(u)
+        data[self.config["to"]]=urls
+        return data
+    def validate_url(self,u):
+        '''check if the url need to be visited,
+            generelly removing pictures,css and javascript files
+            and if the param conf (specified when you initing the object) set leave_domain false,fire this validation
+        '''
+        #如果定义了same_domain_regexps,
+        #就必须检查.
+        if self.config.has_key("validate_url_regexps"):
+            validate_url=False
+            for validate_url_regexp in self.conf["validate_url_regexps"]:
+                if validate_url_regexp.match(u):
+                    validate_url=True
+            if same_domain==False:
+                return False
+            else:
+                return True
+        else:
+            return True
+
+class ExtractLinksDataFilter(Filter):
+    '''从字符串中解析出一个链接和链接文本'''

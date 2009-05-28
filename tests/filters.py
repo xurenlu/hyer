@@ -92,7 +92,40 @@ class PyFilterTest(unittest.TestCase):
             "url":"http://www.sina.com/"
         }
         newtasks=hyer.filter.RandomProxyUrlFetchFilter(filter).run(data)
-        print len(newtasks["html"])
+        #print len(newtasks["html"])>0
+    def test_scanlinksfilter(self):
+        filter=\
+        {
+            "class":hyer.filter.ScanLinksFilter,
+            "from":"html",
+            "to":"links",
+            "uri_field":"url"
+        }
+        data=\
+        {
+            "url":"http://www.162cm.com/",
+            "html":open("./data/index.html").read()
+        }
+        outputs=hyer.filter.ScanLinksFilter(filter).run(data)
+        del outputs["html"]
+        #print outputs
+    def test_findSoupNodes(self):
+        filter=\
+        {
+            "class":hyer.filter.BeautifulSoupMultiNodeFilter,
+            "from":"html",
+            "to":"links_nodes",
+            "tagname":"a",
+            "attrs":{}
+        }
+        data=\
+        {
+            "url":"http://www.162cm.com/",
+            "html":open("./data/index.html").read()
+        }
+        outputs=hyer.filter.BeautifulSoupMultiNodeFilter(filter).run(data)
+        del outputs["html"]
+        print outputs
 
 if __name__ == "__main__":
     unittest.main()  

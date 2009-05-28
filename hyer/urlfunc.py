@@ -84,3 +84,13 @@ def remove_bad_links(links):
     return validated_urls	
     
 
+def extract_links(content):
+    reg=re.compile(r'href\s*=\s*[\'\"]?([+:%\/\?~=&;\\\(\),._a-zA-Z0-9-]*)(#[.a-zA-Z0-9-]*)?[\'\" ]?(\s*rel\s*=\s*[\'\"]?(nofollow)[\'\"]?)?[^>]*>([^<]*)')
+    #[\>]?([^<]?)')
+    matches=reg.findall(content)
+    res=[]
+    for mt in matches:
+        if mt[0]!="":
+            res.append([mt[0],mt[4]])
+    return res
+
