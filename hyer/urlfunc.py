@@ -70,17 +70,31 @@ def remove_bad_links(links):
     ''' remove the javascript:,mailto:,ftp:,news: links or something else'''
     validated_urls=[]
     for u in links:
-        if re.match(r'^javascript:',u,re.I):
-            continue
-        if re.match(r'^mailto:',u,re.I):
-            continue
-        if re.match(r'^ftp:',u,re.I):
-            continue
-        if re.match(r'^news:',u,re.I):
-            continue
-        if re.match(r'^gopher:',u,re.I):
-            continue
-        validated_urls.append(u)
+        if isinstance(u,list):
+            if re.match(r'^javascript:',u[0],re.I):
+                continue
+            if re.match(r'^mailto:',u[0],re.I):
+                continue
+            if re.match(r'^ftp:',u[0],re.I):
+                continue
+            if re.match(r'^news:',u[0],re.I):
+                continue
+            if re.match(r'^gopher:',u[0],re.I):
+                continue
+            validated_urls.append(u)
+        else:
+            if re.match(r'^javascript:',u,re.I):
+                continue
+            if re.match(r'^mailto:',u,re.I):
+                continue
+            if re.match(r'^ftp:',u,re.I):
+                continue
+            if re.match(r'^news:',u,re.I):
+                continue
+            if re.match(r'^gopher:',u,re.I):
+                continue
+            validated_urls.append(u)
+
     return validated_urls	
     
 
@@ -93,4 +107,16 @@ def extract_links(content):
         if mt[0]!="":
             res.append([mt[0],mt[4]])
     return res
+def get_base(html,url):
+    r=re.compile("<base +href *= *[\"']?([^<>'\"]+)[\"']?",re.M|re.I)
+    matches=r.findall(html)
+    base=url
+    try:
+        base=matches.pop()
+        base =base and base or url
+    except:
+        pass
+    return base
+    
+    
 
