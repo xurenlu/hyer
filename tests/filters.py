@@ -74,14 +74,14 @@ class PyFilterTest(unittest.TestCase):
         data["html"]="testdone"
         hyer.filter.FuncFilter(filter).run(data)
         self.assertEqual(data["len"],8)
-    def test_tasksplitfilter(self):
+    def test_randomProxyfilter(self):
         filter=\
         {
             "class":hyer.filter.RandomProxyUrlFetchFilter,
             "agent":"Mozilla/Firefox 3.1",
             "from":"url",
             "to":"html",
-            "db_path":"../db/dbpath/",
+            "db_path":"./db/dbpath/",
             "proxies":[
                 {"http":"http://localhost:2000"},
                 {"http":"http://localhost:80"}
@@ -92,7 +92,8 @@ class PyFilterTest(unittest.TestCase):
             "url":"http://www.sina.com/"
         }
         newtasks=hyer.filter.RandomProxyUrlFetchFilter(filter).run(data)
-        #print len(newtasks["html"])>0
+
+        print len(newtasks["html"])
     def test_scanlinksfilter(self):
         filter=\
         {
@@ -108,7 +109,7 @@ class PyFilterTest(unittest.TestCase):
         }
         outputs=hyer.filter.ScanLinksFilter(filter).run(data)
         del outputs["html"]
-        #print outputs
+        print outputs
     def test_findSoupNodes(self):
         filter=\
         {
