@@ -127,6 +127,20 @@ class PyFilterTest(unittest.TestCase):
         outputs=hyer.filter.BeautifulSoupMultiNodeFilter(filter).run(data)
         del outputs["html"]
         print outputs
+    
+    def test_tidyhtmlfilter(self):
+        filter=\
+        {
+            "class":hyer.filter.TidyHTMLFilter,
+            "from":"html",
+            "to":"html"
+        }
+        data=\
+        {
+            "html":open("./data/index.html").read()
+        }
+        output=hyer.filter.TidyHTMLFilter(filter).run(data)
+        print output
 
 if __name__ == "__main__":
     unittest.main()  
