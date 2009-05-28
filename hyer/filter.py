@@ -10,6 +10,7 @@ import hyer.urlfunc
 import hyer.document
 import copy
 import random
+import time
 _MAX_PAGENUM=10000
 class Filter:
     def __init__(self,config):
@@ -563,13 +564,18 @@ class TaskSplitFilter(Filter):
     def run(self,data):
         if not isinstance(data[self.config["from"]],list):
             raise hyer.error.ConfigError("config['from'] must be list ")
-        
+        #如果task_id为空,则生成一个.
+        if not data.has_key("__TASK_ID__"):
+            data["__TASK_ID__"]="task_%d" % int(time.time())
         tempdata=[]
         frm=data[self.config["from"]]
+        taskid=0
         for item in frm:
+            taskid=taskid+1
             iter=copy.copy(data)
             del iter[self.config["from"]]
             iter[self.config["to"]]=item
+            iter["__TASK_ID__"]="%s_%d" % (iter["__TASK_ID__"],taskid)
             tempdata.append(iter)
         return tempdata
 class ScanLinksFilter(Filter):
@@ -586,19 +592,18 @@ class ScanLinksFilter(Filter):
     def run(self,data):
         frm=data[self.config["from"]]
         url=data[self.config["uri_field"]]
-        doc=hyer.document.HTMLDocument(frm,url)
-        base_dir=hyer.urlfunc.get_base_dir(doc,url)
+        #doc=hyer.document.HTMLDocument(frm,url)
+        base_dir=hyer.urlfunc.get_base(frm,url)
         links=[]
-        all_original_links=doc["links"]
-        hyer.event.fire_event("new_original_url",all_original_links)
+        all_original_links=hyer.urlfunc.extract_links(frm)
         all_original_links=hyer.urlfunc.remove_bad_links(all_original_links)
         urls=[]
         for l in all_original_links: 
-            u=hyer.urlfunc.get_full_url(l,base_dir)
+            u=hyer.urlfunc.get_full_url(l[0],base_dir)
             u=hyer.urlfunc.fix_url(u)
             hyer.event.fire_event("new_fixed_url",l)
             if self.validate_url(u):
-                urls.append(u)
+                urls.append([u,l[1]])
         data[self.config["to"]]=urls
         return data
     def validate_url(self,u):
@@ -620,5 +625,5 @@ class ScanLinksFilter(Filter):
         else:
             return True
 
-class ExtractLinksDataFilter(Filter):
-    '''从字符串中解析出一个链接和链接文本'''
+#class ExtractLinksDataFilter(Filter):
+#    '''从字符串中解析出一个链接和链接文本'''
