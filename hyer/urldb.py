@@ -87,9 +87,10 @@ class Urldb:
         print "unvisited:",self.urls_queue
 class Urldb_mysql:
     '''class hold on urls that visited all would be visited'''
-    def __init__(self):
+    def __init__(self,conf):
         '''initize the mysqldb connection'''
-        self.conn=MySQLdb.connect('localhost','root','842519','hyer')
+
+        self.conn=MySQLdb.connect(conf["host"],conf["user"],conf["pass"],conf["db"])
         self.cursor=self.conn.cursor(MySQLdb.cursors.DictCursor)
     def add(self,url,task):
         '''we found a new url and save it in the queue'''   
