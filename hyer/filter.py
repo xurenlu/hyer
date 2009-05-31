@@ -599,3 +599,29 @@ class ScanLinksFilter(Filter):
                 hyer.event.fire_event("add_url",u)
                 self.add_url(u)
 
+class TidyHTMLFilter(Filter):
+    '''
+    用tidy 来对某个html进行检查修正.
+    仅限UTF-8
+    utidylib的主页:
+    http://pypi.python.org/pypi/uTidylib/0.2
+    {
+        "class":hyer.filter.TidyHTMLFilter,
+        "from":"html",
+        "to":"html"
+    }
+    '''
+    def run(self,data):
+        '''
+        '''
+        import tidy
+        frm=data[self.config["from"]]
+        if isinstance(frm,list):
+            outputs=[]
+            for it in frm:
+                outputs.append(str(tidy.parseString(it,input_encoding="utf8",output_encoding="utf8",preserve_entities="yes")))
+            data[self.config["to"]]=outputs
+        else:
+            data[self.config["to"]]=str(tidy.parseString(frm,input_encoding="utf8",output_encoding="utf8"),preserve_entities="yes"))
+        return data
+
