@@ -118,7 +118,7 @@ class PyFilterTest(unittest.TestCase):
             "output_encoding":"utf8"
         }
         output=hyer.filter.TidyHTMLFilter(filter).run(output)
-        print data["htmls"]
+        #print data["htmls"]
 
 if __name__ == "__main__":
     unittest.main()  

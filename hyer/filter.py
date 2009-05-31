@@ -623,10 +623,6 @@ class TidyHTMLFilter(Filter):
         '''
         import tidy
         frm=data[self.config["from"]]
-        #[44500:46000]
-        #print frm
-        #print tidy.parseString(frm,input_xml="yes",output_xml="yes",output_html="yes",force_output="yes")
-        #print frm
         try:
             input_enc=self.config["input_encoding"]
         except:
@@ -635,9 +631,6 @@ class TidyHTMLFilter(Filter):
             output_enc=self.config["output_encoding"]
         except:
             output_enc="utf8"
-        print "hi"
-        print input_enc
-        print output_enc
         if isinstance(frm,list):
             outputs=[]
             for it in frm:
@@ -664,8 +657,6 @@ class TidyHTMLFilter(Filter):
                 show_errors=6,
                 force_output="yes"
                 ))
-        print "hidos"
-        print "yessss============================"
         return data
 
 class IconvFilter(Filter):
