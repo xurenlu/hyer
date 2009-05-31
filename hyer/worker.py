@@ -80,7 +80,11 @@ class Worker(threading.Thread):
                     hyer.log.debug("worker got null product" )
                 else:
                     hyer.log.info("worker got new product")
-                    output=self.process(product)
+                    try:
+                        output=self.process(product)
+                    except Exception,e2:
+                        hyer.log.error("error occured while processing filters ")
+                        continue
                     #如果这个流程至这儿结束了,就不用报告到控制台了..
                     if self.nextWorker==None:
                         continue
