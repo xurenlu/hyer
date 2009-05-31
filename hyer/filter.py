@@ -6,6 +6,8 @@ import json
 from BeautifulSoup import BeautifulSoup
 import re
 import hyer.browser
+import hyer.urlfunc
+import hyer.document
 import copy
 import random
 _MAX_PAGENUM=10000
@@ -570,3 +572,30 @@ class TaskSplitFilter(Filter):
             iter[self.config["to"]]=item
             tempdata.append(iter)
         return tempdata
+class ScanLinksFilter(Filter):
+    '''
+    从[from]扫描出所有链接,再利用[uri_field]拼接出完整的地址.
+    {
+        "class":hyer.filter.ScanLinksFilter,
+        "from":"html",
+        "uri_field":"URI",
+        "to":"links"
+    }
+    '''
+    def run(self,data):
+        frm=data[self.config["from"]]
+        url=data[self.config["uri_field"]]
+        doc=self.document(frm,url)
+        base_dir=hyer.urlfunc.get_base_dir(doc,url)
+        links=[]
+        all_original_links=doc["links"]
+        hyer.event.fire_event("new_original_url",all_original_links)
+        all_original_links=hyer.urlfunc.remove_bad_links(all_original_links)
+        for l in all_original_links: 
+            u=hyer.urlfunc.get_full_url(l,base_dir)
+            u=hyer.urlfunc.fix_url(u)
+            hyer.event.fire_event("new_fixed_url",l)
+            if self.validate_url(u):
+                hyer.event.fire_event("add_url",u)
+                self.add_url(u)
+
