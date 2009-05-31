@@ -96,16 +96,29 @@ class PyFilterTest(unittest.TestCase):
     def test_tidyhtmlfilter(self):
         filter=\
         {
-            "class":hyer.filter.TidyHTMLFilter,
+            "class":hyer.filter.IconvFilter,
             "from":"html",
-            "to":"html"
+            "to":"html",
+            "f":"GBK",
+            "t":"UTF-8"
         }
         data=\
         {
-            "html":open("./data/index.html").read()
+            "html":open("./data/sohu.html").read()
         }
-        output=hyer.filter.TidyHTMLFilter(filter).run(data)
-        print output
+        #print data["html"]
+        output=hyer.filter.IconvFilter(filter).run(data)
+        #print output["html"]
+        filter=\
+        {
+            "class":hyer.filter.TidyHTMLFilter,
+            "from":"html",
+            "to":"htmls",
+            "input_encoding":"utf8",
+            "output_encoding":"utf8"
+        }
+        output=hyer.filter.TidyHTMLFilter(filter).run(output)
+        print data["htmls"]
 
 if __name__ == "__main__":
     unittest.main()  
