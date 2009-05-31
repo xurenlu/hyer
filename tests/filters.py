@@ -83,7 +83,7 @@ class PyFilterTest(unittest.TestCase):
             "to":"html",
             "db_path":"../db/dbpath/",
             "proxies":[
-                {"http":"http://localhost:2000"},
+                #{"http":"http://localhost:2000"},
                 {"http":"http://localhost:80"}
             ]
         }
@@ -93,6 +93,19 @@ class PyFilterTest(unittest.TestCase):
         }
         newtasks=hyer.filter.RandomProxyUrlFetchFilter(filter).run(data)
         print len(newtasks["html"])
+    def test_tidyhtmlfilter(self):
+        filter=\
+        {
+            "class":hyer.filter.TidyHTMLFilter,
+            "from":"html",
+            "to":"html"
+        }
+        data=\
+        {
+            "html":open("./data/index.html").read()
+        }
+        output=hyer.filter.TidyHTMLFilter(filter).run(data)
+        print output
 
 if __name__ == "__main__":
     unittest.main()  
