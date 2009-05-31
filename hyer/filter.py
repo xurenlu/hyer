@@ -226,6 +226,11 @@ class DisplayFilter(Filter):
                 print " " * depth," ",v,":"
                 self.dump(vr[v],depth+1)
             print " " * depth,"},"
+        elif vr.__class__ == type(""):
+            if len(vr)>500:
+                print " " * depth,vr[:500],","
+            else:
+                print " " * depth,vr,","
 
         else:
             print " " * depth,vr,","
@@ -608,7 +613,9 @@ class TidyHTMLFilter(Filter):
     {
         "class":hyer.filter.TidyHTMLFilter,
         "from":"html",
-        "to":"html"
+        "to":"html",
+        "input_encoding":"utf8",
+        "output_encoding":"UTF8"
     }
     '''
     def run(self,data):
@@ -616,12 +623,74 @@ class TidyHTMLFilter(Filter):
         '''
         import tidy
         frm=data[self.config["from"]]
+        #[44500:46000]
+        #print frm
+        #print tidy.parseString(frm,input_xml="yes",output_xml="yes",output_html="yes",force_output="yes")
+        #print frm
+        try:
+            input_enc=self.config["input_encoding"]
+        except:
+            input_enc="utf8"
+        try:
+            output_enc=self.config["output_encoding"]
+        except:
+            output_enc="utf8"
+        print "hi"
+        print input_enc
+        print output_enc
         if isinstance(frm,list):
             outputs=[]
             for it in frm:
-                outputs.append(str(tidy.parseString(it,input_encoding="utf8",output_encoding="utf8",preserve_entities="yes")))
+                outputs.append(str(tidy.parseString(it,
+                input_encoding=input_enc,
+                output_encoding=output_enc,
+                preserve_entities="yes",
+                accessibility_check=0,
+                new_empty_tags="",
+                output_html="yes",
+                show_errors=6,
+                force_output="yes"
+
+                    )))
             data[self.config["to"]]=outputs
         else:
-            data[self.config["to"]]=str(tidy.parseString(frm,input_encoding="utf8",output_encoding="utf8"),preserve_entities="yes"))
+            data[self.config["to"]]=str(tidy.parseString(frm,
+                input_encoding=input_enc,
+                output_encoding=output_enc,
+                preserve_entities="yes",
+                accessibility_check=0,
+                new_empty_tags="",
+                output_html="yes",
+                show_errors=6,
+                force_output="yes"
+                ))
+        print "hidos"
+        print "yessss============================"
         return data
 
+class IconvFilter(Filter):
+    '''convert data to other encoding:
+    {
+        "class":hyer.filter.IconvFilter,
+        "f":"GBK",
+        "t":"UTF-8",
+        "from":"html",
+        "to":"html"
+    }
+    '''
+    def run(self,data):
+        if not self.config.has_key("f"):
+            raise hyer.error.ConfigError("config[f] can't be null")
+        if not self.config.has_key("t"):
+            raise hyer.error.ConfigError("config[t] can't be null")
+
+        frm=data[self.config["from"]]
+        if isinstance(frm,list):
+            outputs=[]
+            for it in frm:
+                outputs.append( it.decode(self.config["f"],"ignore").encode(self.config["t"],"ignore"))
+            data[self.config["to"]]=outputs
+        else:
+            data[self.config["to"]]= frm.decode(self.config["f"],"ignore").encode(self.config["t"],"ignore")
+        return data
+        
