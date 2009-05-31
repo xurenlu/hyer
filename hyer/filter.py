@@ -6,11 +6,8 @@ import json
 from BeautifulSoup import BeautifulSoup
 import re
 import hyer.browser
-import hyer.urlfunc
-import hyer.document
 import copy
 import random
-import time
 _MAX_PAGENUM=10000
 class Filter:
     def __init__(self,config):
@@ -287,7 +284,7 @@ class BeautifulSoupMultiNodeFilter(Filter):
     Extra html tag nodes by BeautifulSoup 
     example:
     {
-        "class":hyer.filter.BeautifulSoupMultiNodeFilter,
+        "class":hyer.filter.BeautifulSoupMultiNodeFilter(Filter):
         "from":"html",
         "to":"links_nodes",
         "tagname":"a",
@@ -564,89 +561,12 @@ class TaskSplitFilter(Filter):
     def run(self,data):
         if not isinstance(data[self.config["from"]],list):
             raise hyer.error.ConfigError("config['from'] must be list ")
-        #如果task_id为空,则生成一个.
-        if not data.has_key("__TASK_ID__"):
-            data["__TASK_ID__"]="task_%d" % int(time.time())
+        
         tempdata=[]
         frm=data[self.config["from"]]
-        taskid=0
         for item in frm:
-            taskid=taskid+1
             iter=copy.copy(data)
             del iter[self.config["from"]]
             iter[self.config["to"]]=item
-            iter["__TASK_ID__"]="%s_%d" % (iter["__TASK_ID__"],taskid)
             tempdata.append(iter)
         return tempdata
-class ScanLinksFilter(Filter):
-    '''
-    从[from]扫描出所有链接,再利用[uri_field]拼接出完整的地址.
-    {
-        "class":hyer.filter.ScanLinksFilter,
-        "from":"html",
-        "uri_field":"URI",
-        "to":"links",
-        "same_domain_regexps":[ re.compile('http:\/\/business\.sohu\.com\/'), re.compile('http:\/\/money\.sohu\.com\/'), re.compile('http:\/\/stock\.sohu\.com\/') ],
-    }
-    '''
-    def run(self,data):
-        frm=data[self.config["from"]]
-        url=data[self.config["uri_field"]]
-        #doc=hyer.document.HTMLDocument(frm,url)
-        base_dir=hyer.urlfunc.get_base(frm,url)
-        links=[]
-        all_original_links=hyer.urlfunc.extract_links(frm)
-        all_original_links=hyer.urlfunc.remove_bad_links(all_original_links)
-        urls=[]
-        for l in all_original_links: 
-            u=hyer.urlfunc.get_full_url(l[0],base_dir)
-            u=hyer.urlfunc.fix_url(u)
-            hyer.event.fire_event("new_fixed_url",l)
-            if self.validate_url(u):
-                urls.append([u,l[1]])
-        data[self.config["to"]]=urls
-        return data
-    def validate_url(self,u):
-        '''check if the url need to be visited,
-            generelly removing pictures,css and javascript files
-            and if the param conf (specified when you initing the object) set leave_domain false,fire this validation
-        '''
-        #如果定义了same_domain_regexps,
-        #就必须检查.
-        if self.config.has_key("validate_url_regexps"):
-            validate_url=False
-            for validate_url_regexp in self.conf["validate_url_regexps"]:
-                if validate_url_regexp.match(u):
-                    validate_url=True
-            if same_domain==False:
-                return False
-            else:
-                return True
-        else:
-            return True
-
-class TidyHTMLFilter(Filter):
-    '''
-    用tidy 来对某个html进行检查修正.
-    仅限UTF-8
-    utidylib的主页:
-    http://pypi.python.org/pypi/uTidylib/0.2
-    {
-        "class":hyer.filter.TidyHTMLFilter,
-        "from":"html",
-        "to":"html"
-    }
-    '''
-    def run(self,data):
-        '''
-        '''
-        import tidy
-        frm=data[self.config["from"]]
-        if isinstance(frm,list):
-            outputs=[]
-            for it in frm:
-                outputs.append( str( tidy.parseString(it,input_encoding="utf8",output_encoding="utf8",preserve_entities="yes")))
-            data[self.config["to"]]=outputs
-        else:
-            data[self.config["to"]]=str(tidy.parseString(frm,input_encoding="utf8",output_encoding="utf8",preserve_entities="yes"))
-        return data

@@ -74,16 +74,16 @@ class PyFilterTest(unittest.TestCase):
         data["html"]="testdone"
         hyer.filter.FuncFilter(filter).run(data)
         self.assertEqual(data["len"],8)
-    def test_randomProxyfilter(self):
+    def test_tasksplitfilter(self):
         filter=\
         {
             "class":hyer.filter.RandomProxyUrlFetchFilter,
             "agent":"Mozilla/Firefox 3.1",
             "from":"url",
             "to":"html",
-            "db_path":"./db/dbpath/",
+            "db_path":"../db/dbpath/",
             "proxies":[
-                {"http":"http://localhost:2000"},
+                #{"http":"http://localhost:2000"},
                 {"http":"http://localhost:80"}
             ]
         }
@@ -92,42 +92,7 @@ class PyFilterTest(unittest.TestCase):
             "url":"http://www.sina.com/"
         }
         newtasks=hyer.filter.RandomProxyUrlFetchFilter(filter).run(data)
-
         print len(newtasks["html"])
-    def test_scanlinksfilter(self):
-        filter=\
-        {
-            "class":hyer.filter.ScanLinksFilter,
-            "from":"html",
-            "to":"links",
-            "uri_field":"url"
-        }
-        data=\
-        {
-            "url":"http://www.162cm.com/",
-            "html":open("./data/index.html").read()
-        }
-        outputs=hyer.filter.ScanLinksFilter(filter).run(data)
-        del outputs["html"]
-        print outputs
-    def test_findSoupNodes(self):
-        filter=\
-        {
-            "class":hyer.filter.BeautifulSoupMultiNodeFilter,
-            "from":"html",
-            "to":"links_nodes",
-            "tagname":"a",
-            "attrs":{}
-        }
-        data=\
-        {
-            "url":"http://www.162cm.com/",
-            "html":open("./data/index.html").read()
-        }
-        outputs=hyer.filter.BeautifulSoupMultiNodeFilter(filter).run(data)
-        del outputs["html"]
-        print outputs
-    
     def test_tidyhtmlfilter(self):
         filter=\
         {
