@@ -4,6 +4,7 @@ import sys
 import os
 import json
 from BeautifulSoup import BeautifulSoup
+import hashlib
 import re
 import hyer.browser
 import hyer.urlfunc
@@ -578,6 +579,7 @@ class TaskSplitFilter(Filter):
             iter=copy.copy(data)
             del iter[self.config["from"]]
             iter[self.config["to"]]=item
+            iter["__PRODUCT_ID__"]=hashlib.md5(self.config["new_product_id_from"].run(item)).hexdigest()
             tempdata.append(iter)
         return tempdata
 class ScanLinksFilter(Filter):
@@ -722,8 +724,34 @@ class UniqueCheckFilter(Filter):
             raise hyer.error.ConfigError("data['from'] can't be list")
         frm=data[self.config["from"]]
         if hyer.singleton_bloom.exists(frm):
-            raise hyer.error.ExitLoopError("exit the loop")
+            raise hyer.error.ExitLoopError("exit the loop because UniqueCheckFilter:" + str(frm))
         else:
             hyer.singleton_bloom.add(frm)
         return data
+
+class RegexpCheckFilter(Filter):
+    '''
+    check if the specific field matches the regexp
+    if not,raise a hyer.error.ExitLoopError
+    {
+        "class":hyer.filter.RegexpCheckFilter,
+        "regexp":re.compile('.*n[\d]+\.shtml',re.I),
+        "from":"url"
+    }
+    '''
+    def run(self,data):
+        if isinstance(data[self.config["from"]],list):
+            raise hyer.error.ConfigError("data[from] can't be list")
+        if not self.config["regexp"].match(data[self.config["from"]]):
+           raise hyer.error.ExitLoopError("data[%s] not match re." % self.config["from"])
+        return data
+
+class FixProductIdFilter(Filter):
+    '''
+    {
+        'class':hyer.filter.FixProductIdFilter,
+        "from":hyer.helper.peeker([]),
+        "seed":"url"
+    }
+    '''
 

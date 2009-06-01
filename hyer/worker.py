@@ -27,6 +27,7 @@ class Worker(threading.Thread):
         self.products=products
         self.config=config
         self.nextWorker=config["nextWorker"]
+        self.currentFilter="null"
         #for product in products:
         #    self.Leader.pushProduct(self.post,product)
         #pass
@@ -55,6 +56,7 @@ class Worker(threading.Thread):
     def process(self,product):
         '''处理一件产品/加工一个作业'''
         for filter in self.filters:
+            self.currentFilter=filter
             try:
                 product=filter["class"](filter).run(product)
             except hyer.error.ExitLoopError,ex:
@@ -84,13 +86,14 @@ class Worker(threading.Thread):
                     try:
                         output=self.process(product)
                     except hyer.error.ExitLoopError,e1:
-
+                        print "got an ExitLoopError ",e1,":",self.post,":",self.currentFilter
                         continue
                     except Exception,e2:
                         hyer.log.error("error occured while processing filters ")
                         continue
                     #如果这个流程至这儿结束了,就不用报告到控制台了..
                     if self.nextWorker==None:
+                        hyer.log.error("nextWorker == None,exit")
                         continue
                     if isinstance(self.nextWorker,list):
                         for nw in self.nextWorker:

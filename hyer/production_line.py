@@ -37,13 +37,13 @@ class ProductionLine:
         j=0
         for worker in self.workers:
             worker.setDaemon(True)
-            worker.setName("worker-%d [%s]" % (j,worker.name))
+            worker.setName("worker-%s-%d" % (worker.post,j))
             worker.start()
             hyer.log.info("%d:worker started:%s" % (j,str(id(worker))) )
             j=j+1
         while True:
             time.sleep(5)
-            print "main thread..."
+            print "..."
         for worker in self.workers:
             worker.join()
 

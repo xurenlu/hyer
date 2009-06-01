@@ -60,8 +60,13 @@ sys.setdefaultencoding("utf-8")
 global g_mutex
 g_mutex=None
 g_mutex = threading.Lock()
-print g_mutex
-Leader=hyer.leader.Leader()
+Leader=hyer.leader.Leader({
+    "host":"localhost",
+    "db":"hyer",
+    "user":"root",
+    "pass":"",
+    "table":"products"
+    })
 workers=[
         {
             "post":"UrlFetch",
@@ -69,7 +74,20 @@ workers=[
             "threads":1,
             "products":[
                 {
-                    "url":"http://business.sohu.com/"
+                    "url":"http://business.sohu.com/20090409/n263287936.shtml",
+                    "__PRODUCT_ID__":"0",
+                },
+                {
+                    "url":"http://business.sohu.com/20090409/n263288115.shtml",
+                    "__PRODUCT_ID__":"1",
+                },
+                {
+                    "url":"http://stock.sohu.com/20090531/n264247193.shtml",
+                    "__PRODUCT_ID__":"2",
+                },
+                {
+                    "url":"http://business.sohu.com/20090531/n264247509.shtml",
+                    "__PRODUCT_ID__":"3"
                 }
                 ],
             "filters":[
@@ -114,12 +132,13 @@ workers=[
                     "from":"html",
                     "uri_field":"url",
                     "to":"urls",
-                    "validate_url_regexps":[ re.compile('http:\/\/business\.sohu\.com\/'), re.compile('http:\/\/money\.sohu\.com')]
+                    "validate_url_regexps":[ re.compile('http:\/\/business\.sohu\.com\/'), re.compile('http:\/\/money\.sohu\.com'),re.compile('http:\/\/stock\.sohu\.com\/')]
                 },
                 {
                     "class":hyer.filter.TaskSplitFilter,
                     "from":"urls",
-                    "to":"urls"
+                    "to":"urls",
+                    "new_product_id_from":hyer.helper.peeker(["url"]) #从这里产生新的__PRODUCT_ID__
                 }
                 ]
             },
@@ -156,6 +175,11 @@ workers=[
                 "nextWorker":None,
                 "products":[],
                 "filters":[
+                {
+                    "class":hyer.filter.RegexpCheckFilter,
+                    "from":"url",
+                    "regexp":re.compile('.*n[\d]+\.shtml',re.I)
+                },
                 {
                     "class":hyer.filter.ExtMainTextFilter,
                     "from":"html",

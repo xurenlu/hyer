@@ -16,7 +16,6 @@ class Writer:
         return data
 class MySQLWriter(Writer):
     def run(self,data):
-        print self.config
         if not self.config.has_key("host"):
             raise hyer.error.ConfigError("MysqWriter need config['host'] filed")
             return data
@@ -46,7 +45,6 @@ class MySQLWriter(Writer):
         for f in self.config["fields"]:
             dict[f]=frm[f]
         sql=hyer.tinySQL.create(self.config["table"],dict)
-        print sql
         conn=MySQLdb.connect(self.config["host"],self.config["user"],self.config["pass"],self.config["db"])
         cursor=conn.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute(sql)

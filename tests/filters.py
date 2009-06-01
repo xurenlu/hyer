@@ -74,7 +74,25 @@ class PyFilterTest(unittest.TestCase):
         data["html"]="testdone"
         hyer.filter.FuncFilter(filter).run(data)
         self.assertEqual(data["len"],8)
-    def test_tasksplitfilter(self):
+    def test_taskSplitFilter(self):
+        data={
+                "domain":"http://www.sohu.com/",
+                "urls":[
+                    {"url":"/index1.html","title":"page1"},
+                    {"url":"/index2.html","title":"page2"},
+                    {"url":"/index3.html","title":"page3"}
+                ]
+            }
+        filter=\
+            {
+                "class":hyer.filter.TaskSplitFilter,
+                "from":"urls",
+                "to":"urls",
+                "new_product_id_from":hyer.helper.peeker(["url"])
+            }
+        newtasks=hyer.filter.TaskSplitFilter(filter).run(data)
+        print newtasks
+    def test_randomfilter(self):
         filter=\
         {
             "class":hyer.filter.RandomProxyUrlFetchFilter,
@@ -154,7 +172,20 @@ class PyFilterTest(unittest.TestCase):
         del outputs["html"]
         for j in outputs["links"]:
             print j
-
+    def test_regexpcheckfilter(self):
+        data={
+                "url": "http://business.sohu.com/20090409/n263287936.shtml"
+            }
+        filter=\
+        {
+            "class":hyer.filter.RegexpCheckFilter,
+            "from":"url",
+            "regexp":re.compile(r'.*n[\d]+\.shtml',re.I)
+        }
+        print "checkExp:"
+        j=filter["class"](filter).run(data)
+        print j
+        print "done"
 if __name__ == "__main__":
     unittest.main()  
 		
