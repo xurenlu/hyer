@@ -74,6 +74,13 @@ workers=[
                 ],
             "filters":[
                 {
+                    "class":hyer.filter.DisplayFilter,
+                },
+                {
+                    "class":hyer.filter.UniqueCheckFilter,
+                    "from":"url",
+                },
+                {
                     "class":hyer.filter.UrlFetchFilter,
                     "to":"html",
                     "agent":"Mozilla/Firefox 3.1",

@@ -11,6 +11,8 @@ import hyer.document
 import copy
 import random
 import hyer.vendor.TextExtract
+import hyer.vendor.bloom
+import hyer.singleton_bloom
 _MAX_PAGENUM=10000
 class Filter:
     def __init__(self,config):
@@ -597,12 +599,14 @@ class ScanLinksFilter(Filter):
         all_original_links=hyer.urlfunc.extract_links(frm)
         all_original_links=hyer.urlfunc.remove_bad_links(all_original_links)
         urls=[]
+        hrefs=[]
         for l in all_original_links: 
             u=hyer.urlfunc.get_full_url(l["url"],base_dir)
             u=hyer.urlfunc.fix_url(u)
-            hyer.event.fire_event("new_fixed_url",l)
             if self.validate_url(u):
-                urls.append({"url":u,"text":l["text"]})
+                if not u in hrefs:
+                    urls.append({"url":u,"text":l["text"]})
+                    hrefs.append(u)
         data[self.config["to"]]=urls
         return data
     def validate_url(self,u):
@@ -704,4 +708,22 @@ class IconvFilter(Filter):
         else:
             data[self.config["to"]]= frm.decode(self.config["f"],"ignore").encode(self.config["t"],"ignore")
         return data
-        
+class UniqueCheckFilter(Filter):
+    '''
+    check if an unique key is exists ,
+    and if exists, just exit the loop
+    {
+        "class":hyer.filter.UniqueCheckFilter,
+        "from":"url"
+    }
+    '''
+    def run(self,data):
+        if isinstance(data[self.config["from"]],list):
+            raise hyer.error.ConfigError("data['from'] can't be list")
+        frm=data[self.config["from"]]
+        if hyer.singleton_bloom.exists(frm):
+            raise hyer.error.ExitLoopError("exit the loop")
+        else:
+            hyer.singleton_bloom.add(frm)
+        return data
+

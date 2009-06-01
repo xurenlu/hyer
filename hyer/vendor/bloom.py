@@ -47,7 +47,7 @@ class Bloom:
 	return 1
     def _hashes(self, astr):
     	"""The hashes of a particular string."""
-    	digest = sha.sha(astr).digest()
+    	digest = hashlib.sha1(astr).digest()
 	# is there no better way to convert a byte string into a long?!
 	hashlong = 0L
 	for ch in digest: hashlong = (hashlong << 8) | ord(ch)
@@ -76,10 +76,26 @@ def test_bloom():
     assert 'fdsa' not in b
 
     # false positives (depends on hash function):
-    x = Bloom(8, 3)
+    x = Bloom(1024, 8)
     x.add('asdf') # about a 5% chance of false positives
+    x.add('1') # about a 5% chance of false positives
+    x.add('2') # about a 5% chance of false positives
+    x.add('3') # about a 5% chance of false positives
+    x.add('4') # about a 5% chance of false positives
+    x.add('5') # about a 5% chance of false positives
+    x.add('6') # about a 5% chance of false positives
+    x.add('7') # about a 5% chance of false positives
+    x.add('8') # about a 5% chance of false positives
     assert 'asdf' in x
-    assert 'fdsa' not in x
-    ok(filter(x.__contains__, ['foo%d' % ii for ii in range(25)]), ['foo22'])
-
-#test_bloom()
+    assert '1' in x
+    assert '2' in x
+    assert '3' in x
+    assert '4' in x
+    assert '5' in x
+    assert '6' in x
+    assert '7' in x
+    assert '8' in x
+    #ok(filter(x.__contains__, ['foo%d' % ii for ii in range(25)]), ['foo22'])
+    print "done"
+if __name__=="__main__":
+    test_bloom()

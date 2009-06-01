@@ -57,11 +57,10 @@ class Worker(threading.Thread):
         for filter in self.filters:
             try:
                 product=filter["class"](filter).run(product)
-            except hyer.error.ExitLoopError,e:
-                print "error caught:",e
-                return False
-            except Exception,er:
-                print "got mseg:",er
+            except hyer.error.ExitLoopError,ex:
+                raise hyer.error.ExitLoopError(str(ex))
+            except Except,ec:
+                pass
         return product
     def report(self,status=STA_DONE):
         pass
@@ -84,6 +83,9 @@ class Worker(threading.Thread):
                     hyer.log.info("worker got new product")
                     try:
                         output=self.process(product)
+                    except hyer.error.ExitLoopError,e1:
+
+                        continue
                     except Exception,e2:
                         hyer.log.error("error occured while processing filters ")
                         continue
