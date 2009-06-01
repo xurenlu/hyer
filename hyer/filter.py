@@ -212,7 +212,7 @@ class DisplayFilter(Filter):
     '''
     def dump(self,vr,depth):
         '''var_dump '''
-        if vr.__class__ == type([]):
+        if isinstance(vr,list):
             i=0
             print " " * depth,"["
             for v in vr:
@@ -220,13 +220,13 @@ class DisplayFilter(Filter):
                 print " " * depth,"list item [",i,"]:"
                 self.dump(v,depth+1)
             print "],"
-        elif vr.__class__ == type({}):
+        elif isinstance(vr,dict):
             print " " * depth,"{"
             for v in vr:
                 print " " * depth," ",v,":"
                 self.dump(vr[v],depth+1)
             print " " * depth,"},"
-        elif vr.__class__ == type(""):
+        elif isinstance(vr,str):
             if len(vr)>500:
                 print " " * depth,vr[:500],","
             else:
@@ -597,11 +597,11 @@ class ScanLinksFilter(Filter):
         all_original_links=hyer.urlfunc.remove_bad_links(all_original_links)
         urls=[]
         for l in all_original_links: 
-            u=hyer.urlfunc.get_full_url(l[0],base_dir)
+            u=hyer.urlfunc.get_full_url(l["url"],base_dir)
             u=hyer.urlfunc.fix_url(u)
             hyer.event.fire_event("new_fixed_url",l)
             if self.validate_url(u):
-                urls.append([u,l[1]])
+                urls.append([u,l["text"]])
         data[self.config["to"]]=urls
         return data
     def validate_url(self,u):

@@ -64,8 +64,8 @@ print g_mutex
 Leader=hyer.leader.Leader()
 workers=[
         {
-            "post":"UrlGenerator",
-            "nextWorker":"UrlProcess",
+            "post":"UrlFetch",
+            "nextWorker":["UrlProcess","UrlFetch"],
             "threads":1,
             "products":[
                 {
@@ -102,12 +102,12 @@ workers=[
                     "validate_url_regexps":[ re.compile('http:\/\/business\.sohu\.com\/'), re.compile('http:\/\/money\.sohu\.com')]
                 },
                 {
-                    "class":hyer.filter.DeleteItemFilter,
-                    "from":"",
-                    "delete_items":["url","html"]
+                    "class":hyer.filter.TaskSplitFilter,
+                    "from":"urls",
+                    "to":"urls"
                 },
                 {
-                    "class":hyer.filter.DisplayFilter,
+                    "class":hyer.filter.DisplayFilter
                 }
             ]
         }
