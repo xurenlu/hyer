@@ -119,6 +119,41 @@ class PyFilterTest(unittest.TestCase):
         }
         output=hyer.filter.TidyHTMLFilter(filter).run(output)
         #print data["htmls"]
+    def test_findSoupNodes(self):
+        filter=\
+        {
+            "class":hyer.filter.BeautifulSoupMultiNodeFilter,
+            "from":"html",
+            "to":"links_nodes",
+            "tagname":"a",
+            "attrs":{}
+        }
+        data=\
+        {
+            "url":"http://www.162cm.com/",
+            "html":open("./data/index.html").read()
+        }
+        outputs=hyer.filter.BeautifulSoupMultiNodeFilter(filter).run(data)
+        del outputs["html"]
+        #print outputs
+    def test_scanlinksfilter(self):
+        filter=\
+        {
+            "class":hyer.filter.ScanLinksFilter,
+            "from":"html",
+            "to":"links",
+            "uri_field":"url"
+        }
+        data=\
+        {
+            "url":"http://www.162cm.com/",
+            "html":open("./data/index.html").read()
+        }
+        outputs=hyer.filter.ScanLinksFilter(filter).run(data)
+        print "scan_links:"
+        del outputs["html"]
+        for j in outputs["links"]:
+            print j
 
 if __name__ == "__main__":
     unittest.main()  

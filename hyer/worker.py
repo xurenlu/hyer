@@ -60,6 +60,8 @@ class Worker(threading.Thread):
             except hyer.error.ExitLoopError,e:
                 print "error caught:",e
                 return False
+            except Exception,er:
+                print "got mseg:",er
         return product
     def report(self,status=STA_DONE):
         pass

@@ -584,25 +584,44 @@ class ScanLinksFilter(Filter):
         "class":hyer.filter.ScanLinksFilter,
         "from":"html",
         "uri_field":"URI",
-        "to":"links"
+        "to":"links",
+        "validate_url_regexps":[ re.compile('http:\/\/business\.sohu\.com\/'), re.compile('http:\/\/money\.sohu\.com')]
     }
     '''
     def run(self,data):
         frm=data[self.config["from"]]
         url=data[self.config["uri_field"]]
-        doc=self.document(frm,url)
-        base_dir=hyer.urlfunc.get_base_dir(doc,url)
+        base_dir=hyer.urlfunc.get_base(frm,url)
         links=[]
-        all_original_links=doc["links"]
-        hyer.event.fire_event("new_original_url",all_original_links)
+        all_original_links=hyer.urlfunc.extract_links(frm)
         all_original_links=hyer.urlfunc.remove_bad_links(all_original_links)
+        urls=[]
         for l in all_original_links: 
-            u=hyer.urlfunc.get_full_url(l,base_dir)
+            u=hyer.urlfunc.get_full_url(l[0],base_dir)
             u=hyer.urlfunc.fix_url(u)
             hyer.event.fire_event("new_fixed_url",l)
             if self.validate_url(u):
-                hyer.event.fire_event("add_url",u)
-                self.add_url(u)
+                urls.append([u,l[1]])
+        data[self.config["to"]]=urls
+        return data
+    def validate_url(self,u):
+        '''check if the url need to be visited,
+            generelly removing pictures,css and javascript files
+            and if the param conf (specified when you initing the object) set leave_domain false,fire this valida
+        '''
+        #如果定义了same_domain_regexps,
+        #就必须检查.
+        if self.config.has_key("validate_url_regexps"):
+            validate_url=False
+            for validate_url_regexp in self.config["validate_url_regexps"]:
+                if validate_url_regexp.match(u):
+                    validate_url=True
+            if validate_url==False:
+                return False
+            else:
+                return True
+        else:
+            return True
 
 class TidyHTMLFilter(Filter):
     '''

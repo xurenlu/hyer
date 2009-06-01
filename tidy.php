@@ -14,9 +14,10 @@ $config = array(
 // Tidy
 $tidy = new tidy;
 $tidy->parseString($html, $config, 'utf8');
-$tidy->cleanRepair();
+#$tidy->cleanRepair();
 
 // Output
 echo $tidy;
+//print_r($tidy->getConfig());
 ?>
 

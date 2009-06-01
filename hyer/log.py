@@ -15,11 +15,13 @@ log.error("hi,baby")
 log.debug("hi,baby")
 '''
 def info(msg,file=None):
-    _gen_msg("INFO",pcolor.PGREEN,msg,file)
+    #_gen_msg("INFO",pcolor.PGREEN,msg,file)
+    pass
 def error(msg,file=None):
     _gen_msg("EROR",pcolor.PRED,msg,file)
 def debug(msg,file=None):
-    _gen_msg("DEBG",pcolor.PYELLOW,msg,file)
+    #_gen_msg("DEBG",pcolor.PYELLOW,msg,file)
+    pass
 
 def _gen_msg(symbol,color,msg,file=None):
     hyer.lock.lock("record log")
