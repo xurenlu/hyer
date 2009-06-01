@@ -10,6 +10,7 @@ import hyer.urlfunc
 import hyer.document
 import copy
 import random
+import hyer.vendor.TextExtract
 _MAX_PAGENUM=10000
 class Filter:
     def __init__(self,config):
@@ -601,7 +602,7 @@ class ScanLinksFilter(Filter):
             u=hyer.urlfunc.fix_url(u)
             hyer.event.fire_event("new_fixed_url",l)
             if self.validate_url(u):
-                urls.append([u,l["text"]])
+                urls.append({"url":u,"text":l["text"]})
         data[self.config["to"]]=urls
         return data
     def validate_url(self,u):

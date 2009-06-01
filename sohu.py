@@ -65,7 +65,7 @@ Leader=hyer.leader.Leader()
 workers=[
         {
             "post":"UrlFetch",
-            "nextWorker":["UrlProcess","UrlFetch"],
+            "nextWorker":["TextGrabber","LinksGrabber"],
             "threads":1,
             "products":[
                 {
@@ -93,7 +93,15 @@ workers=[
                     "to":"html",
                     "input_encoding":"utf8",
                     "output_encoding":"utf8"
-                },
+                }
+                ]
+            },
+            {
+                "post":"LinksGrabber",
+                "threads":1,
+                "nextWorker":["GenNewUrls"],
+                "products":[],
+                "filters":[
                 {
                     "class":hyer.filter.ScanLinksFilter,
                     "from":"html",
@@ -105,12 +113,59 @@ workers=[
                     "class":hyer.filter.TaskSplitFilter,
                     "from":"urls",
                     "to":"urls"
+                }
+                ]
+            },
+            {
+                "post":"GenNewUrls",
+                "nextWorker":["UrlFetch"],
+                "products":[],
+                "filters":[
+                {
+                    "class":hyer.filter.DeleteItemFilter,
+                    "delete_items":["html"]
                 },
                 {
-                    "class":hyer.filter.DisplayFilter
+                    "class":hyer.filter.ReMixArrayFilter,
+                    "from":"urls",
+                    "to":"url",
+                    "column":"url"
+                },
+                {
+                    "class":hyer.filter.ReMixArrayFilter,
+                    "from":"urls",
+                    "to":"text",
+                    "column":"text"
+                },
+                {
+                    "class":hyer.filter.DeleteItemFilter,
+                    "delete_items":["urls"]
                 }
-            ]
-        }
+                ]
+            },
+            {
+                "post":"TextGrabber",
+                "threads":1,
+                "nextWorker":None,
+                "products":[],
+                "filters":[
+                {
+                    "class":hyer.filter.ExtMainTextFilter,
+                    "from":"html",
+                    "to":"maintext",
+                    "threshold":0.03
+                },
+                {
+                    "class":hyer.dbwriter.MySQLWriter,
+                    "fields":["maintext","url","text"],
+                    "host":"localhost",
+                    "user":"root",
+                    "pass":"",
+                    "db":"hyer",
+                    "table":"sohudata"
+                }
+                ]
+            }
         ]
 productionLine=hyer.production_line.ProductionLine()
 productionLine.addLeader(Leader)

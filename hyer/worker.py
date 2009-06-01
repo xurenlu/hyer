@@ -90,18 +90,22 @@ class Worker(threading.Thread):
                     #如果这个流程至这儿结束了,就不用报告到控制台了..
                     if self.nextWorker==None:
                         continue
-                    if isinstance(output,list):
-                        for outproduct in output:
-                            try:
-                                self.Leader.pushProduct(self.nextWorker,outproduct)
-                            except Exception,ep:
-                                hyer.log.error("pushProduct error:%s" % ep)
+                    if isinstance(self.nextWorker,list):
+                        for nw in self.nextWorker:
+                            if isinstance(output,list):
+                                for outproduct in output:
+                                    try:
+                                        self.Leader.pushProduct(nw,outproduct)
+                                    except Exception,ep:
+                                        hyer.log.error("pushProduct error:%s" % ep)
+                            else:
+                                try:
+                                    self.Leader.pushProduct(nw,output)
+                                except Exception,ep:
+                                    hyer.log.error("pushProduct error:%s" % ep)
                     else:
-                        try:
-                            self.Leader.pushProduct(self.nextWorker,output)
-                        except Exception,ep:
-                            hyer.log.error("pushProduct error:%s" % ep)
+                       hyer.log.error("nextWorker must be a list .") 
 
             except Exception,e:
                 hyer.log.error("fetchProduct() failed:%s" % e )
-            print str(self.Leader.productsToHandle[self.post])
+            #print str(self.Leader.productsToHandle[self.post])

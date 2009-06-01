@@ -4,6 +4,7 @@ import threading
 import hyer.singleton
 import hyer.lock
 import time
+import copy
 class Leader(threading.Thread):
     productsToHandle={}
     workers=[]
@@ -17,9 +18,10 @@ class Leader(threading.Thread):
         self.workers.append(worker)
         hyer.lock.unLock()
     def pushProduct(self,nextWorker,product):
+        tempProduct=copy.copy(product)
         hyer.lock.lock("pushProduct")
         try:
-            self.productsToHandle[nextWorker].append(product)
+            self.productsToHandle[nextWorker].append(tempProduct)
         except:
             pass
         hyer.lock.unLock()
