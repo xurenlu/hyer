@@ -59,6 +59,7 @@ class Browser:
             content=hyer.diskhash.hash_read(url,self.cache_dir)
             if not content==None:
                 return content
+            pass
         try:
             resp=self.get(url)
             if resp==None:
@@ -68,6 +69,7 @@ class Browser:
                 hyer.diskhash.hash_write(url,str,self.cache_dir)
                 return str
         except hyer.error.HTTPError,er:
+            print "url fetch error:",url,er.__class__,er
             raise er
             return None
         except Exception,er2:

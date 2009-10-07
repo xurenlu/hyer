@@ -4,7 +4,7 @@ import hyer.error
 import hyer.tinySQL
 import MySQLdb
 class Writer:
-    """filters implements function like writing to db"""
+    """tools implements function like writing to db"""
     def __init__(self,config):
         self.config=config
     def run(self,data):
@@ -14,7 +14,20 @@ class Writer:
             towrite=data[self.config["from"]]
         #do some thing here...
         return data
+
 class MySQLWriter(Writer):
+    '''
+    {
+        "class":hyer.dbwriter.MySQLWriter,
+        "fields":["ranktype","page","nodeid","bookid","ord"],
+        "host":configure["host"],
+        "user":configure["user"],
+        "pass":configure["pass"],
+        "db":configure["db"],
+        "table":"ranks2",
+        "insert_method":"insert" # or replace
+    }
+    '''
     def run(self,data):
         if not self.config.has_key("host"):
             raise hyer.error.ConfigError("MysqWriter need config['host'] filed")
@@ -34,6 +47,9 @@ class MySQLWriter(Writer):
         if not self.config.has_key("fields"):
             raise hyer.error.ConfigError("MysqWriter need config['fields'] filed")
             return data
+        if not self.config.has_key("insert_method"):
+            self.config["insert_method"]="insert"
+
         if self.config.has_key("from"):
             if self.config["from"]=="":
                 frm=data
@@ -44,9 +60,10 @@ class MySQLWriter(Writer):
         dict={}
         for f in self.config["fields"]:
             dict[f]=frm[f]
-        sql=hyer.tinySQL.create(self.config["table"],dict)
+        sql=hyer.tinySQL.create(self.config["table"],dict,self.config["insert_method"])
         conn=MySQLdb.connect(self.config["host"],self.config["user"],self.config["pass"],self.config["db"])
         cursor=conn.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute("set names utf8")
         cursor.execute(sql)
         return data
 class ResetFileWriter(Writer):

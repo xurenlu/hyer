@@ -121,7 +121,7 @@ class spider:
         except:
             self.logger.info("got invalid url:%s" % url)
             return True 
-        if  not self.site_holder_monster.can_visite(uri):
+        if  not self.site_holder_monster.can_visit(uri):
             self.logger.info("visited site too frequently:%s " % url)
             time.sleep(5)
             return True

@@ -1,9 +1,11 @@
 #coding:utf-8
-import hyer.singleton
-import logging
-from hyer import pcolor
-import time
 import threading
+import time
+import logging
+import sys
+import traceback
+import hyer.singleton
+from hyer import pcolor
 import hyer.lock
 '''
 colorful log text.
@@ -24,7 +26,7 @@ def debug(msg,file=None):
     pass
 
 def _gen_msg(symbol,color,msg,file=None):
-    hyer.lock.lock("record log")
+    #hyer.lock.lock("record log")
     thread=""
     tmp=""
     thread=pcolor.pcolorstr(" %s @%d" % (
@@ -35,5 +37,7 @@ def _gen_msg(symbol,color,msg,file=None):
     tmp="%s" % pcolor.pcolorstr(tmp,pcolor.PHIGHLIGHT,color,pcolor.PBLACK)
     tmp="%s %s" %  (tmp,thread)
     print tmp
-    hyer.lock.unLock()
-    
+    #hyer.lock.unLock()
+def track(limit=8): 
+    exceptionType, exceptionValue, exceptionTraceback = sys.exc_info()
+    traceback.print_tb(exceptionTraceback, limit=limit, file=sys.stdout)

@@ -12,7 +12,7 @@ class SingletonBloom(hyer.singleton.Singleton):
         if not self.__dict__.has_key("__bloom"):
             self.__dict__["__bloom"]={}
         if not self.__dict__["__bloom"].has_key(index):
-            self.__dict__["__bloom"][index]=hyer.vendor.bloom.Bloom(1024,6)
+            self.__dict__["__bloom"][index]=hyer.vendor.bloom.Bloom(10000000,5)
     def exists(self,k,index="default"):
         return k in self.__dict__["__bloom"][index]
 

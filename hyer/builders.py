@@ -6,17 +6,17 @@ import hyer.error
 class Builder:
     def __init__(self,setting):
         '''
-        A builder has a source and many filters;
-        builder run loops :pop up from source,sent to filters,and fetch the data,sent to filters....
-        and try to write to db by a dbwriter filter'''
+        A builder has a source and many tools;
+        builder run loops :pop up from source,sent to tools,and fetch the data,sent to tools....
+        and try to write to db by a dbwriter tool'''
         self.config=setting
-        self.filters=[]
-        for filter in setting["filters"]:
-            self.add_filter(filter)
+        self.tools=[]
+        for tool in setting["tools"]:
+            self.add_tool(tool)
         self.source=setting["source"]["class"](setting["source"])
 
-    def add_filter(self,filter):
-        self.filters.append(filter)
+    def add_tool(self,tool):
+        self.tools.append(tool)
     def single_run(self,data):
         pass
     def run(self,data):
@@ -29,8 +29,8 @@ class GenericBuilder(Builder):
             sys.exit(1)
     def _default(self,setting,key):
         pass
-    def add_filter(self,filter):
-        self.filters.append(filter)
+    def add_tool(self,tool):
+        self.tools.append(tool)
         pass
     def run(self,data):
         self.source.init(data)
@@ -43,9 +43,9 @@ class GenericBuilder(Builder):
             if temp == None:
                 return data
             data["__ITER__"]=temp
-            for filter in self.filters:
+            for tool in self.tools:
                 try:
-                    filter["class"](filter).run(data)
+                    tool["class"](tool).run(data)
                 except hyer.error.ExitLoopError,e:
                     print "error caught:",e
                     return False

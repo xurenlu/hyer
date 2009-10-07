@@ -8,6 +8,7 @@ global locked
 locked=False
 def lock(reason=None):
     global globalMutex
+    globalMutex.acquire()
     if reason==None:
         #print "locked by thread %s" % threading.currentThread().getName()
         pass
@@ -16,10 +17,9 @@ def lock(reason=None):
         #pcolor.pcolorstr( reason,pcolor.PHIGHLIGHT,pcolor.PCYAN,pcolor.PBLACK)
         #)
         pass
-    globalMutex.acquire()
 
 def unLock():
     global globalMutex
-    #print "unlocked by thread %s" % threading.currentThread().getName()
     globalMutex.release()
+    #print "unlocked by thread %s" % threading.currentThread().getName()
 

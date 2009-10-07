@@ -2,13 +2,15 @@
 #coding:utf-8
 
 import copy
+import urllib
 def helper_trim(str,args=[]):
     return str.strip()
 def helper_rtrim(str,args=[]):
     return str.rtrim()
 def helper_catstr(str,args=[]):
     return "%s%s" % (str,args[0] )
-
+def helper_urlencode(str,args=[]):
+    return urllib.urlencode({"":str})
 
 class peeker:
     def __init__(self,order):
@@ -24,10 +26,13 @@ class peeker:
         temp=copy.copy(data)
         try:
             while True:
-#((key=order.pop())!=None):
-                key=order.pop()
+                try:
+                    key=order.pop()
+                except:
+                    return temp
                 temp=temp[key]
-        except:
+        except Exception,e:
+            print "while hyer.helper.peeker:",e,"[",key,"]"
             pass
         return temp
 

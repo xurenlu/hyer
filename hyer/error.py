@@ -22,3 +22,7 @@ class ExitLoopError(Exception):
 class ConfigError(Exception):
     ''' error occured when configurating '''
     pass
+
+class IgnoreError(Exception):
+    '''Exception could be ignored in tools handleing.'''
+

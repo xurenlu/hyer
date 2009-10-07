@@ -81,6 +81,8 @@ def remove_bad_links(links):
                 continue
             if re.match(r'^gopher:',u["url"],re.I):
                 continue
+            if not re.match(r'^http:',u["url"],re.I):
+                continue;
             validated_urls.append(u)
         else:
             if re.match(r'^javascript:',u,re.I):
@@ -93,16 +95,18 @@ def remove_bad_links(links):
                 continue
             if re.match(r'^gopher:',u,re.I):
                 continue
+            if not re.match(r'^http:',u,re.I):
+                continue;
             validated_urls.append(u)
     return validated_urls	
     
 def extract_links(content):
-    #reg=re.compile(r'href\s*=\s*[\'\"]?([+:%\/\?~=&;\\\(\),._a-zA-Z0-9-]*)(#[.a-zA-Z0-9-]*)?[\'\" ]?(\s*rel\s*=\s[\>])([^<]?)')
-    #reg=re.compile(r'href\s*=\s*[\'\"]?([+:%\/\?~=&;\\\(\),._a-zA-Z0-9-]*)(#[.a-zA-Z0-9-]*)?[\'\" ]?(\s*rel\s*=\s*[\'\"]?(nofollow)[\'\"]?)?')
-    reg=re.compile(r'href\s*=\s*[\'\"]?([+:%\/\?~=&;\\\(\),._a-zA-Z0-9-]*)(#[.a-zA-Z0-9-]*)?[\'\" ]?(\s*rel\s*=\s*[\'\"]?(nofollow)[\'\"]?)?[\>]([^<]*)')
+    reg=re.compile(r'href\s*=\s*[\'\"]?([+:%\/\?~=&;\\\(\),._a-zA-Z0-9-]*)(#[.a-zA-Z0-9-]*)?[\'\" ]?(\s*rel\s*=\s*[\'\"]?(nofollow)[\'\"]?)?[^>]*[>]?([^<]*)',re.I|re.M|re.UNICODE)
     matches=reg.findall(content)
     res=[]
     for mt in matches:
+        #res.append(mt[0])
+        #continue
         if mt[0]!="":
             res.append({"url":mt[0],"text":mt[4]})
     return res

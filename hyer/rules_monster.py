@@ -2,7 +2,7 @@
 # hold on all rules ,to decide if an url can be fetched
 from robotparser import RobotFileParser
 import urlparse
-class rules_monster():
+class rules_monster:
 	'''rules monster
 	hold on all rules ,to decide if an url can be fetched'''
 	def __init__(self,agent='Mozilla/Firefox 3.1'):

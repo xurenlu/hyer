@@ -33,7 +33,7 @@ class Bloom:
 	self.size = size
 	self.nhashes = nhashes
 	self.hashbits = nbits_required(size)
-	assert self.hashbits * nhashes <= 160  # 160's all we get with SHA1
+	assert self.hashbits * nhashes <= 360  # 160's all we get with SHA1
     def add(self, astr):
     	"""Add a string to the membership of the filter."""
     	for offset in self._hashes(astr):
@@ -47,6 +47,7 @@ class Bloom:
 	return 1
     def _hashes(self, astr):
     	"""The hashes of a particular string."""
+    	#digest = hashlib.sha1(astr).digest()
     	digest = hashlib.sha1(astr).digest()
 	# is there no better way to convert a byte string into a long?!
 	hashlong = 0L
@@ -76,7 +77,7 @@ def test_bloom():
     assert 'fdsa' not in b
 
     # false positives (depends on hash function):
-    x = Bloom(1024, 8)
+    x = Bloom(4096, 18)
     x.add('asdf') # about a 5% chance of false positives
     x.add('1') # about a 5% chance of false positives
     x.add('2') # about a 5% chance of false positives

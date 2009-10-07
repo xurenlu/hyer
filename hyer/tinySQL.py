@@ -22,9 +22,24 @@ def update(table,columns,condition=None):
     else:
         return None
 
-def create(table,columns):
+def remove(table,columns):
     if isinstance(columns,dict):
-        sql="INSERT INTO `%s` (" % table
+        sql="DELETE FROM `%s` WHERE " % table
+        comm=""
+        for col in columns:
+            sql = sql + comm+ "`"+col+"`='"+escape(columns[col])+"' "
+            comm="AND "
+        return sql
+    else:
+        return None
+
+def create(table,columns,method="INSERT"):
+    '''
+    parameter method could be 'INSERT' or 'UPDATE'
+    '''
+    method=method.upper()
+    if isinstance(columns,dict):
+        sql=method + " INTO `%s` (" % table
         comm=""
         for col in columns:
             sql = sql + comm + "`"+col+"`"
