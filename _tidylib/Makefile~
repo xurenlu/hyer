@@ -1,0 +1,17 @@
+all:
+	gcc -pthread -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes  -DNDEBUG -Itidylib/include -I/usr/include/python2.6 -c tidylib/src/dump.c -o tidylib/src/dump.o
+	rm tidylib/src/dump
+	gcc -pthread  -Wl,-O1 -Wl,-Bsymbolic-functions  tidylib/src/access.o tidylib/src/alloc.o tidylib/src/attrask.o tidylib/src/attrdict.o tidylib/src/attrget.o tidylib/src/attrs.o tidylib/src/buffio.o tidylib/src/clean.o tidylib/src/config.o tidylib/src/entities.o tidylib/src/fileio.o tidylib/src/istack.o tidylib/src/lexer.o tidylib/src/localize.o tidylib/src/parser.o tidylib/src/pprint.o tidylib/src/streamio.o tidylib/src/tagask.o tidylib/src/tags.o tidylib/src/tidylib.o tidylib/src/tmbstr.o tidylib/src/utf8.o tidylib/src/dump.o -o  tidylib/src/dump
+	./tidylib/src/dump
+en:
+	LC_ALL=en_US.UTF-8 gcc dump.c -ltidy -I/usr/include/tidy -o dump
+
+ci:
+	LC_ALL=en_US.UTF-8 gcc dump.c -ltidy -I/usr/include/tidy -o dump -E
+bak:
+	gcc -pthread -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes  -DNDEBUG -Itidylib/include -I/usr/include/python2.6 -c tidylib/src/dump.c -o dump
+so:
+	rm *.so
+	gcc -pthread -shared -Wl,-O1 -Wl,-Bsymbolic-functions  tidylib/src/access.o tidylib/src/alloc.o tidylib/src/attrask.o tidylib/src/attrdict.o tidylib/src/attrget.o tidylib/src/attrs.o tidylib/src/buffio.o tidylib/src/clean.o tidylib/src/config.o tidylib/src/entities.o tidylib/src/fileio.o tidylib/src/istack.o tidylib/src/lexer.o tidylib/src/localize.o tidylib/src/parser.o tidylib/src/pprint.o tidylib/src/streamio.o tidylib/src/tagask.o tidylib/src/tags.o tidylib/src/tidylib.o tidylib/src/tmbstr.o tidylib/src/utf8.o  -o tidylib2.so
+
+
