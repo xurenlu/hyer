@@ -67,6 +67,7 @@ def prepare_taskfile(taskfile):
     path = os.path.dirname(taskfile)
     taskmodulename = os.path.splitext(os.path.basename(taskfile))[0]
     fp, pathname, description = imp.find_module(taskmodulename, [path])
+    print "fp:",fp,",pathname:",pathname,",desc:",description
     try:
         return imp.load_module(taskmodulename, fp, pathname, description)
     finally:
@@ -191,8 +192,9 @@ if len(sys.argv)==1:
     sys.exit()
 
 taskfile=sys.argv[-1]
-prepare_taskfile(taskfile)
-
+k=prepare_taskfile(taskfile)
+print k.run(configure)
+print "k:",k
 print "\n\nstart with:\n"
 print configure
 print "\n\n"

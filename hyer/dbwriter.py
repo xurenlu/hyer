@@ -30,7 +30,7 @@ class MySQLWriter(Writer):
     '''
     def run(self,data):
         if not self.config.has_key("host"):
-            raise hyer.error.ConfigError("MysqWriter need config['host'] filed")
+            raise hyer.error.ConfigError("MysqlWriter need config['host'] filed")
             return data
         if not self.config.has_key("user"):
             raise hyer.error.ConfigError("MysqWriter need config['user'] filed")
