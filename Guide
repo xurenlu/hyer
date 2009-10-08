@@ -1,0 +1,4 @@
+1.
+    hyerctl.py init dmoz
+    hyerctl.py run dmoz/dmoz.py
+
