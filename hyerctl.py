@@ -6,7 +6,14 @@ sys.path.append('/usr/lib/python2.5/site-packages/')
 sys.path.append('/usr/lib/python2.6/dist-packages/')
 sys.path.append("/var/lib/python-support/python2.5/")
 sys.path.append("/var/lib/python-support/python2.6/")
-import  stackless,sys, os,atexit
+import stackless,sys, os,atexit
+import sys,getopt
+import json
+import threading
+import signal, os,time,re
+import imp
+import shutil
+
 import hyer.document
 import hyer.browser
 import hyer.rules_monster
@@ -18,20 +25,11 @@ import hyer.builders
 import hyer.helper
 import hyer.dbwriter
 import hyer.production_line
-#import hyer.worker
 import hyer.leader
 import hyer.singleton
 import hyer.log
-#import codecs
-import sys,getopt
-import json
-import re
-import threading
-#import hyer.break_handler
 import hyer.pcolor
 import hyer.sl
-import signal, os,time,re
-import imp
 
 """
 """
@@ -74,6 +72,18 @@ def prepare_taskfile(taskfile):
         if fp:
             fp.close()
 
+def inittask(task):
+    """init a task and create empty files for you 
+    """
+    try:
+        os.mkdir(task,0755)
+    except:
+        pass
+    try:
+        shutil.copyfile("share/templates/project.py","%s/%s.py" % (task,task) )
+    except:
+        pass
+
 def handle_pid():
     """
     handle pid files
@@ -104,7 +114,9 @@ def at_exit():
     print "\n=========================\n"
 
 def usage():
-    print 'usage:',sys.argv[0],' [-H mysql-host] [-d mysql-database] [-u mysql-user] [-p mysql-pass] [-i start-url] [-r url-regexp-to-visit] [-c cachedir] [-e encoding] [-t threshold] taskfile' 
+    print "usage:\t",sys.argv[0],' init task' 
+    print "usage:\t",sys.argv[0],' run taskfile' 
+    print "usage:\t",sys.argv[0],' help' 
 
 
 
@@ -119,84 +131,24 @@ signal.signal(signal.SIGCHLD,signal.SIG_IGN)
 sys.getdefaultencoding()
 reload(sys)
 sys.setdefaultencoding("utf-8")
-
-
-
 start_time=time.time()
-print "[start time]:"+str(start_time)
-atexit.register(at_exit)
-try:
-    opts, args= getopt.getopt(sys.argv[1:],"hH:d:u:p:i:r:c:e:t:",
-            ["help",
-            "host=",
-            "db=",
-            "user=",
-            "pass=",
-            "index=",
-            "regexp=",
-            "cachedir=",
-            "encoding=",
-            "threshold="
-            ])
-except getopt.GetoptError,e:
-    # print help information and exit:
-    print "arguments parse error:",e
+if len(sys.argv)<2:
     usage()
     sys.exit()
-configure={
-    "host":"localhost",
-    "db":"hyer",
-    "user":"root",
-    "pass":"",
-    "cachedir":"./cachedir/",
-    "encoding":"GBK",
-    "threshold":0.015
-    }
-for o,a in opts:
-    print "o:",o,",a:",a
-    if o in ('-h','--help'):
-        usage()
-        sys.exit()
-    if o in ("-u","--user"):
-        configure["user"]=a
-    if o in ("-p","--pass"):
-        configure["pass"]=a
-    if o in ("-H","--host"):
-        configure["host"]=a
-    if o in ("-d","--db"):
-        configure["db"]=a
-    if o in ("-i","--index"):
-        configure["index"]=a
-    if o in ("-r","--regexp"):
-        configure["regexp"]=a
-    if o in ("-c","--cachedir"):
-        configure["cachedir"]=a
-    if o in ("-e","--encoding"):
-        configure["encoding"]=a
-    if o in ("-t","--threshold"):
-        configure["threshold"]=a
-
-#if not configure.has_key("index"):
-#    usage()
-#    sys.exit()
-#if configure.has_key("regexp"):
-#    configure["regexp"]=re.compile(configure["regexp"])
-#else:
-#    import urlparse
-#    urls=urlparse.urlparse(configure["index"])
-#    configure["regexp"]=re.compile( str(urls.scheme)+"://"+str(urls.netloc))
-#configure["threshold"]= float(configure["threshold"])
-
-if len(sys.argv)==1:
+cmd=sys.argv[1].lower()
+if cmd == "help" :
     usage()
     sys.exit()
-
-taskfile=sys.argv[-1]
-k=prepare_taskfile(taskfile)
-print k.run(configure)
-print "k:",k
-print "\n\nstart with:\n"
-print configure
-print "\n\n"
-
-
+elif cmd == "run":
+    print "[start time]:"+str(start_time)
+    atexit.register(at_exit)
+    taskfile=sys.argv[-1]
+    k=prepare_taskfile(taskfile)
+    k.run({})
+    stackless.run()
+elif cmd == "init":
+    task=sys.argv[-1]
+    inittask(task)
+else:
+    usage()
+    sys.exit()
