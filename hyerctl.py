@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#!/usr/local/bin/python.stackless
 # -*- coding: utf-8 -*-
 #================================================
 import sys
