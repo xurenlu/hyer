@@ -22,12 +22,6 @@ Hyer 入门必读
 """ {{/div}}
 """ {{/div}}
 
-""" {{div class="notice-wrapper" style="text-align:center;"}} 
-""" {{div class="notice" style="text-align:left;margin-left:50px;padding:5px;border:1px solid gray;background:#ccc;margin-right:50px;"}} 
- **目录**
-    %%toc
-""" {{/div}}
-""" {{/div}}
 
 
 
@@ -37,11 +31,6 @@ Hyer 入门必读
 """ margin-left:50px;margin-right:50px;margin-bottom:10px;
 """ } 
 """ {{/style}}
-""" {{div class="center blocked"}}
-- 请随时跟踪 [ hyer项目 http://github.com/xurenlu/hyer/] 以获得更新信息.
-- 作者邮箱:xurenlu@gmail.com,欢迎来邮沟通.
-- 当前文档最近更新时间 Wed Oct 14 22:24:31 2009
-""" {{/div}}
 
 """ {{div class="blocked"}} 
 **目录**

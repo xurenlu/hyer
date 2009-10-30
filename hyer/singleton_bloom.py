@@ -1,7 +1,5 @@
 import thread
-
 import hyer.singleton
-
 import hyer.vendor.bloom
 
 class SingletonBloom(hyer.singleton.Singleton):
@@ -34,5 +32,6 @@ def test():
     assert exists("http://www.sohu.com")==False
     assert add("http://www.sohu.com")==None
     assert exists("http://www.sohu.com")==True
+
 #if __name__ == "__main__":
 #    test()
