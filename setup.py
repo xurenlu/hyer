@@ -16,7 +16,7 @@ def find_packages(where='.'):
 
 setup(
 	name = "Hyer",
-	version = "0.57",
+	version = "0.66",
 	url = 'http://www.162cm.com/',
 	author = '162cm',
 	author_email = 'xurenlu@gmail.com',
