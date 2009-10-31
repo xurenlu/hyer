@@ -1,0 +1,21 @@
+Hyer 文档
+    [项目主页 http://github.com/xurenlu/hyer/]
+    Last Updated: %%date(%Y-%m-%d)
+%! target:html
+%! encoding: UTF-8
+%! options: --toc
+%! postproc(html): @@ <BR>
+%! postproc(xhtml): @@ <BR>
+%! postproc(html): {{(.*?)}} <\1>
+%!postproc(html): {{ <
+%!postproc(html): }} >
+""" {{style type="text/css"}}
+""" .blocked { background:#ccc;border:1px solid gray;
+""" padding:10px;
+""" margin-left:50px;margin-right:50px;margin-bottom:10px;
+""" } 
+""" {{/style}}
+""" {{div class="blocked"}} 
++ [文档规范 DEV.rule.html]
++ [入门说明 Guide.html]
+""" {{/div}}

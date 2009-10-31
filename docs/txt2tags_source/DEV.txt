@@ -2,12 +2,14 @@ Hyer 编程风格
     hyer(http://code.google.com/p/hyer/)推荐的编码风格<renlu.xu>
 Last Updated: %%mtime(%c)
 
-%%date(%Y-%m-%d)
 %! target:html
 %! encoding: UTF-8
-%! style:resource/generic.css
-%!options(html): --toc --toc-level 2 --css-sugar
-%!options(html): --style resource/generic.css
+%! options: --toc
+%! postproc(html): @@ <BR>
+%! postproc(xhtml): @@ <BR>
+%! postproc(html): {{(.*?)}} <\1>
+%!postproc(html): {{ <
+%!postproc(html): }} >
 
 ==编码==
     所有代码均以#coding:utf-8 开头.
