@@ -10,12 +10,16 @@ Hyer 文档
 %!postproc(html): {{ <
 %!postproc(html): }} >
 """ {{style type="text/css"}}
+""" body {
+""" margin:auto 150px ;
+""" }
 """ .blocked { background:#ccc;border:1px solid gray;
 """ padding:10px;
 """ margin-left:50px;margin-right:50px;margin-bottom:10px;
 """ } 
 """ {{/style}}
 """ {{div class="blocked"}} 
-+ [文档规范 DEV.rule.html]
++ [说明 README.html]
 + [入门说明 Guide.html]
++ [文档规范 DEV.html]
 """ {{/div}}

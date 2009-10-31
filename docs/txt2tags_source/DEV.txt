@@ -11,6 +11,16 @@ Last Updated: %%mtime(%c)
 %!postproc(html): {{ <
 %!postproc(html): }} >
 
+""" {{style type="text/css"}}
+""" body {
+""" margin:auto 150px ;
+""" }
+""" .blocked { background:#ccc;border:1px solid gray;
+""" padding:10px;
+""" margin-left:50px;margin-right:50px;margin-bottom:10px;
+""" } 
+""" {{/style}}
+
 ==编码==
     所有代码均以#coding:utf-8 开头.
 

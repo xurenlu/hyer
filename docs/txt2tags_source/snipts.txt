@@ -1,0 +1,163 @@
+Hyer 的一些零乱的想法
+    [项目主页 http://github.com/xurenlu/hyer/]
+    Last Updated: %%date(%Y-%m-%d)
+
+
+
+%! target:html
+%! encoding: UTF-8
+%! options: --toc
+%! postproc(html): @@ <BR>
+%! postproc(xhtml): @@ <BR>
+%! postproc(html): {{(.*?)}} <\1>
+%!postproc(html): {{ <
+%!postproc(html): }} >
+
+
+""" {{div class="notice-wrapper" style="text-align:center;"}} 
+""" {{div class="notice" style="text-align:left;margin-left:50px;padding:5px;border:1px solid gray;background:#ccc;margin-right:50px;"}} 
++ 请随时跟踪 [hyer项目 http://github.com/xurenlu/hyer/] 以获得更新信息. 
++ 作者邮箱:xurenlu@gmail.com,欢迎来邮沟通. 
++ 当前文档最近更新时间 %%mtime(%c) 
+""" {{/div}}
+""" {{/div}}
+
+
+
+
+""" {{style type="text/css"}}
+""" body {
+""" margin:auto 150px ;
+""" }
+""" .blocked { background:#ccc;border:1px solid gray;
+""" padding:10px;
+""" margin-left:50px;margin-right:50px;margin-bottom:10px;
+""" } 
+""" {{/style}}
+
+""" {{div class="blocked"}} 
+**目录**
+%%toc
+""" {{/div}}
+
++ 关于文档模板的抽取 +
+
+    目的:现在我们有一些HTML文件,有一部分是使用了相同的模板文件,我们需要找出这
+    些使用了相同模板的文件;    
+    文档都是HTML节点组成的,而HTML节点可以被分类:
+   *枝/叶* ;我们把一个HTML文档视为一棵树;两个HTML文档,可以当做两棵树
+。要比较这两个文档(或是计算这两个文档的相似度)，我们只需要比较这两棵树的"枝干"
+即可。通常来说,div,p,table,h1,h2...h6,ul,li,ol,form这些都可以为是枝干;而
+A,img,input,button这些标签我们都视做为"叶子"节点。在对两个文档进行比较时,我们
+把叶子节点也就是A,img,button等等这些去掉,然后绘制枝干节点的树结构;
+    在对由纯"枝干"节点组成的树时,我们抽取这样两个要素进行比较:父子关系与深度,
+    兄弟关系与深度.HTML节点的深度为0;现在看文档一:
+    HTML
+        DIV
+            FORM
+            P
+            P
+        DIV
+            P
+            FORM
+看文档二:
+    HTML
+        DIV
+            FORM
+            P
+        DIV
+            P
+            FORM
+    我们列出文档树一的父子&深度列表(/表示父子关系,数字表示第一个元素的深度,#后
+    面数字表示同类关系第几次出现)
+        (HTML/DIV,0)#0
+        (HTML/DIV,0)#1
+        
+        (DIV/FORM,1)#0
+        (DIV/P,1)#0
+        (DIV/P,1)#1
+
+        (DIV/P,1)#2
+        (DIV/FORM,1)#0
+        文档树一的兄弟&深度列表:
+        (DIV-DIV,1)#0
+
+        (FORM-P,2)#0
+        (P-P,2)#0
+        (P-FORM,2)#0
+
+    文档树二的父子&深度列表:
+        (HTML/DIV,0)#0
+        (HTML/DIV,0)#1
+
+        (DIV/FORM,1)#0
+        (DIV/P,1)#0
+
+        (DIV/P,1)#1
+        (DIV/FORM,1)#0
+    文档树二的兄弟关系&深度列表:
+
+        (DIV-DIV,1)#0
+        (FORM-P,2)#0
+        (P-FORM,2)#0
+#///#    在两个文档的关系之间进行比较时,我们只比较#号前的部分是否相同;
+    
+    比较两个文档的父子&深度列表,有6个相同的,文档一有7个父子关系,文档二有6个父子
+    关系;我们按N(same)*N(same)/(N(doc1)*N(doc2)),算出一个值是N=0.8571
+    比较两个文档的兄弟&深度列表,有3个相同的,文档一有4个兄弟关系,文档二有3个兄
+    弟关系;我们也按M(same)*M(same)/(M(doc1)*M(doc2))算出一个值是:M=0.75
+    接下来我们按
+        S=M*P(m)+N*P(n) 算一个最后的相似度:
+        这里为了简化,P(m),P(n)都取0.5,最后得出这两个HTML文档的相似度
+        S=0.8036
+    因此我们算出了相似度为0.8036(嗯，好歹有个衡量的尺度了...)
+
+
+等等，再看看这样两棵HTML树:
+    tree 1：
+    DIV 
+        P
+        FORM
+        P
+    另一棵(tree 2):
+    P
+        DIV
+            P
+            FORM
+            P
+
+    这样树一的列表如下:
+
+    (DIV/P,0)#0
+    (DIV/FORM,0)#0
+    (DIV/P,0)#1
+
+    (P-FORM,1)#0
+    (FORM-P,1)#0
+
+    树二的列表如下:
+    (P/DIV,0)#0
+    (DIV/P,1)#0
+    (DIV/FORM,1)#0
+    (DIV/P,1)#1
+
+    (P-FORM,2)#0
+    (FORM-P,2)#0
+
+    这样一比较,似乎相似度就为0了:完全没有相同的。可以用人类的眼光看，这两棵树
+    确实有很大的相似的地方:树一是树二的一棵子树;
+    好了，现在我们不是数完全相同的关系的个数了,对父/子节点或是兄弟节点相同的不
+    管深度是不是相同都算个值,把所有的这个值加起来.比如树一中的(DIV/P,0)#0 和树
+    二中的(DIV/P,1)#0其实是有相以度的,在我们用数数的方法得得两个列表中相同的个
+    数时,这个被忽略了。
+    下面我们要设计一个公式,得到(DIV/P,Depth1)#0 和(DIV/P,Depth2)#0的相似度
+    N(same),这个公式应该满足以下条件:
+    1.要跟(Depth1-Depth2)相关，abs(Depth1-Depth2)越大,相似度越小
+    2.在一棵树中,越是细节末节的节点的相似就越是不重要了:要跟当前二者的深度相关,深度越大，相以度越小; 
+    3.二者深度相同时，取值为1;
+
+稍微拼凑一下,得到这样一个公式:
+    N(same)(DIV/P,Depth1,Depth2)=1/(abs(Depth1^2-Depth2^2)+1);刚好满足这个条件
+    ,现在我们可以有一个公式去算两个HTML文档的结构相似度了.
+    
+

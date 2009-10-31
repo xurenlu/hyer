@@ -13,6 +13,16 @@ Hyer 介绍
 %!postproc(html): {{ <
 %!postproc(html): }} >
 
+""" {{style type="text/css"}}
+""" body {
+""" margin:auto 150px ;
+""" }
+""" .blocked { background:#ccc;border:1px solid gray;
+""" padding:10px;
+""" margin-left:50px;margin-right:50px;margin-bottom:10px;
+""" } 
+""" {{/style}}
+
 == About Hyer ==
     Hyer is a vertical search cralwer library written in python. It
 provides a number of methods to mine data from kinds of sites.

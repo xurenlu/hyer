@@ -3,7 +3,6 @@
 for c in txt2tags_source/*.txt
 do
     #echo $c
-    echo txt2tags $c
     txt2tags $c
 done
 mv txt2tags_source/*.html ./html/
