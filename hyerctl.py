@@ -18,14 +18,9 @@ import hyer.document
 import hyer.browser
 import hyer.rules_monster
 import hyer.event
-import hyer.vsr
-import hyer.source
 import hyer.tool
-import hyer.builders
 import hyer.helper
 import hyer.dbwriter
-import hyer.production_line
-import hyer.leader
 import hyer.singleton
 import hyer.log
 import hyer.pcolor
@@ -83,6 +78,10 @@ def inittask(task):
         shutil.copyfile("share/templates/project.py","%s/%s.py" % (task,task) )
     except:
         pass
+    try:
+        shutil.copyfile("share/templates/config.py","%s/config.py" % task )
+    except:
+        pass
 
 def handle_pid():
     """
@@ -132,20 +131,31 @@ sys.getdefaultencoding()
 reload(sys)
 sys.setdefaultencoding("utf-8")
 start_time=time.time()
+
 if len(sys.argv)<2:
     usage()
     sys.exit()
+
 cmd=sys.argv[1].lower()
 if cmd == "help" :
     usage()
     sys.exit()
-elif cmd == "run":
+
+elif cmd == "runfile":
+    '''run a single file'''
     print "[start time]:"+str(start_time)
     atexit.register(at_exit)
     taskfile=sys.argv[-1]
     k=prepare_taskfile(taskfile)
     k.run({})
     stackless.run()
+
+elif cmd == "run":
+    '''run a project '''
+    print "[start time]:"+str(start_time)
+    atexit.register(at_exit)
+    taskfile=sys.argv[-1]
+
 elif cmd == "init":
     task=sys.argv[-1]
     inittask(task)
