@@ -6,6 +6,7 @@ sys.path.append('/usr/lib/python2.5/site-packages/')
 sys.path.append('/usr/lib/python2.6/dist-packages/')
 sys.path.append("/var/lib/python-support/python2.5/")
 sys.path.append("/var/lib/python-support/python2.6/")
+sys.path.append("/usr/local/lib/python2.6/dist-packages/")
 import  stackless,sys, os,atexit
 import hyer.document
 import hyer.browser

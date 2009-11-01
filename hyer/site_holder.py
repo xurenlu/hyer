@@ -42,7 +42,7 @@ class site_holder_monster:
         '''browser visited an url,logged the visiting
         @param url:the url just visited
         '''
-		uri=urlparse(url)
+        uri=urlparse(url)
         host=uri.hostname
         if self.holders.has_key(host):
             self.holders[host].visited(times)
@@ -51,7 +51,7 @@ class site_holder_monster:
     def can_visit(self,url):
         '''if the browser can visit the url
         @param url:the url we try to visit'''
-		uri=urlparse(url)
+        uri=urlparse(url)
         host=uri.hostname
         if self.holders.has_key(host):
             return self.holders[host].can_visit()

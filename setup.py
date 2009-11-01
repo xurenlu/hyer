@@ -20,12 +20,11 @@ setup(
 	url = 'http://www.162cm.com/',
 	author = '162cm',
 	author_email = 'xurenlu@gmail.com',
-	description = 'python files for WWW spider and index,search .',
+	description = 'A simple vertical search engine written in python ,based on stackless',
 	license = 'LGPL V2',
 	packages = find_packages(),
 	package_data ={
-		'':['ANNOUNCE', 'AUTHORS', 'ChangeLog', 'INSTALL',
-'LICENSE.TXT', 'README', 'TODO'],
+		'':['docs/'],
 		'hyer.tests': ['tests/*.py']
    },
 )
