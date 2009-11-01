@@ -24,7 +24,7 @@ setup(
 	license = 'LGPL V2',
 	packages = find_packages(),
 	package_data ={
-		'':['docs/'],
+        'docs':['docs/'],
 		'hyer.tests': ['tests/*.py']
    },
 )
