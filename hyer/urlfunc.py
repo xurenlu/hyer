@@ -81,8 +81,8 @@ def remove_bad_links(links):
                 continue
             if re.match(r'^gopher:',u["url"],re.I):
                 continue
-            if not re.match(r'^http:',u["url"],re.I):
-                continue;
+            #if not re.match(r'^http:',u["url"],re.I):
+            #    continue;
             validated_urls.append(u)
         else:
             if re.match(r'^javascript:',u,re.I):
@@ -95,8 +95,8 @@ def remove_bad_links(links):
                 continue
             if re.match(r'^gopher:',u,re.I):
                 continue
-            if not re.match(r'^http:',u,re.I):
-                continue;
+            #if not re.match(r'^http:',u,re.I):
+            #    continue;
             validated_urls.append(u)
     return validated_urls	
     

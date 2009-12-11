@@ -17,6 +17,24 @@ class spider:
     '''this is the main entrance of the whole library'''
     def __init__(self,conf):
         '''@param conf:a list describe the cralwer task'''
+        must_have_keys=[ "db_path","feed","max_in_minute","agent","same_domain_regexps","url_db","task","leave_domain"]
+        for v in must_have_keys:
+            if not conf.has_key(v):
+                print "demo conf:"
+                print """
+conf={
+        "db_path":"./tmp/",
+        "feed":"http://localhost/",
+        "max_in_minute":60,
+        "agent":"Mozilla/Firefox",
+        "same_domain_regexps":[re.compile("http://localhost")],
+        "url_db":hyer.urldb.Urldb_mysql({"host":"localhost","user":"root","pass":"","db":"hyer"}),
+        "task":"demo",
+        "leave_domain":False
+        }
+spider=hyer.spider.spider(conf)
+            """
+                return False
 
         #init the logging service
         logger = logging.getLogger()
@@ -146,6 +164,7 @@ class spider:
         all_original_links=doc["links"]
         hyer.event.fire_event("new_original_url",all_original_links)
         all_original_links=hyer.urlfunc.remove_bad_links(all_original_links)
+
         for l in all_original_links: 
             u=hyer.urlfunc.get_full_url(l,base_dir)
             u=hyer.urlfunc.fix_url(u)
@@ -153,9 +172,12 @@ class spider:
             if self.validate_url(u):
                 hyer.event.fire_event("add_url",u)
                 self.add_url(u)
+            else:
+                self.logger.info("url:%s not valied" % u)
+
         self.url_db.mark_visited(url,self.task)
         hyer.event.fire_event("before_save_document",doc)
-        #self.save_document(doc,url,self.conf["db_path"]+"docs/")
+        self.save_document(doc,url,self.conf["db_path"]+"docs/")
         hyer.event.fire_event("new_document",doc)
         if self.timer > 1024:
             #self.url_db.save_to(self.conf["db_path"]+"_urls.db")

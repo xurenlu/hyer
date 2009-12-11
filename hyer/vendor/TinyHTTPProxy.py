@@ -69,6 +69,7 @@ class ProxyHandler (BaseHTTPServer.BaseHTTPRequestHandler):
         if scm != 'http' or fragment or not netloc:
             self.send_error(400, "bad url %s" % self.path)
             return
+        print "%s://%s%s%s" % (scm,netloc,path,query)
         soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
             if self._connect_to(netloc, soc):

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import time
-from urlparse import urlparse
 class site_holder:
     def __init__(self,domain,max_in_minute):
         '''initialization of the class
@@ -38,20 +37,18 @@ class site_holder_monster:
         self.holders={}
         self.max_in_minute=max_in_minute
         
-    def visited(self,url,times=1):
+    def visited(self,uri,times=1):
         '''browser visited an url,logged the visiting
         @param url:the url just visited
         '''
-        uri=urlparse(url)
         host=uri.hostname
         if self.holders.has_key(host):
             self.holders[host].visited(times)
         else:
             self.holders[host]=site_hoder(host,self.max_in_minute)
-    def can_visit(self,url):
+    def can_visit(self,uri):
         '''if the browser can visit the url
         @param url:the url we try to visit'''
-        uri=urlparse(url)
         host=uri.hostname
         if self.holders.has_key(host):
             return self.holders[host].can_visit()

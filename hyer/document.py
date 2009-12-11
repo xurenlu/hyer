@@ -29,7 +29,7 @@ class SimpleHTMLDocument(Document):
 		r'/(window[.]open[[:blank:]]*[(])[[:blank:]]*[\'\"]+(([[a-z]{3,5}:\/\/(([.a-zA-Z0-9-])+(:[0-9]+)*))*([+:%\/?=&;\\\(\),._ a-zA-Z0-9-]*))(#[.a-zA-Z0-9-]*)?[\'\" ]?/i'\
 	]
 	PIC_RATE=100
-	HUB_RATE=20
+	HUB_RATE=12
 	TYPE_TEXT=0
 	TYPE_HUB=1
 	TYPE_PIC=2
@@ -184,8 +184,8 @@ class SimpleHTMLDocument(Document):
 		self["pics_count"]=pics
 		self["words_count"]=words
 		self["doc_type"]=self.TYPE_TEXT
-		r1=words/(pics+1)
-		r2=words/(links+1)
+		self["doc_rate_pic"]=r1=words/(pics+1)
+		self["doc_rate_link"]=r2=words/(links+1)
 		if r1 < self.PIC_RATE:
 			self["doc_type"]=self.TYPE_PIC
 		if r2 < self.HUB_RATE:
