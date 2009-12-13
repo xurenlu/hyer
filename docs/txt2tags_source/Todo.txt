@@ -1,0 +1,39 @@
+  Hyer  Todos
+    author:renlu.xu<xurenlu@gmail.com> 
+    Last Updated: %%date(%Y-%m-%d)
+
+%!target:html
+%!encoding: UTF-8
+%!options: --toc --toc-level=4
+%!postproc(html): @@ <BR>
+%!postproc(xhtml): @@ <BR>
+%!postproc(html): {{(.*?)}} <\1>
+%!postproc(html): {{ <
+%!postproc(html): }} >
+
++ 给URL 打score  +
+    
+    URL 的打分可以从以下几个方面着手:
+        + 链接数;在Hyer能做到的情况下,更多的是站内链接;不过站内链接仍然反映了该链接是不是“重要";比如像首页,关于我们等页面的链接数一般都比较高;
+        + 链接到该页的页面的分数;类似google pagerank,这个好理解;
+        + Url 层次;主要是指目录层次;
+        + URL 是静态的还是动态的(大多情况下是指有没有带问号)
+        + Url 出现参数的个数;指的是像http://a.com/?arg1=val1&arg2=val2;实现上简单地多一个参数多扣分的形式;
+        + Url 长度;
+        
+
+    其中,分数分为两个,一个是第一次发现该链接就可以打出来的,另一个是以后第n次访问该链接时可以修正的,总分数由两者加权来计算;
+
+
+
++ 字符集的猜解 +
+
+    目前这一版(0.6.10)简单地使用了chardet来猜文档地编码,这个相当地慢;目前可改进的方式有俩:
+        - 不需要将文档的全部部分丢给chardet来猜测编码,只需要前n个字节就可以猜,一般来说,前1000字节已经足够;若大部分网页为30K,此改进在这方面能节省29/30的计算资源;
+        - 对于单个网站或单个频道,一般来说是会使用同一种编码的:
+            - 假设http://news.a.com/a.html 是GBK编码,那http://news.a.com/b.html基本可以定为是GBK的;
+            - 假设http://a.com/path1/filea.html是GBK编码的,那么http://a.com/path1/fileb.html也可以认为是GBK的;
+            - 假设http://www.a.com/path1.php?id={a}是GBK编码的,那么http://www.a.com/path1.php?id={b}也可以认为是GBK的;
+
++ 本地DNS缓存 +
+    做Profile 发现, Socket->recv和socket->getAddrInfo是比较费时的.前一个目前没有办法优化的,可以先加本地dns缓存,以减少gethostbyname的时间共费;

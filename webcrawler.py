@@ -185,10 +185,8 @@ def start():
 
 
 start()
-sys.exit(0)
-
-import cProfile
-cProfile.run("start()", "prof.txt")
-import pstats
-p = pstats.Stats("prof.txt")
-p.sort_stats("time").print_stats()
+#import cProfile
+#cProfile.run("start()", "prof.txt")
+#import pstats
+#p = pstats.Stats("prof.txt")
+#p.sort_stats("time").print_stats()

@@ -1,0 +1,581 @@
+         754262 function calls (753796 primitive calls) in 20.095 CPU seconds
+
+   Ordered by: internal time
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+     6582   12.939    0.002   12.939    0.002 {method 'recv' of '_socket.socket' objects}
+       12    2.095    0.175    2.095    0.175 {_socket.getaddrinfo}
+       11    0.526    0.048    0.526    0.048 {method 'readlines' of 'file' objects}
+   298792    0.507    0.000    0.507    0.000 {ord}
+      150    0.476    0.003    0.867    0.006 /usr/lib/python2.6/dist-packages/chardet/sbcharsetprober.py:63(feed)
+       40    0.465    0.012    1.130    0.028 /usr/lib/python2.6/dist-packages/chardet/mbcharsetprober.py:52(feed)
+    81015    0.457    0.000    0.597    0.000 /usr/lib/python2.6/dist-packages/chardet/codingstatemachine.py:40(next_state)
+      250    0.270    0.001    0.270    0.001 {method 'query' of '_mysql.connection' objects}
+       10    0.236    0.024    0.564    0.056 /usr/lib/python2.6/dist-packages/chardet/eucjpprober.py:51(feed)
+       12    0.217    0.018    0.217    0.018 {method 'connect' of '_socket.socket' objects}
+    79378    0.182    0.000    0.195    0.000 /usr/lib/python2.6/dist-packages/chardet/chardistribution.py:52(feed)
+    79644    0.151    0.000    0.151    0.000 /usr/lib/python2.6/dist-packages/chardet/codingstatemachine.py:52(get_current_charlen)
+       22    0.127    0.006    0.127    0.006 {posix.system}
+     1054    0.121    0.000    0.121    0.000 {built-in method sub}
+       10    0.052    0.005    0.089    0.009 /usr/lib/python2.6/dist-packages/chardet/latin1prober.py:109(feed)
+    20437    0.051    0.000    0.062    0.000 /usr/lib/python2.6/dist-packages/chardet/jpcntx.py:134(feed)
+      186    0.043    0.000    7.212    0.039 /usr/lib/python2.6/socket.py:375(readline)
+     8497    0.041    0.000    0.119    0.000 /usr/lib/python2.6/re.py:229(_compile)
+       11    0.036    0.003    0.037    0.003 {cPickle.dumps}
+    16240    0.035    0.000    0.035    0.000 {method 'append' of 'list' objects}
+     5562    0.034    0.000    0.089    0.000 /usr/lib/python2.6/re.py:134(match)
+      916    0.030    0.000    0.075    0.000 /usr/lib/python2.6/logging/__init__.py:226(__init__)
+     1832    0.028    0.000    0.194    0.000 /usr/lib/python2.6/logging/__init__.py:756(emit)
+     1832    0.025    0.000    0.105    0.000 /usr/lib/python2.6/logging/__init__.py:423(format)
+    11310    0.024    0.000    0.024    0.000 {method 'get' of 'dict' objects}
+      903    0.024    0.000    0.045    0.000 /home/renlu/Dropbox/Private/devel/hyer/hyer/urlfunc.py:3(fix_url)
+     8296    0.023    0.000    0.023    0.000 {built-in method match}
+     1832    0.022    0.000    0.326    0.000 /usr/lib/python2.6/logging/__init__.py:660(handle)
+     1832    0.022    0.000    0.022    0.000 {time.localtime}
+     1832    0.021    0.000    0.054    0.000 /usr/lib/python2.6/logging/__init__.py:382(formatTime)
+     4648    0.020    0.000    0.029    0.000 /usr/lib/python2.6/threading.py:801(currentThread)
+     1866    0.020    0.000    0.039    0.000 /usr/lib/python2.6/threading.py:134(release)
+       11    0.020    0.002   19.864    1.806 /home/renlu/Dropbox/Private/devel/hyer/hyer/spider.py:132(run_single_fetch)
+       55    0.019    0.000    0.019    0.000 {built-in method findall}
+     1832    0.019    0.000    0.019    0.000 {method 'flush' of 'file' objects}
+     1866    0.019    0.000    0.038    0.000 /usr/lib/python2.6/threading.py:114(acquire)
+     7901    0.016    0.000    0.016    0.000 {hasattr}
+      903    0.015    0.000    0.110    0.000 /home/renlu/Dropbox/Private/devel/hyer/hyer/urlfunc.py:47(get_full_url)
+       11    0.015    0.001    0.088    0.008 /home/renlu/Dropbox/Private/devel/hyer/hyer/urlfunc.py:69(remove_bad_links)
+5479/5401    0.014    0.000    0.014    0.000 {len}
+     1832    0.014    0.000    0.119    0.000 /usr/lib/python2.6/logging/__init__.py:637(format)
+    86/11    0.013    0.000    5.817    0.529 /usr/lib/python2.6/socket.py:315(read)
+     1832    0.013    0.000    0.207    0.000 /usr/lib/python2.6/logging/__init__.py:843(emit)
+      916    0.012    0.000    0.338    0.000 /usr/lib/python2.6/logging/__init__.py:1196(callHandlers)
+     1832    0.012    0.000    0.034    0.000 /usr/lib/python2.6/logging/__init__.py:749(flush)
+     1832    0.012    0.000    0.012    0.000 {time.strftime}
+     2784    0.012    0.000    0.084    0.000 /usr/lib/python2.6/re.py:188(compile)
+     1854    0.011    0.000    0.011    0.000 {method 'write' of 'file' objects}
+     4563    0.011    0.000    0.011    0.000 {isinstance}
+      916    0.010    0.000    0.020    0.000 /usr/lib/python2.6/logging/__init__.py:1113(findCaller)
+     5564    0.010    0.000    0.010    0.000 {thread.get_ident}
+       11    0.010    0.001    0.014    0.001 /usr/lib/pymodules/python2.6/MySQLdb/connections.py:44(__init__)
+     1832    0.010    0.000    0.014    0.000 /usr/lib/python2.6/logging/__init__.py:289(getMessage)
+      250    0.010    0.000    0.296    0.001 /usr/lib/pymodules/python2.6/MySQLdb/cursors.py:129(execute)
+      916    0.010    0.000    0.457    0.000 /usr/lib/python2.6/logging/__init__.py:1147(_log)
+     3948    0.009    0.000    0.009    0.000 {method 'find' of 'str' objects}
+      916    0.009    0.000    0.477    0.001 /usr/lib/python2.6/logging/__init__.py:1038(info)
+    67/24    0.009    0.000    0.032    0.001 /usr/lib/python2.6/sre_parse.py:385(_parse)
+     1832    0.009    0.000    0.046    0.000 /usr/lib/python2.6/logging/__init__.py:617(acquire)
+     1832    0.009    0.000    0.047    0.000 /usr/lib/python2.6/logging/__init__.py:624(release)
+      110    0.008    0.000    0.018    0.000 /usr/lib/python2.6/urllib2.py:306(add_handler)
+     1152    0.008    0.000    0.014    0.000 /usr/lib/python2.6/copy.py:65(copy)
+        1    0.008    0.008    0.008    0.008 /usr/lib/python2.6/dist-packages/chardet/chardistribution.py:28(<module>)
+      903    0.008    0.000    0.029    0.000 /home/renlu/Dropbox/Private/devel/hyer/hyer/spider.py:218(validate_url)
+     1152    0.008    0.000    0.629    0.001 /home/renlu/Dropbox/Private/devel/hyer/hyer/event.py:27(fire_event)
+     1832    0.008    0.000    0.012    0.000 /usr/lib/python2.6/string.py:351(find)
+     3732    0.007    0.000    0.007    0.000 /usr/lib/python2.6/threading.py:64(_note)
+      916    0.007    0.000    0.011    0.000 /usr/lib/python2.6/genericpath.py:85(_splitext)
+       12    0.007    0.001    0.127    0.011 /usr/lib/python2.6/httplib.py:230(readheaders)
+      916    0.007    0.000    0.347    0.000 /usr/lib/python2.6/logging/__init__.py:1167(handle)
+     2772    0.006    0.000    0.006    0.000 {method 'rfind' of 'str' objects}
+     2748    0.006    0.000    0.006    0.000 /usr/lib/python2.6/logging/__init__.py:560(filter)
+       10    0.006    0.001    0.019    0.002 /usr/lib/python2.6/dist-packages/chardet/sjisprober.py:51(feed)
+      916    0.006    0.000    0.006    0.000 /usr/lib/python2.6/logging/__init__.py:1222(getEffectiveLevel)
+      969    0.006    0.000    0.009    0.000 /usr/lib/python2.6/sre_parse.py:188(__next)
+       11    0.006    0.001    0.006    0.001 {posix.popen}
+      631    0.005    0.000    0.005    0.000 {method 'write' of 'cStringIO.StringO' objects}
+      916    0.005    0.000    0.080    0.000 /usr/lib/python2.6/logging/__init__.py:1134(makeRecord)
+      230    0.005    0.000    0.015    0.000 /usr/lib/python2.6/urlparse.py:133(urlsplit)
+   138/24    0.005    0.000    0.021    0.001 /usr/lib/python2.6/sre_compile.py:38(_compile)
+      916    0.005    0.000    0.007    0.000 /usr/lib/python2.6/logging/__init__.py:148(getLevelName)
+       11    0.005    0.000    0.006    0.001 {method 'decode' of 'str' objects}
+     1866    0.005    0.000    0.005    0.000 {built-in method acquire}
+      615    0.005    0.000    0.008    0.000 /usr/lib/python2.6/dist-packages/chardet/jpcntx.py:192(get_order)
+      916    0.005    0.000    0.011    0.000 /usr/lib/python2.6/logging/__init__.py:1236(isEnabledFor)
+       59    0.004    0.000    0.009    0.000 /usr/lib/python2.6/sre_compile.py:213(_optimize_charset)
+     1199    0.004    0.000    0.004    0.000 {method 'join' of 'str' objects}
+       44    0.004    0.000    0.004    0.000 {_mysql.escape_string}
+      916    0.004    0.000    0.007    0.000 /usr/lib/python2.6/posixpath.py:109(basename)
+     1808    0.004    0.000    0.004    0.000 {method 'replace' of 'str' objects}
+      916    0.004    0.000    0.015    0.000 /usr/lib/python2.6/posixpath.py:94(splitext)
+      916    0.004    0.000    0.006    0.000 /usr/lib/python2.6/logging/__init__.py:76(<lambda>)
+      120    0.004    0.000    0.005    0.000 /usr/lib/python2.6/dist-packages/chardet/mbcharsetprober.py:41(reset)
+     1866    0.004    0.000    0.004    0.000 {built-in method release}
+      985    0.004    0.000    0.004    0.000 {method 'split' of 'str' objects}
+      300    0.004    0.000    0.005    0.000 /usr/lib/python2.6/dist-packages/chardet/sbcharsetprober.py:49(reset)
+      981    0.004    0.000    0.004    0.000 {time.time}
+      210    0.004    0.000    0.006    0.000 /usr/lib/python2.6/urlparse.py:125(_splitnetloc)
+       11    0.004    0.000    0.539    0.049 /home/renlu/Dropbox/Private/devel/hyer/hyer/misc.py:30(cmdmy)
+     1447    0.003    0.000    0.003    0.000 {method 'lower' of 'str' objects}
+      834    0.003    0.000    0.011    0.000 /usr/lib/python2.6/sre_parse.py:207(get)
+      206    0.003    0.000    0.440    0.002 /home/renlu/Dropbox/Private/devel/hyer/hyer/spider.py:91(add_url)
+     1524    0.003    0.000    0.003    0.000 {method 'has_key' of 'dict' objects}
+       45    0.003    0.000    0.003    0.000 {open}
+      343    0.003    0.000    0.005    0.000 /usr/lib/python2.6/dist-packages/chardet/chardistribution.py:192(get_order)
+       20    0.003    0.000    0.008    0.000 /usr/lib/python2.6/dist-packages/chardet/charsetgroupprober.py:38(reset)
+       27    0.003    0.000    0.003    0.000 /usr/lib/python2.6/sre_compile.py:264(_mk_bitmap)
+      633    0.003    0.000    0.004    0.000 /usr/lib/python2.6/sre_parse.py:136(__getitem__)
+      129    0.003    0.000    0.003    0.000 {range}
+      250    0.003    0.000    0.279    0.001 /usr/lib/pymodules/python2.6/MySQLdb/cursors.py:273(_do_query)
+       10    0.003    0.000    0.007    0.001 /usr/lib/python2.6/dist-packages/chardet/utf8prober.py:50(feed)
+      114    0.003    0.000    0.006    0.000 /usr/lib/pymodules/python2.6/MySQLdb/cursors.py:107(_do_get_result)
+      206    0.003    0.000    0.249    0.001 /home/renlu/Dropbox/Private/devel/hyer/hyer/rules_monster.py:12(can_fetch)
+      230    0.002    0.000    0.019    0.000 /usr/lib/python2.6/urlparse.py:102(urlparse)
+      206    0.002    0.000    0.076    0.000 /home/renlu/Dropbox/Private/devel/hyer/hyer/urldb.py:95(add)
+     1128    0.002    0.000    0.002    0.000 {method 'startswith' of 'str' objects}
+      916    0.002    0.000    0.002    0.000 {sys._getframe}
+       20    0.002    0.000    2.595    0.130 /usr/lib/python2.6/dist-packages/chardet/charsetgroupprober.py:55(feed)
+        1    0.002    0.002    0.002    0.002 /usr/lib/python2.6/dist-packages/chardet/sbcsgroupprober.py:29(<module>)
+      300    0.002    0.000    0.003    0.000 /usr/lib/python2.6/dist-packages/chardet/jpcntx.py:173(get_order)
+   208/94    0.002    0.000    0.003    0.000 /usr/lib/python2.6/sre_parse.py:146(getwidth)
+      343    0.002    0.000    0.003    0.000 /usr/lib/python2.6/dist-packages/chardet/chardistribution.py:132(get_order)
+      916    0.002    0.000    0.002    0.000 /usr/lib/python2.6/threading.py:655(name)
+       22    0.002    0.000    0.004    0.000 /usr/lib/python2.6/rfc822.py:228(getallmatchingheaders)
+      343    0.002    0.000    0.003    0.000 /usr/lib/python2.6/dist-packages/chardet/chardistribution.py:149(get_order)
+     1119    0.002    0.000    0.002    0.000 /usr/lib/python2.6/copy.py:100(_copy_immutable)
+      150    0.002    0.000    0.005    0.000 /usr/lib/python2.6/dist-packages/chardet/sbcharsetprober.py:42(__init__)
+       85    0.002    0.000    0.002    0.000 {method 'getvalue' of 'cStringIO.StringO' objects}
+       11    0.002    0.000    0.091    0.008 /home/renlu/Dropbox/Private/devel/hyer/hyer/diskhash.py:11(hash_write)
+       86    0.002    0.000    5.813    0.068 /usr/lib/python2.6/httplib.py:513(read)
+       30    0.002    0.000    0.003    0.000 /usr/lib/python2.6/dist-packages/chardet/charsetgroupprober.py:72(get_confidence)
+       11    0.002    0.000    0.541    0.049 /home/renlu/Dropbox/Private/devel/hyer/hyer/misc.py:48(gettags)
+       11    0.002    0.000    0.006    0.001 /home/renlu/Dropbox/Private/devel/hyer/hyer/tinySQL.py:36(create)
+      110    0.002    0.000    0.002    0.000 {dir}
+      739    0.002    0.000    0.002    0.000 /usr/lib/pymodules/python2.6/MySQLdb/cursors.py:124(_get_db)
+      916    0.002    0.000    0.002    0.000 /usr/lib/python2.6/posixpath.py:42(normcase)
+      916    0.002    0.000    0.002    0.000 {posix.getpid}
+       11    0.002    0.000    0.069    0.006 /home/renlu/Dropbox/Private/devel/hyer/hyer/document.py:79(scan_links)
+      154    0.002    0.000    0.003    0.000 /usr/lib/python2.6/rfc822.py:197(isheader)
+      279    0.002    0.000    0.003    0.000 /usr/lib/python2.6/dist-packages/chardet/chardistribution.py:115(get_order)
+      470    0.002    0.000    0.002    0.000 /usr/lib/python2.6/dist-packages/chardet/charsetprober.py:35(reset)
+      458    0.002    0.000    0.002    0.000 {method 'seek' of 'cStringIO.StringO' objects}
+       35    0.002    0.000    0.002    0.000 /usr/lib/python2.6/socket.py:265(close)
+      250    0.001    0.000    0.281    0.001 /usr/lib/pymodules/python2.6/MySQLdb/cursors.py:311(_query)
+       12    0.001    0.000    0.003    0.000 /usr/lib/python2.6/urllib.py:1297(getproxies_environment)
+      592    0.001    0.000    0.003    0.000 /usr/lib/python2.6/sre_parse.py:201(match)
+       11    0.001    0.000    0.001    0.000 {method 'encode' of 'unicode' objects}
+      114    0.001    0.000    0.001    0.000 /usr/lib/pymodules/python2.6/MySQLdb/cursors.py:72(_warning_check)
+       11    0.001    0.000    0.001    0.000 {method 'autocommit' of '_mysql.connection' objects}
+       44    0.001    0.000    0.001    0.000 {method 'close' of 'file' objects}
+        1    0.001    0.001    0.012    0.012 /usr/lib/python2.6/dist-packages/chardet/mbcsgroupprober.py:30(<module>)
+      154    0.001    0.000    0.002    0.000 /usr/lib/python2.6/httplib.py:216(addheader)
+       10    0.001    0.000    0.011    0.001 /usr/lib/python2.6/dist-packages/chardet/sbcsgroupprober.py:41(__init__)
+       10    0.001    0.000    0.006    0.001 /usr/lib/python2.6/dist-packages/chardet/hebrewprober.py:188(feed)
+       11    0.001    0.000    0.001    0.000 {posix.unlink}
+      463    0.001    0.000    0.001    0.000 {built-in method __new__ of type object at 0x8228620}
+       11    0.001    0.000    0.024    0.002 /usr/lib/python2.6/urllib2.py:439(build_opener)
+      324    0.001    0.000    0.002    0.000 /usr/lib/python2.6/sre_parse.py:144(append)
+       10    0.001    0.000    2.734    0.273 /usr/lib/python2.6/dist-packages/chardet/__init__.py:20(detect)
+      488    0.001    0.000    0.001    0.000 {min}
+       11    0.001    0.000    0.086    0.008 /home/renlu/Dropbox/Private/devel/hyer/hyer/spider.py:200(save_document)
+      296    0.001    0.000    0.002    0.000 /usr/lib/python2.6/sre_parse.py:132(__len__)
+       11    0.001    0.000    0.062    0.006 /home/renlu/Dropbox/Private/devel/hyer/hyer/dbwriter.py:31(run)
+       12    0.001    0.000    0.002    0.000 /usr/lib/python2.6/socket.py:180(__init__)
+       11    0.001    0.000    9.329    0.848 /usr/lib/python2.6/urllib2.py:1085(do_open)
+      295    0.001    0.000    0.001    0.000 {cStringIO.StringIO}
+      520    0.001    0.000    0.001    0.000 /usr/lib/python2.6/dist-packages/chardet/charsetprober.py:44(get_state)
+      140    0.001    0.000    0.069    0.000 /usr/lib/python2.6/re.py:144(sub)
+       33    0.001    0.000    0.001    0.000 {posix.stat}
+        1    0.001    0.001    0.016    0.016 /usr/lib/python2.6/dist-packages/chardet/universaldetector.py:29(<module>)
+      230    0.001    0.000    0.002    0.000 <string>:8(__new__)
+      143    0.001    0.000    0.002    0.000 {_bisect.insort}
+       12    0.001    0.000    7.227    0.602 /usr/lib/python2.6/httplib.py:384(begin)
+       11    0.001    0.000   15.280    1.389 /home/renlu/Dropbox/Private/devel/hyer/hyer/browser.py:55(getHTML)
+      220    0.001    0.000    0.001    0.000 /usr/lib/python2.6/urllib2.py:488(__lt__)
+       59    0.001    0.000    0.010    0.000 /usr/lib/python2.6/sre_compile.py:184(_compile_charset)
+      114    0.001    0.000    0.001    0.000 {method 'store_result' of '_mysql.connection' objects}
+    66/24    0.001    0.000    0.032    0.001 /usr/lib/python2.6/sre_parse.py:307(_parse_sub)
+       10    0.001    0.000    0.015    0.001 /usr/lib/python2.6/dist-packages/chardet/mbcsgroupprober.py:40(__init__)
+        1    0.001    0.001    0.001    0.001 /usr/lib/python2.6/encodings/gb2312.py:7(<module>)
+      300    0.001    0.000    0.001    0.000 {method 'strip' of 'str' objects}
+      114    0.001    0.000    0.002    0.000 /usr/lib/pymodules/python2.6/MySQLdb/cursors.py:309(_get_result)
+        1    0.001    0.001    0.009    0.009 /usr/lib/python2.6/dist-packages/chardet/sjisprober.py:28(<module>)
+       11    0.001    0.000    0.001    0.000 /usr/lib/python2.6/copy_reg.py:59(_reduce_ex)
+       24    0.001    0.000    0.004    0.000 /usr/lib/python2.6/sre_compile.py:367(_compile_info)
+      180    0.001    0.000    0.001    0.000 /usr/lib/python2.6/dist-packages/chardet/chardistribution.py:46(reset)
+      136    0.001    0.000    0.001    0.000 /usr/lib/pymodules/python2.6/MySQLdb/connections.py:16(defaulterrorhandler)
+       12    0.001    0.000    2.315    0.193 /usr/lib/python2.6/socket.py:487(create_connection)
+       84    0.001    0.000    0.001    0.000 /usr/lib/python2.6/rfc822.py:285(getheader)
+      288    0.001    0.000    0.001    0.000 {method 'isspace' of 'str' objects}
+       91    0.001    0.000    0.001    0.000 {method 'items' of 'dict' objects}
+      260    0.001    0.000    0.001    0.000 /usr/lib/python2.6/dist-packages/chardet/charsetprober.py:32(__init__)
+      272    0.001    0.000    0.001    0.000 {method 'character_set_name' of '_mysql.connection' objects}
+       10    0.001    0.000    2.710    0.271 /usr/lib/python2.6/dist-packages/chardet/universaldetector.py:61(feed)
+      261    0.001    0.000    0.001    0.000 {method 'tell' of 'cStringIO.StringO' objects}
+        1    0.001    0.001    0.001    0.001 /usr/lib/python2.6/dist-packages/chardet/utf8prober.py:28(<module>)
+       60    0.001    0.000    0.001    0.000 /usr/lib/python2.6/dist-packages/chardet/mbcharsetprober.py:35(__init__)
+      183    0.001    0.000    0.001    0.000 {getattr}
+       11    0.001    0.000    2.737    0.249 /home/renlu/Dropbox/Private/devel/hyer/hyer/document.py:11(_get_charset)
+       11    0.001    0.000    0.604    0.055 ./webcrawler.py:173(handle_new_doc)
+       12    0.001    0.000    7.096    0.591 /usr/lib/python2.6/httplib.py:347(_read_status)
+      373    0.001    0.000    0.001    0.000 /usr/lib/python2.6/sre_compile.py:24(_identityfunction)
+       22    0.001    0.000    0.003    0.000 /home/renlu/Dropbox/Private/devel/hyer/hyer/urlfunc.py:21(get_dir)
+      166    0.001    0.000    0.001    0.000 /usr/lib/python2.6/rfc822.py:209(islast)
+      210    0.001    0.000    0.001    0.000 /usr/lib/python2.6/dist-packages/chardet/codingstatemachine.py:37(reset)
+      110    0.001    0.000    0.001    0.000 /usr/lib/python2.6/urllib2.py:449(isclass)
+       11    0.001    0.000    9.341    0.849 /usr/lib/python2.6/urllib2.py:371(open)
+       12    0.001    0.000    0.001    0.000 {method 'sendall' of '_socket.socket' objects}
+       11    0.001    0.000    9.370    0.852 /home/renlu/Dropbox/Private/devel/hyer/hyer/browser.py:21(get)
+      114    0.001    0.000    0.001    0.000 /usr/lib/pymodules/python2.6/MySQLdb/cursors.py:316(_post_get_result)
+      130    0.001    0.000    0.065    0.001 /usr/lib/python2.6/dist-packages/chardet/charsetprober.py:54(filter_without_english_letters)
+       22    0.001    0.000    0.001    0.000 /usr/lib/python2.6/copy.py:300(_reconstruct)
+      186    0.001    0.000    0.001    0.000 {method 'read' of 'cStringIO.StringO' objects}
+       12    0.001    0.000    0.130    0.011 /usr/lib/python2.6/mimetools.py:24(__init__)
+       12    0.001    0.000    0.001    0.000 /usr/lib/python2.6/mimetools.py:33(parsetype)
+       11    0.001    0.000    0.002    0.000 /home/renlu/Dropbox/Private/devel/hyer/hyer/site_holder.py:40(visited)
+       52    0.001    0.000    0.001    0.000 /usr/lib/python2.6/sre_parse.py:231(_class_escape)
+       11    0.001    0.000    0.003    0.000 /usr/lib/python2.6/_MozillaCookieJar.py:47(_really_load)
+       70    0.001    0.000    0.001    0.000 /usr/lib/python2.6/dist-packages/chardet/codingstatemachine.py:31(__init__)
+       10    0.001    0.000    0.002    0.000 /usr/lib/python2.6/dist-packages/chardet/sjisprober.py:37(__init__)
+       22    0.001    0.000    0.001    0.000 {method '__reduce_ex__' of 'object' objects}
+      108    0.001    0.000    0.001    0.000 {max}
+      212    0.001    0.000    0.001    0.000 /usr/lib/python2.6/dist-packages/chardet/hebrewprober.py:172(is_final)
+       11    0.001    0.000    0.014    0.001 /usr/lib/pymodules/python2.6/MySQLdb/__init__.py:78(Connect)
+        1    0.001    0.001   19.864   19.864 /home/renlu/Dropbox/Private/devel/hyer/hyer/spider.py:119(run_loop)
+      144    0.001    0.000    0.001    0.000 {setattr}
+      150    0.001    0.000    0.001    0.000 /usr/lib/python2.6/dist-packages/chardet/sbcharsetprober.py:97(get_confidence)
+       70    0.000    0.000    0.001    0.000 /usr/lib/python2.6/sre_compile.py:360(_simple)
+       60    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/jpcntx.py:127(reset)
+      206    0.000    0.000    0.000    0.000 /usr/lib/python2.6/robotparser.py:126(can_fetch)
+      166    0.000    0.000    0.000    0.000 /usr/lib/python2.6/rfc822.py:219(iscomment)
+       11    0.000    0.000    0.006    0.001 /usr/lib/python2.6/cookielib.py:1630(extract_cookies)
+       60    0.000    0.000    0.001    0.000 /usr/lib/python2.6/dist-packages/chardet/chardistribution.py:40(__init__)
+       11    0.000    0.000    2.815    0.256 /home/renlu/Dropbox/Private/devel/hyer/hyer/document.py:59(__init__)
+       22    0.000    0.000    0.001    0.000 /usr/lib/python2.6/genericpath.py:38(isdir)
+       11    0.000    0.000    2.128    0.193 /usr/lib/python2.6/httplib.py:906(_send_request)
+       12    0.000    0.000    7.230    0.602 /usr/lib/python2.6/httplib.py:940(getresponse)
+       11    0.000    0.000    0.001    0.000 /usr/lib/pymodules/python2.6/MySQLdb/cursors.py:57(__del__)
+       11    0.000    0.000    0.001    0.000 /home/renlu/Dropbox/Private/devel/hyer/hyer/site_holder.py:11(visited)
+       24    0.000    0.000    0.060    0.002 /usr/lib/python2.6/sre_compile.py:501(compile)
+       12    0.000    0.000    0.001    0.000 /usr/lib/python2.6/socket.py:187(close)
+       23    0.000    0.000    0.001    0.000 /usr/lib/python2.6/socket.py:235(__init__)
+      136    0.000    0.000    0.000    0.000 {sys.exc_info}
+       12    0.000    0.000    0.001    0.000 /usr/lib/python2.6/mimetools.py:50(parseplist)
+      198    0.000    0.000    0.000    0.000 {method 'setdefault' of 'dict' objects}
+       24    0.000    0.000    0.033    0.001 /usr/lib/python2.6/sre_parse.py:669(parse)
+       22    0.000    0.000    0.000    0.000 /usr/lib/python2.6/urlparse.py:65(hostname)
+       11    0.000    0.000    2.745    0.250 /home/renlu/Dropbox/Private/devel/hyer/hyer/document.py:140(get_charset)
+       10    0.000    0.000    0.004    0.000 /usr/lib/python2.6/dist-packages/chardet/universaldetector.py:121(close)
+       11    0.000    0.000    0.001    0.000 /usr/lib/python2.6/urllib2.py:1056(do_request_)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/latin1prober.py:29(<module>)
+       55    0.000    0.000    0.000    0.000 {method 'readline' of 'file' objects}
+       33    0.000    0.000    0.000    0.000 {_hashlib.openssl_md5}
+       44    0.000    0.000    0.005    0.000 /home/renlu/Dropbox/Private/devel/hyer/hyer/tinySQL.py:9(escape)
+      138    0.000    0.000    0.000    0.000 /usr/lib/python2.6/sre_parse.py:96(__init__)
+       12    0.000    0.000    0.001    0.000 /usr/lib/python2.6/httplib.py:329(__init__)
+       11    0.000    0.000    0.001    0.000 /usr/lib/python2.6/random.py:99(seed)
+       10    0.000    0.000    0.002    0.000 /usr/lib/python2.6/dist-packages/chardet/eucjpprober.py:37(__init__)
+       10    0.000    0.000    0.003    0.000 /usr/lib/python2.6/dist-packages/chardet/universaldetector.py:42(__init__)
+       20    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/universaldetector.py:49(reset)
+       20    0.000    0.000    0.001    0.000 /usr/lib/python2.6/dist-packages/chardet/sjisprober.py:44(reset)
+       10    0.000    0.000    0.001    0.000 /usr/lib/python2.6/dist-packages/chardet/utf8prober.py:37(__init__)
+       11    0.000    0.000    0.002    0.000 /usr/lib/python2.6/cookielib.py:1311(add_cookie_header)
+       12    0.000    0.000    2.316    0.193 /usr/lib/python2.6/httplib.py:719(send)
+       57    0.000    0.000    0.001    0.000 /usr/lib/python2.6/httplib.py:873(putheader)
+       20    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/charsetgroupprober.py:32(__init__)
+       20    0.000    0.000    0.001    0.000 /usr/lib/python2.6/dist-packages/chardet/eucjpprober.py:44(reset)
+       78    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/chardistribution.py:66(get_confidence)
+       22    0.000    0.000    0.001    0.000 /usr/lib/python2.6/httplib.py:497(close)
+       69    0.000    0.000    0.000    0.000 /usr/lib/python2.6/httplib.py:749(_output)
+       20    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/utf8prober.py:42(reset)
+       10    0.000    0.000    0.001    0.000 /usr/lib/python2.6/dist-packages/chardet/gb2312prober.py:34(__init__)
+       12    0.000    0.000    0.000    0.000 /usr/lib/python2.6/urllib.py:925(__init__)
+       10    0.000    0.000    0.001    0.000 /usr/lib/python2.6/dist-packages/chardet/big5prober.py:34(__init__)
+       33    0.000    0.000    0.000    0.000 {method 'hexdigest' of '_hashlib.HASH' objects}
+       10    0.000    0.000    0.001    0.000 /usr/lib/python2.6/dist-packages/chardet/euctwprober.py:34(__init__)
+      114    0.000    0.000    0.000    0.000 {method 'affected_rows' of '_mysql.connection' objects}
+      114    0.000    0.000    0.000    0.000 /usr/lib/pymodules/python2.6/MySQLdb/cursors.py:282(_fetch_row)
+       10    0.000    0.000    0.001    0.000 /usr/lib/python2.6/dist-packages/chardet/euckrprober.py:34(__init__)
+       11    0.000    0.000    0.001    0.000 /home/renlu/Dropbox/Private/devel/hyer/hyer/diskhash.py:26(hash_read)
+       58    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/mbcharsetprober.py:81(get_confidence)
+      114    0.000    0.000    0.000    0.000 {method 'extend' of 'list' objects}
+       11    0.000    0.000    9.329    0.848 /usr/lib/python2.6/urllib2.py:399(_open)
+       12    0.000    0.000    0.127    0.011 /usr/lib/python2.6/rfc822.py:88(__init__)
+       11    0.000    0.000    0.001    0.000 /usr/lib/python2.6/os.py:747(urandom)
+       23    0.000    0.000    0.000    0.000 /usr/lib/python2.6/sre_parse.py:263(_escape)
+       11    0.000    0.000    0.000    0.000 {function seed at 0xb76cdaac}
+       24    0.000    0.000    0.026    0.001 /usr/lib/python2.6/sre_compile.py:486(_code)
+      100    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/hebrewprober.py:175(is_non_final)
+      114    0.000    0.000    0.000    0.000 {method 'insert_id' of '_mysql.connection' objects}
+       12    0.000    0.000    0.001    0.000 /usr/lib/python2.6/httplib.py:467(_check_close)
+       12    0.000    0.000    2.315    0.193 /usr/lib/python2.6/httplib.py:701(connect)
+       11    0.000    0.000    0.000    0.000 /usr/lib/pymodules/python2.6/MySQLdb/cursors.py:40(__init__)
+       11    0.000    0.000    0.180    0.016 /home/renlu/Dropbox/Private/devel/hyer/hyer/urldb.py:105(pop)
+       23    0.000    0.000    0.001    0.000 /usr/lib/python2.6/socket.py:274(__del__)
+      114    0.000    0.000    0.000    0.000 {method 'info' of '_mysql.connection' objects}
+       21    0.000    0.000    0.000    0.000 {built-in method search}
+       48    0.000    0.000    0.000    0.000 /usr/lib/python2.6/sre_compile.py:480(isstring)
+      114    0.000    0.000    0.000    0.000 {method 'warning_count' of '_mysql.connection' objects}
+       11    0.000    0.000    0.006    0.001 /usr/lib/python2.6/urllib2.py:1169(http_response)
+       11    0.000    0.000    0.000    0.000 /home/renlu/Dropbox/Private/devel/hyer/hyer/document.py:31(__init__)
+       20    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/eucjpprober.py:82(get_confidence)
+       99    0.000    0.000    0.000    0.000 /usr/lib/python2.6/urllib2.py:481(add_parent)
+       10    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/chardistribution.py:163(__init__)
+       11    0.000    0.000    0.001    0.000 /usr/lib/python2.6/urllib2.py:187(__init__)
+       11    0.000    0.000    0.000    0.000 {posix.open}
+       55    0.000    0.000    0.000    0.000 /usr/lib/python2.6/urllib2.py:1112(<genexpr>)
+       11    0.000    0.000    0.004    0.000 /usr/lib/python2.6/cookielib.py:1550(make_cookies)
+       22    0.000    0.000    0.004    0.000 /usr/lib/python2.6/rfc822.py:295(getheaders)
+       11    0.000    0.000    0.001    0.000 /usr/lib/python2.6/cookielib.py:1686(clear_expired_cookies)
+       11    0.000    0.000    0.001    0.000 /usr/lib/python2.6/cookielib.py:1216(__init__)
+       10    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/chardistribution.py:126(__init__)
+       12    0.000    0.000    0.217    0.018 <string>:1(connect)
+       12    0.000    0.000    0.000    0.000 /usr/lib/python2.6/httplib.py:645(__init__)
+       12    0.000    0.000    0.000    0.000 /usr/lib/python2.6/threading.py:101(__init__)
+       12    0.000    0.000    0.000    0.000 /usr/lib/python2.6/urllib.py:1040(splittype)
+        1    0.000    0.000    0.232    0.232 /home/renlu/Dropbox/Private/devel/hyer/hyer/spider.py:20(__init__)
+       22    0.000    0.000    9.329    0.424 /usr/lib/python2.6/urllib2.py:359(_call_chain)
+       11    0.000    0.000    0.000    0.000 /usr/lib/python2.6/genericpath.py:15(exists)
+       12    0.000    0.000    0.001    0.000 /usr/lib/python2.6/socket.py:205(makefile)
+       42    0.000    0.000    0.000    0.000 /usr/lib/python2.6/sre_parse.py:89(closegroup)
+       22    0.000    0.000    0.000    0.000 /usr/lib/pymodules/python2.6/MySQLdb/cursors.py:338(fetchall)
+       42    0.000    0.000    0.000    0.000 /usr/lib/python2.6/sre_parse.py:78(opengroup)
+       11    0.000    0.000    0.001    0.000 /usr/lib/python2.6/urllib2.py:169(request_host)
+       12    0.000    0.000    0.000    0.000 /usr/lib/python2.6/httplib.py:766(putrequest)
+       10    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/chardistribution.py:109(__init__)
+       11    0.000    0.000    0.004    0.000 /home/renlu/Dropbox/Private/devel/hyer/hyer/urldb.py:114(mark)
+       10    0.000    0.000    0.000    0.000 {method 'clear' of 'dict' objects}
+       11    0.000    0.000    0.004    0.000 /usr/lib/python2.6/cookielib.py:1750(load)
+       11    0.000    0.000    0.001    0.000 /home/renlu/Dropbox/Private/devel/hyer/hyer/site_holder.py:49(can_visit)
+       10    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/chardistribution.py:143(__init__)
+       22    0.000    0.000    0.000    0.000 /usr/lib/python2.6/string.py:308(join)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/escprober.py:28(<module>)
+       12    0.000    0.000    2.317    0.193 /usr/lib/python2.6/httplib.py:756(_send_output)
+       12    0.000    0.000    0.001    0.000 /usr/lib/python2.6/urllib.py:979(__init__)
+       20    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/jpcntx.py:124(__init__)
+       10    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/latin1prober.py:97(__init__)
+       20    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/hebrewprober.py:158(reset)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/big5freq.py:43(<module>)
+       11    0.000    0.000    0.003    0.000 /usr/lib/python2.6/urllib2.py:688(__init__)
+       11    0.000    0.000    0.000    0.000 /usr/lib/pymodules/python2.6/MySQLdb/cursors.py:87(nextset)
+       33    0.000    0.000    0.000    0.000 /usr/lib/python2.6/urllib2.py:277(add_unredirected_header)
+       10    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/hebrewprober.py:152(__init__)
+       12    0.000    0.000    0.001    0.000 /usr/lib/python2.6/httplib.py:709(close)
+        1    0.000    0.000    0.001    0.001 {__import__}
+       10    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/latin1prober.py:122(get_confidence)
+       10    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/chardistribution.py:92(__init__)
+       12    0.000    0.000    0.000    0.000 /usr/lib/python2.6/urllib.py:1169(unquote)
+       22    0.000    0.000    0.001    0.000 /usr/lib/python2.6/urllib2.py:245(get_host)
+       70    0.000    0.000    0.000    0.000 /usr/lib/python2.6/sre_parse.py:140(__setitem__)
+       11    0.000    0.000    9.329    0.848 /usr/lib/python2.6/urllib2.py:1145(http_open)
+       22    0.000    0.000    0.000    0.000 /usr/lib/python2.6/urllib2.py:238(get_type)
+       11    0.000    0.000    0.000    0.000 /usr/lib/python2.6/random.py:160(randrange)
+       11    0.000    0.000    0.001    0.000 /usr/lib/python2.6/cookielib.py:1731(__init__)
+       24    0.000    0.000    0.000    0.000 /usr/lib/python2.6/sre_parse.py:184(__init__)
+       60    0.000    0.000    0.000    0.000 {_sre.getlower}
+       24    0.000    0.000    0.000    0.000 {_sre.compile}
+       10    0.000    0.000    0.000    0.000 /home/renlu/Dropbox/Private/devel/hyer/hyer/site_holder.py:19(can_visit)
+       11    0.000    0.000    0.000    0.000 {posix.read}
+       12    0.000    0.000    0.001    0.000 <string>:1(sendall)
+        1    0.000    0.000    0.228    0.228 /usr/lib/python2.6/robotparser.py:54(read)
+       11    0.000    0.000    0.000    0.000 /usr/lib/python2.6/urllib2.py:1159(__init__)
+       11    0.000    0.000    0.000    0.000 /usr/lib/python2.6/cookielib.py:847(__init__)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/jpcntx.py:28(<module>)
+       12    0.000    0.000    0.000    0.000 /usr/lib/python2.6/httplib.py:665(_set_hostport)
+       11    0.000    0.000    0.002    0.000 /usr/lib/python2.6/re.py:139(search)
+       11    0.000    0.000    0.000    0.000 /usr/lib/pymodules/python2.6/MySQLdb/connections.py:217(cursor)
+       22    0.000    0.000    0.000    0.000 /usr/lib/python2.6/copy_reg.py:92(__newobj__)
+       10    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/latin1prober.py:101(reset)
+       12    0.000    0.000    0.000    0.000 /usr/lib/python2.6/urllib.py:1054(splithost)
+       11    0.000    0.000    0.001    0.000 /usr/lib/python2.6/random.py:90(__init__)
+       11    0.000    0.000    0.000    0.000 /usr/lib/python2.6/urllib2.py:296(__init__)
+       11    0.000    0.000    0.000    0.000 /usr/lib/python2.6/random.py:224(randint)
+       10    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/chardistribution.py:186(__init__)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/charsetprober.py:29(<module>)
+       23    0.000    0.000    0.000    0.000 /usr/lib/python2.6/socket.py:281(flush)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/constants.py:29(<module>)
+       55    0.000    0.000    0.000    0.000 {method 'capitalize' of 'str' objects}
+       11    0.000    0.000    2.128    0.193 /usr/lib/python2.6/httplib.py:894(request)
+        8    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/chardistribution.py:169(get_order)
+       11    0.000    0.000    0.000    0.000 /usr/lib/python2.6/cookielib.py:1174(vals_sorted_by_key)
+       11    0.000    0.000    0.000    0.000 /usr/lib/python2.6/urllib2.py:501(http_response)
+       44    0.000    0.000    0.000    0.000 {method 'pop' of 'dict' objects}
+        1    0.000    0.000    0.222    0.222 /usr/lib/python2.6/urllib.py:290(open_http)
+       11    0.000    0.000    0.000    0.000 {built-in method fetch_row}
+       11    0.000    0.000    0.000    0.000 /usr/lib/pymodules/python2.6/MySQLdb/connections.py:270(set_character_set)
+       33    0.000    0.000    0.000    0.000 /usr/lib/python2.6/urllib.py:985(info)
+       10    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/charsetgroupprober.py:48(get_charset_name)
+       12    0.000    0.000    0.000    0.000 /usr/lib/python2.6/urllib.py:1031(unwrap)
+       42    0.000    0.000    0.000    0.000 {method 'remove' of 'list' objects}
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/mbcssm.py:28(<module>)
+       44    0.000    0.000    0.000    0.000 {method 'title' of 'str' objects}
+       12    0.000    0.000    2.317    0.193 /usr/lib/python2.6/httplib.py:884(endheaders)
+       12    0.000    0.000    0.000    0.000 /usr/lib/python2.6/threading.py:96(RLock)
+       11    0.000    0.000    0.004    0.000 /home/renlu/Dropbox/Private/devel/hyer/hyer/urldb.py:130(mark_visited)
+       11    0.000    0.000    0.000    0.000 /usr/lib/python2.6/cookielib.py:1252(_cookie_attrs)
+       24    0.000    0.000    0.000    0.000 {method 'index' of 'str' objects}
+       22    0.000    0.000    0.000    0.000 {method 'pop' of 'list' objects}
+       22    0.000    0.000    0.000    0.000 {method 'sort' of 'list' objects}
+       11    0.000    0.000    0.000    0.000 {method 'random' of '_random.Random' objects}
+       21    0.000    0.000    0.000    0.000 {method 'copy' of 'dict' objects}
+       11    0.000    0.000    0.000    0.000 /home/renlu/Dropbox/Private/devel/hyer/hyer/event.py:34(apply_filter)
+        8    0.000    0.000    0.005    0.001 /usr/lib/python2.6/socket.py:479(next)
+       12    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/chardistribution.py:98(get_order)
+       33    0.000    0.000    0.000    0.000 /usr/lib/python2.6/urllib2.py:281(has_header)
+       34    0.000    0.000    0.000    0.000 {method 'endswith' of 'str' objects}
+       24    0.000    0.000    0.000    0.000 /usr/lib/python2.6/sre_parse.py:73(__init__)
+       12    0.000    0.000    0.000    0.000 /usr/lib/python2.6/UserDict.py:39(items)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/posixpath.py:308(normpath)
+       11    0.000    0.000    0.001    0.000 /home/renlu/Dropbox/Private/devel/hyer/hyer/urlfunc.py:33(get_base_dir)
+       11    0.000    0.000    0.002    0.000 /usr/lib/python2.6/urllib2.py:1165(http_request)
+       10    0.000    0.000    0.000    0.000 {reduce}
+       12    0.000    0.000    0.000    0.000 {map}
+       22    0.000    0.000    0.000    0.000 /usr/lib/python2.6/cookielib.py:43(_debug)
+       24    0.000    0.000    0.000    0.000 {built-in method group}
+       29    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/chardistribution.py:80(got_enough_data)
+       11    0.000    0.000    0.000    0.000 /usr/lib/pymodules/python2.6/MySQLdb/cursors.py:62(close)
+       22    0.000    0.000    0.000    0.000 /usr/lib/python2.6/urllib2.py:235(get_full_url)
+        1    0.000    0.000    0.223    0.223 /usr/lib/python2.6/urllib.py:176(open)
+       11    0.000    0.000    0.000    0.000 {built-in method describe}
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/logging/__init__.py:591(__init__)
+       22    0.000    0.000    0.000    0.000 {_weakref.proxy}
+       22    0.000    0.000    0.000    0.000 {method 'upper' of 'str' objects}
+       11    0.000    0.000    0.000    0.000 /usr/lib/python2.6/cookielib.py:1179(deepvalues)
+        1    0.000    0.000    0.001    0.001 /usr/lib/python2.6/encodings/__init__.py:71(search_function)
+       11    0.000    0.000    0.000    0.000 /usr/lib/python2.6/cookielib.py:1245(_cookies_for_request)
+       22    0.000    0.000    0.000    0.000 /usr/lib/python2.6/urllib2.py:229(has_data)
+       20    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/jpcntx.py:162(get_confidence)
+       10    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/hebrewprober.py:264(get_state)
+       22    0.000    0.000    0.000    0.000 /usr/lib/pymodules/python2.6/MySQLdb/cursors.py:68(_check_executed)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/charsetgroupprober.py:28(<module>)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/mbcharsetprober.py:30(<module>)
+       10    0.000    0.000    0.004    0.000 /usr/lib/python2.6/dist-packages/chardet/charsetprober.py:50(filter_high_bit_only)
+       11    0.000    0.000    0.000    0.000 /usr/lib/python2.6/urllib2.py:218(get_method)
+       22    0.000    0.000    0.000    0.000 {method 'keys' of 'dict' objects}
+       10    0.000    0.000    0.000    0.000 /usr/lib/python2.6/urlparse.py:38(clear_cache)
+        1    0.000    0.000   20.096   20.096 <string>:1(<module>)
+       11    0.000    0.000    0.000    0.000 /usr/lib/python2.6/copy.py:112(_copy_with_constructor)
+       22    0.000    0.000    0.000    0.000 /usr/lib/python2.6/urllib2.py:1050(__init__)
+       11    0.000    0.000    0.000    0.000 {posix.close}
+       22    0.000    0.000    0.000    0.000 {id}
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/eucjpprober.py:28(<module>)
+       11    0.000    0.000    0.000    0.000 {built-in method fromkeys}
+       10    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/hebrewprober.py:168(set_model_probers)
+       11    0.000    0.000    0.000    0.000 {_mysql.get_client_info}
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/logging/__init__.py:1177(addHandler)
+        1    0.000    0.000    0.001    0.001 /usr/lib/python2.6/logging/__init__.py:802(__init__)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/codingstatemachine.py:28(<module>)
+       11    0.000    0.000    0.000    0.000 /usr/lib/python2.6/cookielib.py:1705(__iter__)
+       11    0.000    0.000    0.000    0.000 {method 'next_result' of '_mysql.connection' objects}
+       12    0.000    0.000    0.000    0.000 /usr/lib/python2.6/threading.py:59(__init__)
+        1    0.000    0.000   20.096   20.096 ./webcrawler.py:181(start)
+       11    0.000    0.000    0.000    0.000 {method 'get_server_info' of '_mysql.connection' objects}
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/gb2312prober.py:28(<module>)
+       11    0.000    0.000    0.000    0.000 /usr/lib/pymodules/python2.6/MySQLdb/connections.py:178(_get_string_literal)
+       11    0.000    0.000    0.000    0.000 {binascii.hexlify}
+       12    0.000    0.000    0.000    0.000 {thread.allocate_lock}
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/urllib.py:127(__init__)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/posixpath.py:335(abspath)
+       11    0.000    0.000    0.000    0.000 {built-in method field_flags}
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/urllib.py:365(http_error)
+       11    0.000    0.000    0.000    0.000 /usr/lib/pymodules/python2.6/MySQLdb/connections.py:183(_get_unicode_literal)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/httplib.py:998(__init__)
+       11    0.000    0.000    0.000    0.000 /usr/lib/pymodules/python2.6/MySQLdb/connections.py:188(_get_string_decoder)
+       11    0.000    0.000    0.000    0.000 {method 'update' of 'dict' objects}
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/euckrprober.py:28(<module>)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/euctwprober.py:28(<module>)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/escsm.py:28(<module>)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/big5prober.py:28(<module>)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/hebrewprober.py:28(<module>)
+       11    0.000    0.000    0.000    0.000 /usr/lib/python2.6/httplib.py:682(set_debuglevel)
+       10    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/gb2312prober.py:40(get_charset_name)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/sbcharsetprober.py:29(<module>)
+        2    0.000    0.000    0.000    0.000 /usr/lib/python2.6/httplib.py:1035(putheader)
+       11    0.000    0.000    0.000    0.000 {gc.enable}
+       10    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/jpcntx.py:159(got_enough_data)
+       11    0.000    0.000    0.000    0.000 /usr/lib/python2.6/urllib2.py:252(get_selector)
+       11    0.000    0.000    0.000    0.000 {method 'iteritems' of 'dict' objects}
+       11    0.000    0.000    0.000    0.000 /usr/lib/python2.6/urllib2.py:264(has_proxy)
+       11    0.000    0.000    0.000    0.000 {gc.disable}
+        2    0.000    0.000    0.000    0.000 /usr/lib/python2.6/robotparser.py:49(set_url)
+       10    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/charsetprober.py:47(get_confidence)
+       10    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/charsetprober.py:58(filter_with_english_letters)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/posixpath.py:59(join)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/encodings/__init__.py:49(normalize_encoding)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/robotparser.py:212(http_error_default)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/urllib.py:1192(quote)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/robotparser.py:203(__init__)
+        4    0.000    0.000    0.000    0.000 /usr/lib/python2.6/sre_compile.py:57(fixup)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/encodings/gb2312.py:30(getregentry)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/urllib.py:617(__init__)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/langcyrillicmodel.py:28(<module>)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/logging/__init__.py:738(__init__)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/urllib.py:943(close)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/copy_reg.py:95(_slotnames)
+        1    0.000    0.000    0.000    0.000 /home/renlu/Dropbox/Private/devel/hyer/hyer/event.py:10(add_event)
+        1    0.000    0.000    0.031    0.031 /usr/lib/python2.6/httplib.py:1039(getreply)
+        1    0.000    0.000    0.000    0.000 {posix.getcwd}
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/urllib.py:623(http_error_default)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/posixpath.py:50(isabs)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/logging/__init__.py:191(_acquireLock)
+        6    0.000    0.000    0.000    0.000 /usr/lib/python2.6/sre_parse.py:211(tell)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/logging/__init__.py:832(_open)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/codecs.py:77(__new__)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/robotparser.py:24(__init__)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/logging/__init__.py:608(createLock)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/chardistribution.py:108(EUCKRDistributionAnalysis)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/charsetgroupprober.py:31(CharSetGroupProber)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/langgreekmodel.py:28(<module>)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/urllib.py:150(__del__)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/logging/__init__.py:203(_releaseLock)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/langbulgarianmodel.py:28(<module>)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/langhungarianmodel.py:28(<module>)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/httplib.py:1010(_setup)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/langhebrewmodel.py:30(<module>)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/charsetprober.py:31(CharSetProber)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/codingstatemachine.py:30(CodingStateMachine)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/urllib.py:1066(splituser)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/langthaimodel.py:28(<module>)
+        1    0.000    0.000    0.000    0.000 /home/renlu/Dropbox/Private/devel/hyer/hyer/browser.py:10(__init__)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/urllib.py:153(close)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/urllib.py:1019(toBytes)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/mbcharsetprober.py:34(MultiByteCharSetProber)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/utf8prober.py:36(UTF8Prober)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/urllib.py:1016(_is_unicode)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/latin1prober.py:96(Latin1Prober)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/chardistribution.py:39(CharDistributionAnalysis)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/euckrfreq.py:41(<module>)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/euctwfreq.py:44(<module>)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/sbcharsetprober.py:41(SingleByteCharSetProber)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/jisfreq.py:44(<module>)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/hebrewprober.py:151(HebrewProber)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/urllib.py:156(cleanup)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/httplib.py:1031(getfile)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/universaldetector.py:41(UniversalDetector)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/escprober.py:33(EscCharSetProber)
+        1    0.000    0.000    0.000    0.000 {_codecs_cn.getcodec}
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/logging/__init__.py:678(setFormatter)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/jpcntx.py:123(JapaneseContextAnalysis)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/logging/__init__.py:368(__init__)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/logging/__init__.py:1412(getLogger)
+        1    0.000    0.000    0.000    0.000 /home/renlu/Dropbox/Private/devel/hyer/hyer/rules_monster.py:8(__init__)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/logging/__init__.py:540(__init__)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/sjisprober.py:36(SJISProber)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/gb2312freq.py:42(<module>)
+        1    0.000    0.000    0.000    0.000 {method 'insert' of 'list' objects}
+        1    0.000    0.000    0.000    0.000 /home/renlu/Dropbox/Private/devel/hyer/hyer/site_holder.py:35(__init__)
+        1    0.000    0.000    0.000    0.000 /home/renlu/Dropbox/Private/devel/hyer/hyer/browser.py:18(setCache)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/euctwprober.py:33(EUCTWProber)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/jpcntx.py:172(SJISContextAnalysis)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/euckrprober.py:33(EUCKRProber)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/chardistribution.py:185(EUCJPDistributionAnalysis)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/logging/__init__.py:1020(setLevel)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/chardistribution.py:125(GB2312DistributionAnalysis)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/encodings/gb2312.py:12(Codec)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/sbcsgroupprober.py:40(SBCSGroupProber)
+        1    0.000    0.000    0.000    0.000 {method 'get' of 'dictproxy' objects}
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/eucjpprober.py:36(EUCJPProber)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/socket.py:476(__iter__)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/encodings/gb2312.py:20(IncrementalDecoder)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/gb2312prober.py:33(GB2312Prober)
+        1    0.000    0.000    0.000    0.000 /home/renlu/Dropbox/Private/devel/hyer/hyer/site_holder.py:4(__init__)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/chardistribution.py:162(SJISDistributionAnalysis)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/jpcntx.py:191(EUCJPContextAnalysis)
+        1    0.000    0.000    0.000    0.000 {method 'translate' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/encodings/gb2312.py:27(StreamWriter)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/big5prober.py:33(Big5Prober)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/encodings/gb2312.py:24(StreamReader)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/chardistribution.py:91(EUCTWDistributionAnalysis)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/chardistribution.py:142(Big5DistributionAnalysis)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/dist-packages/chardet/mbcsgroupprober.py:39(MBCSGroupProber)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/encodings/gb2312.py:16(IncrementalEncoder)
+        1    0.000    0.000    0.000    0.000 /usr/lib/python2.6/sre_parse.py:213(seek)
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+
+

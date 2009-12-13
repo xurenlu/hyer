@@ -4,6 +4,28 @@ Documents handling here
 """
 import re
 import chardet
+import hyer.urlfunc
+
+CHARSETS_PER_DIR={}
+
+def _get_charset(data,url):
+    """ 得到指定URL的编码,并且将之缓存起来,
+    再遇到有指定目录的URL的编码查询请求,就直接返回;
+    这会导出内存慢慢增大,但影响不大
+    同时为了进一步地让程序快,我们不需要探测整个网页的编码 ,
+    探测前1K就足够了,如果是sohu的网页(200K+),能快200倍呢.
+    """
+    dir=hyer.urlfunc.get_dir(url)
+    if CHARSETS_PER_DIR.has_key(dir):
+        return  CHARSETS_PER_DIR[dir]
+    else:
+        charset=chardet.detect(data[64:1024])["encoding"]
+        CHARSETS_PER_DIR[dir] = charset
+        return charset
+
+
+GET_CHARSET_METHOD=_get_charset
+
 class Document(dict):
     """parents of all document classes """
     def __init__(self,content,uri=""):
@@ -50,7 +72,7 @@ class SimpleHTMLDocument(Document):
         self["title"]=""
         self["body"]=""
         self["content"]=content	
-        self.get_charset(self["content"])
+        self.get_charset(self["content"],self["URI"])
         self.scan_links(self["content"])
         #self.parse_document_type(self["body"])
 
@@ -115,9 +137,9 @@ class SimpleHTMLDocument(Document):
         except:
             pass
 
-    def get_charset(self,data):
+    def get_charset(self,data,url):
         """鸟枪换炮了,用chardet来探测当前文档的encoding ,并自动换为UTF-8"""
-        charset=chardet.detect(data)["encoding"]
+        charset=GET_CHARSET_METHOD(data,url)
         if charset==None :
             return 
         
@@ -243,7 +265,7 @@ class HTMLDocument(SimpleHTMLDocument):
         self["body"]=""
         self["content"]=content
 
-        self.get_charset(self["content"])
+        self.get_charset(self["content"],self["URI"])
         self.scan_links(self["content"])
         self.get_head_data(self["content"])
         self.get_title_data(self["head_data"])
