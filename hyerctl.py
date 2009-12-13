@@ -6,6 +6,8 @@ sys.path.append('/usr/lib/python2.5/site-packages/')
 sys.path.append('/usr/lib/python2.6/dist-packages/')
 sys.path.append("/var/lib/python-support/python2.5/")
 sys.path.append("/var/lib/python-support/python2.6/")
+sys.path.append("/usr/share/pyshared/")
+sys.path.append("/usr/lib/pymodules/python2.6/")
 import stackless,sys, os,atexit
 import sys,getopt
 import json

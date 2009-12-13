@@ -120,10 +120,14 @@ spider=hyer.spider.spider(conf)
         '''fetch tasks and finish it
         and exit when  there is no taks,'''
         go=True
+        k=0
         while(go):
             gc.disable() 
             go=self.run_single_fetch()
             gc.enable()
+            k=k+1
+            #if k > 10:
+            #    go=False
             
     def run_single_fetch(self):
         ''' fetch an url,parse it,save the links,documents ....
@@ -157,6 +161,7 @@ spider=hyer.spider.spider(conf)
             return True 
         except Exception,er:
             return True
+        print "url downloaded:",url
         self.site_holder_monster.visited(uri)
         if content==None:
             self.logger.error("error occured when fetching an url %s:response is None" % url)

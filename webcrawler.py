@@ -1,6 +1,10 @@
-#!/usr/local/bin/python.stackless -m profile
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
+#!/usr/local/bin/python.stackless -m profile
 #================================================
+from __future__ import with_statement 
+import subprocess 
+import os 
 import sys
 sys.path.append('/usr/lib/python2.5/site-packages/')
 sys.path.append('/usr/lib/python2.6/dist-packages/')
@@ -18,6 +22,7 @@ import threading
 import signal, os,time,re
 import imp
 import shutil
+import chardet
 
 import hyer.document
 import hyer.browser
@@ -142,15 +147,16 @@ start_time=time.time()
 
 conf={
         "db_path":"./tmp/",
-        #"feed":"http://www.xinhuanet.com/newscenter/index.htm",
-        "feed":"http://localhost/htests/",
+        "feed":"http://www.xinhuanet.com/newscenter/index.htm",
+        #"feed":"http://localhost/htests/",
         "max_in_minute":60,
         "agent":"Mozilla/Firefox",
-        #"same_domain_regexps":[re.compile("http://www.xinhuanet.com/")],
-        "same_domain_regexps":[re.compile("http://localhost/htests/")],
+        "same_domain_regexps":[re.compile("http://www.xinhuanet.com/")],
+        #"same_domain_regexps":[re.compile("http://localhost/htests/")],
         "url_db":hyer.urldb.Urldb_mysql({"host":"localhost","user":"root","pass":"","db":"hyer"}),
         "task":"profiletest",
-        "leave_domain":False
+        "leave_domain":False,
+        "document":hyer.document.SimpleHTMLDocument
         }
 spider=hyer.spider.spider(conf)
 
@@ -160,21 +166,26 @@ writerconf={
         "pass":"",
         "db":"hyer",
         "table":"xinhuall",
-        "fields":["url","body"]
+        "fields":["url","content","tags","charset"]
         }
 wdb=hyer.dbwriter.MySQLWriter(writerconf)
 
 def handle_new_doc(doc):
+    print "handle new doc:"
+    if doc["charset"]!="UTF-8":print "[notice] charset not utf8:",doc["charset"]
     doc["url"]=doc["URI"]
-    doc["body"]=doc["body"].decode("GBK").encode("UTF-8")
+    doc["tags"]=hyer.misc.gettags(doc["content"])
     wdb.run(doc)
 
 
 def start():
     spider=hyer.spider.spider(conf)
-    #hyer.event.add_event("new_document",handle_new_doc)
+    hyer.event.add_event("new_document",handle_new_doc)
     spider.run_loop()
 
+
+start()
+sys.exit(0)
 
 import cProfile
 cProfile.run("start()", "prof.txt")

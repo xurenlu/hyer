@@ -52,7 +52,7 @@ class SimpleHTMLDocument(Document):
         self["content"]=content	
         self.get_charset(self["content"])
         self.scan_links(self["content"])
-        self.parse_document_type(self["body"])
+        #self.parse_document_type(self["body"])
 
     def scan_links(self,content):
         """return all links in the html content
@@ -118,13 +118,19 @@ class SimpleHTMLDocument(Document):
     def get_charset(self,data):
         """鸟枪换炮了,用chardet来探测当前文档的encoding ,并自动换为UTF-8"""
         charset=chardet.detect(data)["encoding"]
-        if charset=="ascii":
+        if charset==None :
+            return 
+        
+        charset=charset.upper()
+        if charset=="ASCII":
             self["charset"]="UTF-8"
             pass
-        elif charset!="utf-8":
-            self["charset"]="UTF-8"
-            self["content"]=data.decode(charset).encode("UTF-8")
-
+        elif charset!="UTF-8":
+            if charset in ["UTF-8","UTF8","UTF-16","GBK","GB2312","GB18030"]:
+                self["content"]=data.decode(charset,"ignore").encode("UTF-8")
+                self["charset"]="UTF-8"
+        else:
+            self["charset"]=charset
     def get_charset_meta(self,head):
         """get the charset of document from the HTML head segment """
         try:
@@ -169,6 +175,15 @@ class SimpleHTMLDocument(Document):
         """return the text without html tags"""
         text=body
         self["text"]=self._html2text(text)
+    def is_text_page(self,html):
+        """return if the page is mostly text"""
+        html_len=len(self["content"])
+        r=re.compile("<a[^>]*>.*?</a>",re.M|re.I|re.S)
+        unlinked_text=r.sub("",self["content"])
+        unlinked_text=self._html2text(unlinked_text)
+        words=len(unlinked_text)
+        return words/html_len
+
     def parse_document_type(self,html):
         """return the document type:hub,text,pic
         hub:document with many links ,little text and pics
