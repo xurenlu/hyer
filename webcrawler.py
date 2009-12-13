@@ -1,4 +1,4 @@
-#!/usr/local/bin/python.stackless
+#!/usr/local/bin/python.stackless -m profile
 # -*- coding: utf-8 -*-
 #================================================
 import sys
@@ -10,7 +10,8 @@ sys.path.append("/usr/share/pyshared/")
 sys.path.append("/usr/lib/pyshared/python2.5/")
 sys.path.append("/usr/lib/pyshared/python2.6/")
 
-import stackless,sys, os,atexit
+#import stackless,
+import sys, os,atexit
 import sys,getopt
 import json
 import threading
@@ -28,8 +29,9 @@ import hyer.dbwriter
 import hyer.singleton
 import hyer.log
 import hyer.pcolor
-import hyer.sl
+#import hyer.sl
 import hyer.spider
+import hyer.misc
 
 """
 """
@@ -140,21 +142,42 @@ start_time=time.time()
 
 conf={
         "db_path":"./tmp/",
+        #"feed":"http://www.xinhuanet.com/newscenter/index.htm",
         "feed":"http://localhost/htests/",
         "max_in_minute":60,
         "agent":"Mozilla/Firefox",
+        #"same_domain_regexps":[re.compile("http://www.xinhuanet.com/")],
         "same_domain_regexps":[re.compile("http://localhost/htests/")],
         "url_db":hyer.urldb.Urldb_mysql({"host":"localhost","user":"root","pass":"","db":"hyer"}),
-        "task":"demoa",
+        "task":"profiletest",
         "leave_domain":False
         }
 spider=hyer.spider.spider(conf)
 
+writerconf={
+        "host":"localhost",
+        "user":"root",
+        "pass":"",
+        "db":"hyer",
+        "table":"xinhuall",
+        "fields":["url","body"]
+        }
+wdb=hyer.dbwriter.MySQLWriter(writerconf)
 
 def handle_new_doc(doc):
+    doc["url"]=doc["URI"]
+    doc["body"]=doc["body"].decode("GBK").encode("UTF-8")
+    wdb.run(doc)
 
-    print doc["doc_type"],doc["URI"],doc["doc_rate_pic"],doc["doc_rate_link"]
+
+def start():
+    spider=hyer.spider.spider(conf)
+    #hyer.event.add_event("new_document",handle_new_doc)
+    spider.run_loop()
 
 
-hyer.event.add_event("new_document",handle_new_doc)
-spider.run_loop()
+import cProfile
+cProfile.run("start()", "prof.txt")
+import pstats
+p = pstats.Stats("prof.txt")
+p.sort_stats("time").print_stats()

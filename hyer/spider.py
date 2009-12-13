@@ -1,5 +1,13 @@
 import cPickle as pickle
 import re
+import gc
+import zlib,hashlib,os
+import time
+import logging
+import sys
+import hashlib
+from urlparse import urlparse
+
 import hyer.browser
 import hyer.document
 import hyer.urldb
@@ -7,12 +15,6 @@ import hyer.error
 import hyer.site_holder
 import hyer.urlfunc
 import hyer.event
-import zlib,hashlib,os
-import time
-import logging
-import sys
-import hashlib
-from urlparse import urlparse
 class spider:
     '''this is the main entrance of the whole library'''
     def __init__(self,conf):
@@ -119,7 +121,9 @@ spider=hyer.spider.spider(conf)
         and exit when  there is no taks,'''
         go=True
         while(go):
+            gc.disable() 
             go=self.run_single_fetch()
+            gc.enable()
             
     def run_single_fetch(self):
         ''' fetch an url,parse it,save the links,documents ....
@@ -157,6 +161,7 @@ spider=hyer.spider.spider(conf)
         if content==None:
             self.logger.error("error occured when fetching an url %s:response is None" % url)
             return True 
+        content=hyer.event.apply_filter("download_succ",content)
 		#fix the timeout problem
         doc=self.document(content,url)
         base_dir=hyer.urlfunc.get_base_dir(doc,url)
