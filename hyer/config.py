@@ -31,7 +31,8 @@ class Config(dict):
         self.builders={
                 "string":str,
                 "regexp":regexp,
-                "list":list
+                "list":list,
+                "python":eval
                 }
     def __str__(self):
         return self.content
