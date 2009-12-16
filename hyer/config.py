@@ -4,17 +4,22 @@ from BeautifulSoup import BeautifulSoup
 import re
 
 R_TRIM=re.compile("<.*?>",re.M|re.S)
+
+def regexp(str):
+    """返回一个正则表达式"""
+    return re.compile(str,re.M|re.S);
+
+def list(str):
+    """返回一个list,是原文以||分隔"""
+    return str.split("||")
+
 class NoneConfig(dict):
+    """当没有查找到节点的时候返回的东西"""
     def value(self):
         return None
     def __getitem__(self,key):
         return NoneConfig()
 
-def regexp(str):
-    return re.compile(str,re.M|re.S);
-
-def list(str):
-    return str.split("||")
 
 class Config(dict):
     """ 话说一米六二同志特别懒,这个配置文件的解析,就是证明:
