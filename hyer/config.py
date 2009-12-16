@@ -43,18 +43,23 @@ class Config(dict):
         return self.content
 
     def value(self):
-
-        v=self.last_find.next
+        #v=self.last_find
         #R_TRIM.sub("",self.content)
-        try:
-            type=self.last_find["type"]
-        except:
-            type="string"
-        print "type:",type
-        return self.builders[type](v)
+        results=[]
+        for item in self.last_find:
+            try:
+                type=item["type"]
+            except:
+                type="string"
+            results.append(self.builders[type](R_TRIM.sub("",str(item))))
+        if len(results)==1:
+            return results[0]
+        else:
+            return results
+
 
     def __getitem__(self,key):
-        data=self.soup.find(key)
+        data=self.soup.findAll(key)
         self.last_find=data
         if data==None:
             return NoneConfig()
