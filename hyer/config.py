@@ -57,6 +57,11 @@ class Config(dict):
         else:
             return results
 
+    def confstring(self):
+        results=[]
+        for item in self.last_find:
+           results.append(str(item))
+        return "".join(results)
 
     def __getitem__(self,key):
         data=self.soup.findAll(key)
