@@ -69,7 +69,7 @@ def prepare_taskfile(taskfile):
         if fp:
             fp.close()
 
-def inittask(task):
+def inittask(task,type="web"):
     """init a task and create empty files for you 
     """
     try:
@@ -77,11 +77,11 @@ def inittask(task):
     except:
         pass
     try:
-        shutil.copyfile("share/templates/project.py","%s/%s.py" % (task,task) )
+        shutil.copyfile("share/templates/project-%s.py" % type,"%s/%s.py" % (task,task) )
     except:
         pass
     try:
-        shutil.copyfile("share/templates/config.py","%s/config.py" % task )
+        shutil.copyfile("share/templates/config-%s.py" % type,"%s/config.py" % task )
     except:
         pass
 
@@ -159,8 +159,13 @@ elif cmd == "run":
     taskfile=sys.argv[-1]
 
 elif cmd == "init":
-    task=sys.argv[-1]
-    inittask(task)
+    task=sys.argv[2]
+    if len(sys.argv)>3:
+        task=sys.argv[3]
+    else:
+        task="web"
+
+    inittask(task,type)
 else:
     usage()
     sys.exit()

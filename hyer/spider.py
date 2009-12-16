@@ -186,8 +186,8 @@ spider=hyer.spider.spider(conf)
                 self.logger.info("url:%s not valied" % u)
 
         self.url_db.mark_visited(url,self.task)
-        hyer.event.fire_event("before_save_document",doc)
-        self.save_document(doc,url,self.conf["db_path"]+"docs/")
+        #hyer.event.fire_event("before_save_document",doc)
+        #self.save_document(doc,url,self.conf["db_path"]+"docs/")
         hyer.event.fire_event("new_document",doc)
         if self.timer > 1024:
             #self.url_db.save_to(self.conf["db_path"]+"_urls.db")

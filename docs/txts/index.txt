@@ -19,7 +19,10 @@ Hyer 文档
 """ } 
 """ {{/style}}
 """ {{div class="blocked"}} 
-+ [说明 README.html]
-+ [入门说明 Guide.html]
-+ [文档规范 DEV.html]
++ [说明 readme.html]
++ [Hyer.vertical 入门说明 vertical-tutorial.html]
++ [Hyer.web 入门说明 web-tutorial.html]
++ [文档规范 dev-rules.html]
++ [一些想做的 todo.html]
++ [一些零乱的想法 snipts.html]
 """ {{/div}}

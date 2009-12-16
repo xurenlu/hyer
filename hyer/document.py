@@ -19,7 +19,7 @@ def _get_charset(data,url):
     if CHARSETS_PER_DIR.has_key(dir):
         return  CHARSETS_PER_DIR[dir]
     else:
-        charset=chardet.detect(data[64:1024])["encoding"]
+        charset=chardet.detect(data[:2048])["encoding"]
         CHARSETS_PER_DIR[dir] = charset
         return charset
 
