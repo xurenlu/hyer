@@ -27,8 +27,17 @@ class Config(dict):
     这个配置文件解析类,居然就是用的BeautifulSoup来解析的,懒到家了....
     @brief
     Example:
-    config=hyer.config.Config(open("./share/demo.conf").read())
-    print config["root"]["db"].value()
+    //file demo.conf
+    <root>
+        <db type="string>
+            host=localhost;user=root;pass=;db=test;
+        </db>
+    </root>
+    
+    #file test.py
+    import hyer.config
+    config=hyer.config.Config(open("demo.conf").read())
+    print config["root"]["db"].values()
     """
     def __init__(self,content,last_find=None):
         self.content=content
@@ -43,7 +52,7 @@ class Config(dict):
     def __str__(self):
         return self.content
 
-    def value(self):
+    def values(self):
         results=[]
         for item in self.last_find:
             try:
@@ -53,7 +62,7 @@ class Config(dict):
             results.append(self.builders[type](R_TRIM.sub("",str(item))))
         return results
 
-    def confstring(self):
+    def confstrings(self):
         results=[]
         for item in self.last_find:
            results.append(str(item))
