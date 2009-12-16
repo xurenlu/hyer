@@ -1,0 +1,70 @@
+Hyer 的配置文件格式
+    author:renlu.xu<xurenlu@gmail.com> 
+    Last Updated: %%date(%Y-%m-%d)
+
+%!target:html
+%!encoding: UTF-8
+%!options: --toc --toc-level=4
+%!postproc(html): @@ <BR>
+%!postproc(xhtml): @@ <BR>
+%!postproc(html): {{(.*?)}} <\1>
+%!postproc(html): {{ <
+%!postproc(html): }} >
+%!postproc(html): @startcode <div class="codediv"><pre>
+%!postproc(html): @endcode </pre></div>
+%!postproc(html): @startred <span class="red">
+%!postproc(html): @endred </span>
+%!postproc(html): @startpre <pre>
+%!postproc(html): @endpre </pre>
+
++ 配置文件格式 +
+    
+    Hyer的配置文件格式非常地web 2.0,可以说,是web上最应该用的配置格式,请看这样一个例子:
+@startcode
+<root>
+    <body>
+        <dbconfig>
+            <host>localhost </host>
+            <dbname>testdb</dbname>
+            <user>root</user>
+            <pass></pass>
+        </dbconfig>
+        <locations>
+            <location type="regexp">/test1/</location>
+            <generator type="python">"".join</generator>
+        </locations>
+        <locations>
+            <location type="regexp">/test2/</location>
+            <generator type="python">len</generator>
+        </locations>
+    </body>
+</root>
+@endcode
+
+我们要读出里面的配置,代码是:
+@startcode
+#coding:utf-8
+import hyer.config
+c=open("./share/demo.conf").read()
+config=hyer.config.Config(c)
+
+#接下来两句效果一样,没错儿, 就是这样;
+print config["body"]["dbconfig"]["host"]
+print config["body"]["host"]
+
+
+#接下来是把内容原样输出;
+for t in config["body"]["locations"].sections():
+    print "new section:",t
+
+
+print "\n=============\n"
+#接下来可以看到,配置文件中产生的数值可以是正则表达式，也可以是python内置语句或函数,够用了吧....
+
+for t in config["body"]["locations"].sections():
+    print hyer.config.Config(t)["location"].value()
+    print hyer.config.Config(t)["generator"].value()
+@endcode
+
+
+

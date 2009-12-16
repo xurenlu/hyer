@@ -62,7 +62,15 @@ class Config(dict):
             results.append(self.builders[type](R_TRIM.sub("",str(item))))
         return results
 
-    def confstrings(self):
+    def value(self):
+        item = self.last_find[0]
+        try:
+            type=item["type"]
+        except:
+            type="string"
+        return self.builders[type](R_TRIM.sub("",str(item)))
+
+    def sections(self):
         results=[]
         for item in self.last_find:
            results.append(str(item))
@@ -71,7 +79,7 @@ class Config(dict):
     def __getitem__(self,key):
         data=self.soup.findAll(key)
         self.last_find=data
-        if data==None:
+        if len(data)==0:
             return NoneConfig()
         else:
             return Config(str(data),self.last_find)
