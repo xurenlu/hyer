@@ -22,7 +22,8 @@ class NoneConfig(dict):
 
 
 class Config(dict):
-    """ 话说一米六二同志特别懒,这个配置文件的解析,就是证明:
+    """
+    话说一米六二同志特别懒,这个配置文件的解析,就是证明:
     这个配置文件解析类,居然就是用的BeautifulSoup来解析的,懒到家了....
     @brief
     Example:
@@ -43,8 +44,6 @@ class Config(dict):
         return self.content
 
     def value(self):
-        #v=self.last_find
-        #R_TRIM.sub("",self.content)
         results=[]
         for item in self.last_find:
             try:
@@ -52,16 +51,13 @@ class Config(dict):
             except:
                 type="string"
             results.append(self.builders[type](R_TRIM.sub("",str(item))))
-        if len(results)==1:
-            return results[0]
-        else:
-            return results
+        return results
 
     def confstring(self):
         results=[]
         for item in self.last_find:
            results.append(str(item))
-        return "".join(results)
+        return results
 
     def __getitem__(self,key):
         data=self.soup.findAll(key)
