@@ -1,0 +1,49 @@
+ChangeLog of Hyer
+    author:renlu.xu<xurenlu@gmail.com> 
+    Last Updated: %%date(%Y-%m-%d)
+
+%!target:html
+%!encoding: UTF-8
+%!options: --toc --toc-level=4
+%!postproc(html): @@ <BR>
+%!postproc(xhtml): @@ <BR>
+%!postproc(html): {{(.*?)}} <\1>
+%!postproc(html): {{ <
+%!postproc(html): }} >
+%!style: resources/css/main.css
+%!postproc(html): @startcode <div class="codediv"><pre>
+%!postproc(html): @endcode </pre></div>
+%!postproc(html): @startred <span class="red">
+%!postproc(html): @endred </span>
+%!postproc(html): @startpre <pre>
+%!postproc(html): @endpre </pre>
+
+2009.12.17
+	加入了新的Config类,是在BeautifulSoup的基础上解析配置文件的;
+
+2009.12.16
+	0.6.10 能用来抓取新华网的全网的数据了;数据存储,暂时不考虑什么分布式之类,用
+	Mysql已经能解决很大一部分问题;
+		
+2009.10.30
+	做了一些整理工作,主要是文档;
+
+0.5.9
+	Pcolor added,so we can display colorful text when debuging
+	Vertical search support developing...
+
+0.5.7 rc1
+	pyevent added,so we can develop plugs for it
+
+0.5.6
+	various bugs fixed
+	url functions moved to hyer.urlfunc module
+
+0.5.5
+	Logging service added
+	Site holder (hold on for a domain,avoid to visite one site too
+	frequecently)
+
+0.5.4
+	first edition
+

@@ -15,6 +15,8 @@ import hyer.error
 import hyer.site_holder
 import hyer.urlfunc
 import hyer.event
+import hyer.rules_monster
+
 class spider:
     '''this is the main entrance of the whole library'''
     def __init__(self,conf):
@@ -238,6 +240,7 @@ spider=hyer.spider.spider(conf)
         if re.match(r'\.js$',u,re.I):
             return False 
         return True
+
     def print_urls(self):
         ''' just for debug'''
         #self.url_db.debug()

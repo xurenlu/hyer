@@ -25,4 +25,6 @@ Hyer 文档
 + [文档规范 dev-rules.html]
 + [一些想做的 todo.html]
 + [一些零乱的想法 snipts.html]
++ [关于网页标题的提取 to-get-title.html]
++ [更新记录 changelog.html]
 """ {{/div}}

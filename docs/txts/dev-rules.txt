@@ -10,7 +10,7 @@ Last Updated: %%mtime(%c)
 %! postproc(html): {{(.*?)}} <\1>
 %!postproc(html): {{ <
 %!postproc(html): }} >
-
+%!postproc(html): =_ __
 """ {{style type="text/css"}}
 """ body {
 """ margin:auto 150px ;
@@ -25,7 +25,7 @@ Last Updated: %%mtime(%c)
     所有代码均以#coding:utf-8 开头.
 
 ==模块==
-    模块只做命名空间用,--init--.py保留为空文件.
+    模块只做命名空间用,=_init=_.py保留为空文件.
 
 ==类==
     类名应用完整的单词连起来,确保意义明确不含糊.

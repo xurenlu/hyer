@@ -28,7 +28,7 @@ class MySQLWriter(Writer):
         "insert_method":"insert" # or replace
     }
     '''
-    def run(self,data):
+    def __init__(self,config):
         if not self.config.has_key("host"):
             raise hyer.error.ConfigError("MysqlWriter need config['host'] filed")
             return data
@@ -50,6 +50,8 @@ class MySQLWriter(Writer):
         if not self.config.has_key("insert_method"):
             self.config["insert_method"]="insert"
 
+    def run(self,data):
+
         if self.config.has_key("from"):
             if self.config["from"]=="":
                 frm=data
@@ -57,6 +59,7 @@ class MySQLWriter(Writer):
                 frm=data[self.config["from"]]
         else:
             frm=data
+
         dict={}
         for f in self.config["fields"]:
             dict[f]=frm[f]
@@ -66,6 +69,7 @@ class MySQLWriter(Writer):
         cursor.execute("set names utf8")
         cursor.execute(sql)
         return data
+
 class ResetFileWriter(Writer):
     '''
         delete  file data["write_to"]
@@ -76,6 +80,8 @@ class ResetFileWriter(Writer):
         else:
             raise KeyError("write_to can't be null")
         return data
+
+
 class TextFileWriter(Writer):
     def run(self,data):
         if(self.config["from"]==""):
@@ -91,6 +97,8 @@ class TextFileWriter(Writer):
         else:
             raise KeyError("write_to can't be null")
         return data
+
+
 class LineAppendWriter(Writer):
     '''
     write array items to file 
@@ -123,6 +131,8 @@ class LineAppendWriter(Writer):
             raise KeyError("write_to can't be null")
         
         return data 
+
+
 class JsonLineAppendWriter(Writer):
     '''
     write array items to file 
