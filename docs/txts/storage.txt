@@ -1,0 +1,23 @@
+分布式存储
+    author:renlu.xu<xurenlu@gmail.com> 
+    Last Updated: %%date(%Y-%m-%d)
+
+%!target:html
+%!encoding: UTF-8
+%!options: --toc --toc-level=4
+%!postproc(html): @@ <BR>
+%!postproc(xhtml): @@ <BR>
+%!postproc(html): {{(.*?)}} <\1>
+%!postproc(html): {{ <
+%!postproc(html): }} >
+%!style: resources/css/main.css
+%!postproc(html): @startcode <div class="codediv"><pre>
+%!postproc(html): @endcode </pre></div>
+%!postproc(html): @startred <span class="red">
+%!postproc(html): @endred </span>
+%!postproc(html): @startpre <pre>
+%!postproc(html): @endpre </pre>
+
+目前希望通过xapian+tokyotyrant来做存储:
+    xapian来做搜索,
+    tokyotyrant来做存储;

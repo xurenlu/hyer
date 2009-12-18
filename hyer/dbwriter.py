@@ -29,6 +29,7 @@ class MySQLWriter(Writer):
     }
     '''
     def __init__(self,config):
+        self.config=config
         if not self.config.has_key("host"):
             raise hyer.error.ConfigError("MysqlWriter need config['host'] filed")
             return data
