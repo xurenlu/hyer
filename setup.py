@@ -14,17 +14,23 @@ def find_packages(where='.'):
 				out.append(prefix+name); stack.append((fn,prefix+name+'.'))
 	return out
 
+print find_packages()
 setup(
 	name = "Hyer",
-	version = "0.66",
-	url = 'http://www.162cm.com/',
+	version = "0.6.11",
+    fullname="Hyer- high performance spider ",
 	author = '162cm',
-	author_email = 'xurenlu@gmail.com',
-	description = 'A simple vertical search engine written in python ,based on stackless',
+	author_email = 'renlu.xu@gmail.com',
+    maintainer="162cm",
+    maintainer_email="renlu.xu@gmail.com",
+	url = 'http://www.162cm.com/',
+	description = 'A simple vertical search engine written in python ;',
 	license = 'LGPL V2',
 	packages = find_packages(),
-	package_data ={
+    keywords=["search","crawler","vertical search","spider","chinese segment"],
+    package_data ={
         'docs':['docs/'],
-		'hyer.tests': ['tests/*.py']
-   },
+        'hyer.tests': ['tests/*.py']
+    },
+    requires=["BeautifulSoup"]
 )

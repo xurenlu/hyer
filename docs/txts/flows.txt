@@ -1,0 +1,37 @@
+前处理和后处理
+    author:renlu.xu<xurenlu@gmail.com> 
+    Last Updated: %%date(%Y-%m-%d)
+
+%!target:html
+%!encoding: UTF-8
+%!options: --toc --toc-level=4
+%!postproc(html): @@ <BR>
+%!postproc(xhtml): @@ <BR>
+%!postproc(html): {{(.*?)}} <\1>
+%!postproc(html): {{ <
+%!postproc(html): }} >
+%!style: resources/css/main.css
+%!postproc(html): @startcode <div class="codediv"><pre>
+%!postproc(html): @endcode </pre></div>
+%!postproc(html): @startred <span class="red">
+%!postproc(html): @endred </span>
+%!postproc(html): @startpre <pre>
+%!postproc(html): @endpre </pre>
+
+我对抓取系统的分析做这样一种划分:
+    
+    + 前处理 +
+
+        前处理,意为在进行抓取以前对文档进行的处理;此时的文档,我们一定有的信息是URL,还可能有他的标题(从外链文字取得标题),也可能有他的charset(一般认为同级目录下的编码是相同的),但是一定还没有他的内容;
+
+    + 后处理 +
+        意为在已经抓取了文档内容以后,在某个时段用一系列方法触发一个事件,去处理某个文档; 例如:
+        我们在抓取URL Ua时发现了一共10个URL,记为U1,U2,U3...Ui;
+        在抓取到Ui时,我们从中发现了一个链到Ua的链接:{{a href="{$Ua}"}}{Text}{{/a}},这时我们可以启动一个操作,对Ua进行一个处理,这个处理就记为后处理;
+        后处理的特点:跟前处理相比,后处理一般都有了文档的内容,并且还有一系列链接集合:从Ua到U1的,从Ua到U2的...
+        后处理中可做的操作通常有:
+            修正文档的标题;
+            修正文档的重要度(rank值)
+            
+
+
