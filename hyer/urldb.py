@@ -3,6 +3,9 @@ import cPickle as pickle
 import random
 import MySQLdb
 import socket  
+import time
+import hyer.tinySQL
+
 class Urldb:
     '''class hold on urls that visited all would be visited'''
     urls_queue=[]
@@ -85,6 +88,8 @@ class Urldb:
         '''just for debuging'''
         print "visited_urls",self.visited_urls
         print "unvisited:",self.urls_queue
+
+
 class Urldb_mysql:
     '''class hold on urls that visited all would be visited'''
     def __init__(self,conf):
@@ -104,13 +109,25 @@ class Urldb_mysql:
             pass
     def pop(self,task):
         '''return an url unvisited'''
-        sql="SELECT url FROM urls WHERE status='new' AND task='%s'  LIMIT 1" % task
+        sql="SELECT url FROM urls WHERE  task='%s' AND next_visit_time<%d LIMIT 1" % (task,int(time.time()) )
         #param=(task)
         n=self.cursor.execute(sql)
         rows=self.cursor.fetchall()
         if len(rows) == 0:
             return None
         return rows[0]["url"] 
+
+    def update_property(self,task,url,property):
+        '''update the property of the url'''
+        condition="task='%s' AND url='%s' " % (task,url)
+        sql=hyer.tinySQL.update("urls",property,condition)
+        n=self.cursor.execute(sql)
+        
+    def calculate_next_time(self,url,task):
+        '''计算下一次访问的时间;'''
+        sql="UPDATE urls set next_visit_time=last_visited+update_time WHERE URL='%s' AND task='%s' " %(url,task)
+        self.cursor.execute(sql)
+
     def mark(self,url,task):
         '''mark an url as visited'''
         try:
@@ -119,8 +136,9 @@ class Urldb_mysql:
             pass
 
         index=-1
-        sql="UPDATE urls set status='visited' WHERE URL='%s' AND task='%s' " % (url,task)
+        sql="UPDATE urls set status='visited',last_visited=%d WHERE URL='%s' AND task='%s'   " % (int(time.time()),url,task)
         n=self.cursor.execute(sql)
+
 #        try:
 #            index=self.visited_urls.index(url)
 #        except:
@@ -164,12 +182,14 @@ class Urldb_mysql:
     def mark_error(self,url,task):
         ''' mark an url as invalid'''
         #self.mark(url,task)
-        sql="UPDATE urls set status='error' WHERE URL='%s' AND task='%s' " % (url,task)
+        sql="UPDATE urls set status='error',last_visited='%d'  WHERE URL='%s' AND task='%s' " % (int(time.time()),url,task)
         n=self.cursor.execute(sql)
     def debug(self):
         '''just for debuging'''
         print "visited_urls",self.visited_urls
         print "unvisited:",self.urls_queue
+
+
 class urldb_sock:
     '''class hold on urls that visited all would be visited'''
     sock=None

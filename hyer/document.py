@@ -28,8 +28,10 @@ GET_CHARSET_METHOD=_get_charset
 
 class Document(dict):
     """parents of all document classes """
-    def __init__(self,content,uri=""):
+    def __init__(self,content,uri="",task='default'):
         self["URI"]=uri
+        self["url"]=uri
+        self["task"]=task
         self["html"]=content
         self["links"]=[]
         self["base"]=""
@@ -39,6 +41,8 @@ class Document(dict):
         self["head_data"]=""
         self["title"]=""
         self["body"]=""
+        self["update_time"]=31536000
+
     def links(self):
         self['links']	
 
@@ -56,11 +60,11 @@ class SimpleHTMLDocument(Document):
     TYPE_TEXT=0
     TYPE_HUB=1
     TYPE_PIC=2
-    def __init__(self,content,uri=""):
+    def __init__(self,content,uri="",task="default"):
         """ 
         @param content:the HTML content
         @param uri:the URI of the html like file:///temp/os.html or http://www.162cm.com/index.html """
-        Document.__init__(self,content)
+        Document.__init__(self,content,uri,task)
         self["URI"]=uri
         self["html"]=content
         self["links"]=[]
@@ -277,13 +281,13 @@ class HTMLDocument(SimpleHTMLDocument):
         self.parse_document_type(self["body"])
 
 class RSSDocument(Document):
-    def __init__(self,content):
-        Document.__init__(self)
+    def __init__(self,content,uri="",task="default"):
+        Document.__init__(self,uri,task)
     def links(self):
         self['links']	
 class RSSItemDocument(Document):
-    def __init__(self,content):
-        Document.__init__(self)
+    def __init__(self,content,uri="",task="default"):
+        Document.__init__(self,uri,task)
     def links(self):
         self['links']	
 

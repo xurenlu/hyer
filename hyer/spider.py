@@ -1,3 +1,4 @@
+#coding:utf-8
 import cPickle as pickle
 import re
 import gc
@@ -160,6 +161,9 @@ spider=hyer.spider.spider(conf)
             self.logger.error("error occured when fetching an url %s" % e)
             hyer.event.fire_event("url_fetch_error",url)
             self.url_db.mark_error(url,self.task)
+            #对于无法下载的页面,我们要记录一下,在三天以后再来访问一次;
+            self.url_db.update_property(self.task,url,{"update_time":86400*3})
+            self.url_db.calculate_next_time(url,self.task)
             return True 
         except Exception,er:
             return True
@@ -170,7 +174,7 @@ spider=hyer.spider.spider(conf)
             return True 
         content=hyer.event.apply_filter("download_succ",content)
 		#fix the timeout problem
-        doc=self.document(content,url)
+        doc=self.document(content,url,url)
         base_dir=hyer.urlfunc.get_base_dir(doc,url)
         links=[]
         all_original_links=doc["links"]
@@ -191,6 +195,9 @@ spider=hyer.spider.spider(conf)
         #hyer.event.fire_event("before_save_document",doc)
         #self.save_document(doc,url,self.conf["db_path"]+"docs/")
         hyer.event.fire_event("new_document",doc)
+        doc=hyer.event.apply_filter("new_document",doc)
+        self.url_db.update_property(self.task,url,{"update_time":doc["update_time"]})
+        self.url_db.calculate_next_time(url,self.task)
         if self.timer > 1024:
             #self.url_db.save_to(self.conf["db_path"]+"_urls.db")
             self.timer=1
