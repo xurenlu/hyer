@@ -23,6 +23,7 @@ sys.path.append("/usr/lib/pyshared/python2.6/")
 import sys, atexit
 import signal,time,re
 import imp
+import getopt 
 
 import hyer.document
 import hyer.event
@@ -30,6 +31,7 @@ import hyer.dbwriter
 import hyer.pcolor
 import hyer.spider
 import hyer.misc
+import hyer.config
 
 def sig_exit():
     """ handle the exit signal
@@ -60,6 +62,17 @@ def at_exit():
     print "[cost time]:"+str(end_time-start_time)
     print "\n=========================\n"
 
+def usage():
+    print "\n"
+    print "Hyer crawler     version ",hyer.__version__
+    print "Author:",hyer.__author__
+    print "Homepage:",hyer.__homepage__
+    print "\n\n\n"
+    
+    sys.exit(0)
+
+
+
 
 signal.signal(signal.SIGINT,handler)
 signal.signal(signal.SIGTERM,handler)
@@ -73,6 +86,21 @@ sys.getdefaultencoding()
 reload(sys)
 sys.setdefaultencoding("utf-8")
 start_time=time.time()
+
+
+optlist,args=getopt.getopt(sys.argv[1:],"c:h")
+
+config={"conf":None,"help":False}
+for (c,v) in optlist:
+    if c == "-c":
+        config["conf"]=v
+    if c == "-h":
+        config["help"]=True
+
+if config["help"]:
+    usage()
+
+
 
 
 conf={
