@@ -11,7 +11,20 @@ def regexp(str):
 
 def list(str):
     """返回一个list,是原文以||分隔"""
-    return str.split("||")
+    return str.split("\n")
+
+def python_list(str):
+    list=[]
+    for item in str.split("\n"):
+        list.append(eval(item))
+    return list
+
+def regexp_list(str):
+    list=[]
+    for item in str.split("\n"):
+        list.append(re.compile(str,re.M|re.S))
+    return list
+
 
 class NoneConfig(dict):
     """当没有查找到节点的时候返回的东西"""
@@ -47,7 +60,9 @@ class Config(dict):
                 "string":str,
                 "regexp":regexp,
                 "list":list,
-                "python":eval
+                "python":eval,
+                "regexp_list":regexp_list,
+                "python_list":python_list
                 }
     def __str__(self):
         return self.content

@@ -74,11 +74,13 @@ def inittask(task,type="web"):
     """
     try:
         os.mkdir(task,0755)
-    except:
+    except Exception,e:
+        print "exception:",e
         pass
     try:
         shutil.copyfile("share/templates/project-%s.py" % type,"%s/%s.py" % (task,task) )
-    except:
+    except Exception,e:
+        print "exception:",e
         pass
     try:
         shutil.copyfile("share/templates/config-%s.py" % type,"%s/config.py" % task )
@@ -164,7 +166,7 @@ elif cmd == "init":
         task=sys.argv[3]
     else:
         task="web"
-
+    type="vertical"
     inittask(task,type)
 else:
     usage()

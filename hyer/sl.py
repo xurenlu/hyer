@@ -1,12 +1,39 @@
 #coding:utf-8
+import sys
+sys.path.append('/usr/lib/python2.5/site-packages/')
+sys.path.append('/usr/lib/python2.6/dist-packages/')
+sys.path.append("/var/lib/python-support/python2.5/")
+sys.path.append("/var/lib/python-support/python2.6/")
+sys.path.append("/usr/share/pyshared/")
+sys.path.append("/usr/lib/pymodules/python2.6/")
+
 import stackless
 import hyer.log
 import hyer.error
+import hyer.pprint
+import sys
 
 '''
 以stackless 方式运行任务.
+
 '''
 channels={}
+_debug_=False
+
+def readch():
+    char=sys.stdin.readline().strip()
+    if char=="y" or char == "Y" or char == "YES" or char =="yes":
+        return True
+    else:
+        return False
+    
+def debug(post,data):
+    print "the result of worker[",post,"]"
+    print "+++++++++++++++++++++++++++++++++++++++"
+    hyer.pprint.pprint(data)
+    print "+++++++++++++++++++++++++++++++++++++++"
+    print >>sys.stdout,"press any key to continue...."
+    readch()
 
 def worker_run(wname,config):
     global channels
@@ -38,6 +65,7 @@ def worker_run(wname,config):
                             )
                     pass
         except hyer.error.ExitLoopError,e1:
+            print "ExitLoopError"
             continue
         except Exception,e2:
             pass
@@ -47,11 +75,13 @@ def worker_run(wname,config):
                 if isinstance(product,list):
                     for outproduct in product:
                         try:
+                            debug(config["post"],product)
                             channels[nw].send(outproduct)
                         except Exception,ep:
                             hyer.log.error("pushProduct error:%s" % ep)
                 else:
                     try:
+                        debug(config["post"],product)
                         channels[nw].send(product)
                     except Exception,ep:
                         hyer.log.error("pushProduct error:%s" % ep)
