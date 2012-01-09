@@ -55,3 +55,11 @@ class site_holder_monster:
         else:
             self.holders[host]=site_holder(host,self.max_in_minute)
             return True 
+class site_holder_dumy(site_holder):
+    def __init__(self,max_in_minute):
+        pass
+
+    def visited(self,url,times=1):
+        return True
+    def can_visit(self,url):
+        return True 

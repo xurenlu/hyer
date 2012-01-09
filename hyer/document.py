@@ -252,11 +252,11 @@ class SimpleHTMLDocument(Document):
 
 
 class HTMLDocument(SimpleHTMLDocument):
-    def __init__(self,content,uri=''):
+    def __init__(self,content,uri='',task='default'):
         """ 
         @param content:the HTML content
         @param uri:the URI of the html like file:///temp/os.html or http://www.162cm.com/index.html """
-        Document.__init__(self,content)
+        Document.__init__(self,content,uri,task)
         self["URI"]=uri
         self["html"]=content
         self["links"]=[]
@@ -282,13 +282,12 @@ class HTMLDocument(SimpleHTMLDocument):
 
 class RSSDocument(Document):
     def __init__(self,content,uri="",task="default"):
-        Document.__init__(self,uri,task)
+        Document.__init__(self,content,uri,task)
     def links(self):
         self['links']	
+
 class RSSItemDocument(Document):
     def __init__(self,content,uri="",task="default"):
-        Document.__init__(self,uri,task)
+        Document.__init__(self,content,uri,task)
     def links(self):
         self['links']	
-
-

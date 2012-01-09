@@ -96,37 +96,46 @@ class Urldb_mysql:
         '''initize the mysqldb connection'''
 
         self.conn=MySQLdb.connect(conf["host"],conf["user"],conf["pass"],conf["db"])
-        self.cursor=self.conn.cursor(MySQLdb.cursors.DictCursor)
     def add(self,url,task):
         '''we found a new url and save it in the queue'''   
         index=-1
         sql="INSERT INTO urls (`url`,`task`,`status`) VALUES ('%s','%s','%s')"
-
+        self.cursor=self.conn.cursor(MySQLdb.cursors.DictCursor)
+        print sql
         try:
             sql="INSERT INTO urls (`url`,`task`,`status`) VALUES ('%s','%s','%s')" %(url,task,'new')
             self.cursor.execute(sql)
         except Exception,e:
+            print "error:",e
             pass
+        self.cursor.close()
+
     def pop(self,task):
         '''return an url unvisited'''
+        self.cursor=self.conn.cursor(MySQLdb.cursors.DictCursor)
         sql="SELECT url FROM urls WHERE  task='%s' AND next_visit_time<%d LIMIT 1" % (task,int(time.time()) )
         #param=(task)
         n=self.cursor.execute(sql)
         rows=self.cursor.fetchall()
+        self.cursor.close()
         if len(rows) == 0:
             return None
         return rows[0]["url"] 
 
     def update_property(self,task,url,property):
         '''update the property of the url'''
+        self.cursor=self.conn.cursor(MySQLdb.cursors.DictCursor)
         condition="task='%s' AND url='%s' " % (task,url)
         sql=hyer.tinySQL.update("urls",property,condition)
         n=self.cursor.execute(sql)
+        self.cursor.close()
         
     def calculate_next_time(self,url,task):
         '''计算下一次访问的时间;'''
         sql="UPDATE urls set next_visit_time=last_visited+update_time WHERE URL='%s' AND task='%s' " %(url,task)
+        self.cursor=self.conn.cursor(MySQLdb.cursors.DictCursor)
         self.cursor.execute(sql)
+        self.cursor.close()
 
     def mark(self,url,task):
         '''mark an url as visited'''
@@ -137,8 +146,9 @@ class Urldb_mysql:
 
         index=-1
         sql="UPDATE urls set status='visited',last_visited=%d WHERE URL='%s' AND task='%s'   " % (int(time.time()),url,task)
+        self.cursor=self.conn.cursor(MySQLdb.cursors.DictCursor)
         n=self.cursor.execute(sql)
-
+        self.cursor.close()
 #        try:
 #            index=self.visited_urls.index(url)
 #        except:
@@ -179,11 +189,15 @@ class Urldb_mysql:
             self.visited_urls=data["visited_urls"]
         except:
             return None 
+
     def mark_error(self,url,task):
         ''' mark an url as invalid'''
         #self.mark(url,task)
+        self.cursor=self.conn.cursor(MySQLdb.cursors.DictCursor)
         sql="UPDATE urls set status='error',last_visited='%d'  WHERE URL='%s' AND task='%s' " % (int(time.time()),url,task)
         n=self.cursor.execute(sql)
+        self.cursor.close()
+
     def debug(self):
         '''just for debuging'''
         print "visited_urls",self.visited_urls

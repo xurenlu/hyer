@@ -21,13 +21,9 @@ import hyer.rules_monster
 class spider:
     '''this is the main entrance of the whole library'''
     def __init__(self,conf):
-        '''@param conf:a list describe the cralwer task'''
-        must_have_keys=[ "db_path","feed","max_in_minute","agent","same_domain_regexps","url_db","task","leave_domain"]
-        for v in must_have_keys:
-            if not conf.has_key(v):
-                print "demo conf:"
-                print """
-conf={
+        '''@param conf:a list describe the cralwer task
+        Example:
+        conf={
         "db_path":"./tmp/",
         "feed":"http://localhost/",
         "max_in_minute":60,
@@ -37,8 +33,12 @@ conf={
         "task":"demo",
         "leave_domain":False
         }
-spider=hyer.spider.spider(conf)
-            """
+        spider=hyer.spider.spider(conf)
+        '''
+        must_have_keys=[ "db_path","feed","max_in_minute","agent","same_domain_regexps","url_db","task","leave_domain"]
+        for v in must_have_keys:
+            if not conf.has_key(v):
+                print "You must specific conf[v] field"
                 return False
 
         #init the logging service
@@ -59,6 +59,7 @@ spider=hyer.spider.spider(conf)
 
         #init site_holder
         self.site_holder_monster=hyer.site_holder.site_holder_monster(conf["max_in_minute"])  
+        #self.site_holder_monster=hyer.site_holder.site_holder_dumy(conf["max_in_minute"])  
         self.conf=conf
         self.timer=1
         self.rm=hyer.rules_monster.rules_monster(conf["agent"])
@@ -101,7 +102,7 @@ spider=hyer.spider.spider(conf)
                 except Exception,ep:
                     self.logger.info("error occured when url_db.add()")
             else:
-                self.logger.info("can't fetch url: %s " % url)
+                self.logger.info("can't fetch url: %s base on the settings" % url)
         except Exception,e:
             self.logger.info("error occured when deciding if url can be crawlered or saving an url" )
             print e.message
@@ -112,11 +113,11 @@ spider=hyer.spider.spider(conf)
     def start(self,processes):
         for i in range(processes):
             pid=os.fork()
-            if pid==0 :
-                time.sleep(86400)
-                return False
-            self.logger.info("process %d started!" % pid)
-            self.procid=pid
+            if pid > 0 :
+                self.logger.info("process %d started!" % pid)
+                self.procid=pid
+            else:
+                pass
         self.run_loop()
 
     def run_loop(self):
@@ -127,6 +128,7 @@ spider=hyer.spider.spider(conf)
         while(go):
             gc.disable() 
             go=self.run_single_fetch()
+            gc.collect()
             gc.enable()
             k=k+1
             #if k > 10:
@@ -174,7 +176,7 @@ spider=hyer.spider.spider(conf)
             return True 
         content=hyer.event.apply_filter("download_succ",content)
 		#fix the timeout problem
-        doc=self.document(content,url,url)
+        doc=self.document(content,url,self.task)
         base_dir=hyer.urlfunc.get_base_dir(doc,url)
         links=[]
         all_original_links=doc["links"]
